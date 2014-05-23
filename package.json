@@ -1,7 +1,10 @@
 {
   "name": "Lunch",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.3.0",
+    "swagger-node-express": "^2.0.3"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-autoprefixer": "~0.4.0",
