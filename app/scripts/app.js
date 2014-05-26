@@ -1,4 +1,4 @@
-'use strict';
+  'use strict';
 // Ionic Starter App, v0.9.20
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -18,12 +18,21 @@ angular.module('Lunch', ['ionic', 'Lunch.controllers'])
 
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
-
     .state('app', {
       url: '/app',
       abstract: true,
       templateUrl: 'templates/menu.html',
       controller: 'AppCtrl'
+    })
+
+    .state('app.profile', {
+      url: '/profile',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/profile.html',
+          controller: 'ProfileCtrl'
+        }
+      }
     })
 
     .state('app.search', {
@@ -39,7 +48,8 @@ angular.module('Lunch', ['ionic', 'Lunch.controllers'])
       url: '/browse',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/browse.html'
+          templateUrl: 'templates/browse.html',
+          controller: 'BrowseCtrl'
         }
       }
     })

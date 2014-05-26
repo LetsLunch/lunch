@@ -6,3 +6,10 @@
   width: 96px;
   height: 96px;
 }
+
+.username, .location{
+	
+	text-align: right;
+}
+
+
