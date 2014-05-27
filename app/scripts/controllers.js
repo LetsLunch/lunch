@@ -26,7 +26,7 @@ angular.module('Lunch.controllers', ['Lunch.factories'])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
-.controller('BrowseCtrl', function($scope, userData, matchData){
+.controller('BrowseCtrl', function($scope, userData, matchData, $location){
 
     $scope.numMatches = matchData.matches.length;
     var initialize = function() {
@@ -45,6 +45,7 @@ angular.module('Lunch.controllers', ['Lunch.factories'])
         $scope.tags = matchData.matches[i].tags;
       } else {
         console.log('matches ended');
+        $location.path('/app/noMatches');
         //show splash screen of come back tomorrow!
       }
     };
@@ -68,4 +69,8 @@ angular.module('Lunch.controllers', ['Lunch.factories'])
       //call service to send rejection to db
     };
 
-});
+})
+.controller('NoMatchesCtrl', function($scope) {
+
+})
+;

@@ -53,6 +53,17 @@ angular.module('Lunch', ['ionic', 'Lunch.controllers'])
         }
       }
     })
+
+    .state('app.noMatches', {
+      url: '/noMatches',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/nomatches.html',
+          controller: 'NoMatchesCtrl'
+        }
+      }
+    })
+
     .state('app.playlists', {
       url: '/playlists',
       views: {
