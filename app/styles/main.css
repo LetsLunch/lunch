@@ -12,4 +12,11 @@
 	text-align: right;
 }
 
-
+.col {
+	background-color: #F0F8FF;
+	/*#FAEBD7;*/
+	margin: 10px;
+	text-align: center;
+	color: #4a87ee;
+	/*#995533;*/
+}
