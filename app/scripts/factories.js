@@ -3,26 +3,26 @@ angular.module('Lunch.factories', [])
 
 .factory('userData', function() {
   return {
-    username : 'John Doe',
-    likes : ['Football', 'Javascript', 'Food', 'Baked-beans'],
-    location : 'San Francisco',
-    tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
+      username : 'John Doe',
+      likes : ['Football', 'Javascript', 'Food', 'Baked-beans'],
+      location : 'San Francisco',
+      tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
   };
 })
 .factory('matchData', function(){
   return {
     'matches' : [
     {
-      username : 'Bill Gates',
-      likes : ['Computers', 'Health', 'Kale'],
-      location : 'Redmond',
-      tags : ['Malaria', 'PCs', 'R&D']
+        username : 'Bill Gates',
+        likes : ['Computers', 'Health', 'Kale'],
+        location : 'Redmond',
+        tags : ['Malaria', 'PCs', 'R&D']
     },
     {
-      username : 'Steve Jobs',
-      likes : ['Design', 'Simplicity', 'Fruitarian-Diet'],
-      location : 'Unknown',
-      tags : ['Geek-chic']
+        username : 'Steve Jobs',
+        likes : ['Design', 'Simplicity', 'Fruitarian-Diet'],
+        location : 'Unknown',
+        tags : ['Geek-chic']
     }]
   };
 });

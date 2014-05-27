@@ -21,42 +21,51 @@ angular.module('Lunch.controllers', ['Lunch.factories'])
     $scope.location = userData.location;
     $scope.tags = userData.tags;
 })
-
+  
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
 .controller('BrowseCtrl', function($scope, userData, matchData){
 
+    $scope.numMatches = matchData.matches.length;
     var initialize = function() {
-      $scope.username = matchData['matches'][0].username;
-      $scope.likes = matchData['matches'][0].likes;
-      $scope.location = matchData['matches'][0].location;
-      $scope.tags = matchData['matches'][0].tags;
-
       $scope.currentMatch = 0;
+      nextMatch($scope.currentMatch);
     }; // if no data have backup
 
-    $scope.currentMatch = 0;
 
-    initialize();
-
-
-    $scope.noMatches = matchData['matches'] 
+    var nextMatch = function(i) {
+      console.log('current match is, ', $scope.currentMatch);
+      console.log('num matches is ', $scope.numMatches);
+      if($scope.currentMatch < $scope.numMatches) {
+        $scope.username = matchData.matches[i].username;
+        $scope.likes = matchData.matches[i].likes;
+        $scope.location = matchData.matches[i].location;
+        $scope.tags = matchData.matches[i].tags;
+      } else {
+        console.log('matches ended');
+        //show splash screen of come back tomorrow!
+      }
+    };
     //take care if the no of matches will dynamically increase, as a new match is
     //returned from the server
+    initialize();
 
     //records an approval for the currently displayed profile
     $scope.approve = function() {
       console.log('user approves');
+      $scope.currentMatch++;
+      nextMatch($scope.currentMatch);
+      //call service to send approval to db
     };
 
     //records a disapproval for the currently displayed profile
     $scope.reject = function() {
       console.log('user disapproves');
+      $scope.currentMatch++;
+      nextMatch($scope.currentMatch);
+      //call service to send rejection to db
     };
 
-    $scope.next = function() {
-      $scope
-    };
 });
