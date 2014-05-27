@@ -1,16 +1,6 @@
 'use strict';
-angular.module('Lunch.controllers', ['Lunch.factories'])
+angular.module('Lunch.browse', ['Lunch.factories'])
 
-.controller('AppCtrl', function($scope) {
-})
-
-.controller('ProfileCtrl', function($scope, userData) {
-    $scope.username = userData.username;
-    $scope.likes = userData.likes;
-    $scope.location = userData.location;
-    $scope.tags = userData.tags;
-})
-  
 .controller('BrowseCtrl', function($scope, userData, matchData, $location){
 
     $scope.numMatches = matchData.matches.length;
@@ -47,8 +37,5 @@ angular.module('Lunch.controllers', ['Lunch.factories'])
       nextMatch($scope.currentMatch);
       //call service to send rejection to db
     };
-
-})
-.controller('NoMatchesCtrl', function($scope) {
 
 });

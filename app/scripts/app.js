@@ -1,12 +1,5 @@
-  'use strict';
-// Ionic Starter App, v0.9.20
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('Lunch', ['ionic', 'Lunch.controllers'])
+'use strict';
+angular.module('Lunch', ['ionic',  'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -14,6 +7,9 @@ angular.module('Lunch', ['ionic', 'Lunch.controllers'])
       StatusBar.styleDefault();
     }
   });
+})
+
+.controller('AppCtrl', function($scope) {
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -47,6 +43,16 @@ angular.module('Lunch', ['ionic', 'Lunch.controllers'])
 
     .state('app.noMatches', {
       url: '/noMatches',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/nomatches.html',
+          controller: 'NoMatchesCtrl'
+        }
+      }
+    })
+
+    .state('app.noShow', {
+      url: '/noShow',
       views: {
         'menuContent' :{
           templateUrl: 'templates/nomatches.html',
