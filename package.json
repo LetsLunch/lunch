@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "dependencies": {
     "express": "^4.3.0",
-    "swagger-node-express": "^2.0.3"
+    "swagger-node-express": "^2.0.3",
+    "neo4j-architect": "^0.1.1",
+    "neo4j-swagger-ui": "0.0.14"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
