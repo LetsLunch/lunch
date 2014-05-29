@@ -1,6 +1,17 @@
 'use strict';
 angular.module('Lunch.browse', ['Lunch.factories'])
-
+.config(function($stateProvider){
+  $stateProvider
+  .state('app.browse', {
+      url: '/browse',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/browse.html',
+          controller: 'BrowseCtrl'
+        }
+      }
+    })
+})
 .controller('BrowseCtrl', function($scope, userData, matchData, $location){
 
     $scope.numMatches = matchData.matches.length;
