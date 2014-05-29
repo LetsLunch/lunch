@@ -5,7 +5,14 @@
     "express": "^4.3.0",
     "swagger-node-express": "^2.0.3",
     "neo4j-architect": "^0.1.1",
-    "neo4j-swagger-ui": "0.0.14"
+    "neo4j-swagger-ui": "0.0.14",
+    "lodash": "^2.4.1",
+    "neo4j": "^1.1.0",
+    "body-parser": "^1.2.2",
+    "method-override": "^1.0.2",
+    "serve-favicon": "^2.0.0",
+    "errorhandler": "^1.0.1",
+    "morgan": "^1.1.1"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

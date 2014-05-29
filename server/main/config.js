@@ -1,13 +1,49 @@
-var express = require('express');
-var Architect = require('neo4j-architect');
-NEO4J_URL = "http://localhost:"+7474 ;
+// 'use strict';
+
+// var express = require('express'),
+//  Architect = require('neo4j-architect'),
+//  routes = require('./routes'),
+//  PORT        = process.env.PORT || 8008;
+
+// // NEO4J_URL = 'http://localhost:' + 7474 ;
+  
+
+// // Architect.init();
+
+// module.exports = function (app, subpath) {
+
+  // configure /api/v0 subpath for api versioning
+  // subpath.configure(function () {
+  //   // just using json for the api
+  //   subpath.use(express.json());
+  //   subpath.use(express.methodOverride());
+  // });
+
+  // app.configure(function () {
+  //   // all environments
+  //   app.set('port', PORT);
+  //   app.use(express.favicon());
+  //   app.use(express.logger('dev'));
+  //   // just using json for the api
+  //   app.use(express.json());
+  //   app.use(express.methodOverride());
+  //   app.use(app.router);
+  //   // development only
+  //   if ('development' === app.get('env')) {
+  //     app.use(express.errorHandler());
+  //   }
+  // });
 
 
-Architect.init();
+  // routes.api(subpath);
+  // routes.swaggerui(app);
 
-v
-module.exports = function (app, server) {
-  app.set('port', process.env.PORT || 8008);
+  // app.get('/', function(req, res) {
+  //   res.redirect('./docs');
+  // });
 
-  app.use(express.static(__dirname + '/../..'));
-};
+
+  // app.set('port', PORT);
+
+  // app.use(express.static(__dirname + '/../..'));
+// };
