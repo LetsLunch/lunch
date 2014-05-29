@@ -18,5 +18,15 @@
 	margin: 10px;
 	text-align: center;
 	color: #4a87ee;
+	border-radius: 10px;
 	/*#995533;*/
 }
+
+#blurb, #facebook {
+	text-align: center;
+}
+
+#button, .ion-social-facebook {
+	border-radius: 20px;
+}
+

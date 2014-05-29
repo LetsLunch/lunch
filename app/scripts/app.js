@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch', ['ionic',  'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow'])
+angular.module('Lunch', ['ionic',  'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -22,6 +22,6 @@ angular.module('Lunch', ['ionic',  'Lunch.profile', 'Lunch.browse', 'Lunch.nomat
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/profile');
+  $urlRouterProvider.otherwise('/app/login');
 });
 
