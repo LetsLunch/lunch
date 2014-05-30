@@ -10,8 +10,16 @@ angular.module('Lunch.login', [])
         controller: 'LoginCtrl'
       }
     }
-  })
+  });
 })
-.controller('LoginCtrl', function($scope, $ionicSlideBoxDelegate ) {
-
+.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB) {
+  $scope.login = function() {
+    OpenFB.login('public_profile,user_likes').then(
+      function() {
+        $state.go('app.profile');
+      },
+      function() {
+        window.alert('Login failed.');
+      });
+  };
 });
