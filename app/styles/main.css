@@ -8,7 +8,6 @@
 }
 
 .username, .location{
-	
 	text-align: right;
 }
 
@@ -26,7 +25,11 @@
 	text-align: center;
 }
 
-#button, .ion-social-facebook {
+#button, #fbbutton {
 	border-radius: 20px;
+}
+
+#lunchtitle {
+	font-size: 80px;
 }
 

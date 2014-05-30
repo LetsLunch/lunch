@@ -18,6 +18,5 @@ angular.module('Lunch.nomatches', [])
   //   $scope.time--;
   //   $timeout($scope.onTimeout, 1000);
   // };
-  //if time difference of 
   // $scope.onTimeout();
 });

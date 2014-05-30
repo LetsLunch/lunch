@@ -27,7 +27,7 @@ angular.module('Lunch.browse', ['Lunch.factories'])
         $scope.location = matchData.matches[i].location;
         $scope.tags = matchData.matches[i].tags;
       } else {
-        $location.path('/app/noMatches');
+        $location.path('/app/nomatches');
         //show splash screen of come back tomorrow!
       }
     };
@@ -48,5 +48,9 @@ angular.module('Lunch.browse', ['Lunch.factories'])
       nextMatch($scope.currentMatch);
       //call service to send rejection to db
     };
+
+    //introduce dummy timeout to show your match
+
+    //
 
 });

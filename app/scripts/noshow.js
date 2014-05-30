@@ -3,10 +3,10 @@ angular.module('Lunch.noshow', [])
 .config(function($stateProvider){
   $stateProvider
   .state('app.noShow', {
-      url: '/noShow',
+      url: '/noshow',
       views: {
         'menuContent' :{
-          templateUrl: 'templates/nomatches.html',
+          templateUrl: 'templates/noshow.html',
           controller: 'NoMatchesCtrl'
         }
       }
