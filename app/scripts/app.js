@@ -8,13 +8,15 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
     }
   });
 
-  OpenFB.init('765912086774968', 'https://www.facebook.com/connect/login_success.html');
+  // Initialize with localhost to support development
+  // (cordova will default to https://www.facebook.com/)
+  OpenFB.init('765912086774968', 'http://localhost:9000/oauth.html');
 
   // Force login
   $rootScope.$on('$stateChangeStart', function(e, state) {
-    if (!$window.sessionStorage['token'] && state.name !== 'app.login') {
+    if (!$window.sessionStorage['fbtoken'] && state.name !== 'app.login') {
       $state.go('app.login');
-      event.preventDefault();
+      e.preventDefault();
     }
   });
 
@@ -34,6 +36,6 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/login');
+  $urlRouterProvider.otherwise('/app/profile');
 });
 
