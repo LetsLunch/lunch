@@ -19,7 +19,7 @@ app.use(API_STRING, subpath);
 // console.log('app :',app);
 // subpath.configure(function () {
   // just using json for the api
-  subpath.use(bodyParser.json());
+  subpath.use(bodyParser());
   subpath.use(methodOverride());
 // });
 
@@ -31,7 +31,7 @@ app.use(API_STRING, subpath);
  
   app.use(logger('dev'));
   // just using json for the api
-  app.use(bodyParser.json());
+  app.use(bodyParser());
   app.use(methodOverride());
   // app.use(app.router);
   // development only
@@ -115,7 +115,7 @@ app.listen(app.get('port'), function () {
 // subpath.configure(function () {
   
 //   // just using json for the api
-//   subpath.use(express.json());
+//   subpath.use(express());
 //   subpath.use(express.urlencoded());
   
 //   subpath.use(express.methodOverride());

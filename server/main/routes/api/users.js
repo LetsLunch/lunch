@@ -118,7 +118,7 @@ exports.addUser = {
 
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
-
+    
     Users.create(params, options, callback);
 
     // The below method uses the neo4j module's db.createNode method
