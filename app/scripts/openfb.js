@@ -87,7 +87,7 @@ angular.module('openfb', [])
                 '&response_type=token&display=popup&scope=' + fbScope, '_blank', 'location=no');
 
             // If the app is running in Cordova, listen to URL changes in the InAppBrowser until we get a URL with an access_token or an error
-            // if (runningInCordova) {
+            if (runningInCordova) {
                 loginWindow.addEventListener('loadstart', function (event) {
                     var url = event.url;
                     if (url.indexOf("access_token=") > 0 || url.indexOf("error=") > 0) {
@@ -100,7 +100,7 @@ angular.module('openfb', [])
                     // Handle the situation where the user closes the login window manually before completing the login process
                     deferredLogin.reject({error: 'user_cancelled', error_description: 'User cancelled login process', error_reason: "user_cancelled"});
                 });
-            // }
+            }
             // Note: if the app is running in the browser the loginWindow dialog will call back by invoking the
             // oauthCallback() function. See oauthcallback.html for details.
 
@@ -222,7 +222,7 @@ angular.module('openfb', [])
 
 // Global function called back by the OAuth login dialog
 function oauthCallback(url) {
-    var injector = angular.element(document.getElementById('main')).injector();
+    var injector = angular.element(document.querySelector('body')).injector();
     injector.invoke(function (OpenFB) {
         OpenFB.oauthCallback(url);
     });
