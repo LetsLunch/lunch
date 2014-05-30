@@ -12,14 +12,14 @@ angular.module('Lunch.login', [])
     }
   });
 })
-.controller('LoginCtrl', function($scope, $location, $ionicSlideBoxDelegate, OpenFB) {
+.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB) {
   $scope.login = function() {
     OpenFB.login('public_profile,user_likes').then(
       function() {
-        $location.path('/app/profile');
+        $state.go('app.profile');
       },
       function() {
-        console.log('uh-oh...');
+        window.alert('Login failed.');
       });
   };
 });

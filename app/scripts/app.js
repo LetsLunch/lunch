@@ -19,7 +19,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
   });
 
   $rootScope.$on('OAuthException', function() {
-    $state.go('Lunch.login');
+    $state.go('app.login');
   });
 
 
