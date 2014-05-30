@@ -6,3 +6,34 @@
   width: 96px;
   height: 96px;
 }
+
+.username, .location{
+	text-align: right;
+}
+
+.col {
+	background-color: #F0F8FF;
+	border-color: #ddd;
+	/*#FAEBD7;*/
+	margin: 10px;
+	text-align: center;
+	color: #4a87ee;
+	border-radius: 10px;
+	border-width: 1px;
+	border-style: solid;
+	font-size: 14px;
+	/*#995533;*/
+}
+
+#blurb, #facebook {
+	text-align: center;
+}
+
+#button, #fbbutton {
+	border-radius: 20px;
+}
+
+#lunchtitle {
+	font-size: 80px;
+}
+
