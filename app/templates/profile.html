@@ -1,0 +1,31 @@
+  <ion-view> <!-- title="Profile"> -->
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+	  	<img src="../images/ionic.png">
+    <div class="row">
+    	<h3 class="username">{{username}}</h3>
+		</div>
+		<div class="row">
+			<h4 class="location">{{location}}</h4>
+		</div>
+			<div class="item item-divider">
+   			 Tags
+  		</div>
+      <div class="row">
+				<ion-item class="col" ng-repeat="tag in tags">
+   				{{tag}}
+      	</ion-item>
+      </div>
+			<div class="item item-divider"> 
+        <div class="icon ion-social-facebook">  likes</div>
+      </div>
+      <div class="row">
+				<ion-item  class="col" ng-repeat="like in likes">
+   				{{like}}
+      	</ion-item>
+      </div>
+ 		<a href="#/app/browse" class="button button-light">Look for a Lunch Buddy for today</a>
+  </ion-content>
+</ion-view>
