@@ -13,11 +13,15 @@
 
 .col {
 	background-color: #F0F8FF;
+	border-color: #ddd;
 	/*#FAEBD7;*/
 	margin: 10px;
 	text-align: center;
 	color: #4a87ee;
 	border-radius: 10px;
+	border-width: 1px;
+	border-style: solid;
+	font-size: 14px;
 	/*#995533;*/
 }
 

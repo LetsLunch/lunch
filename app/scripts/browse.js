@@ -49,8 +49,10 @@ angular.module('Lunch.browse', ['Lunch.factories'])
       //call service to send rejection to db
     };
 
-    //introduce dummy timeout to show your match
-
+    $scope.showPair = function() {
+      // this function will switch the screen to the matched screen
+      $location.path('/app/pair');
+    };
     //
 
 });
