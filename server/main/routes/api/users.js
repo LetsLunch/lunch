@@ -13,8 +13,7 @@ var swe = sw.errors;
 
 var neo4j = require('neo4j');
 var db = new neo4j.GraphDatabase(
-    // process.env['NEO4J_URL'] ||
-    // process.env['GRAPHENEDB_URL'] ||
+    process.env['NEO4J_URL'] ||
     'http://localhost:7474'
 );
 
@@ -247,7 +246,6 @@ exports.updateById = {
       param.form('firstname', 'User firstname', 'string', true),
       param.form('lastname', 'User lastname', 'string', true),
       param.form('email', 'User email', 'string', false),
-      // param.form('linkedInToken', 'LinkedIn OAuth Token', 'string', false),
       param.form('profileImage', 'User profile image url', 'string', false),
     ],
     responseMessages : [swe.invalid('input')],
