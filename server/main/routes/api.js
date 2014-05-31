@@ -8,7 +8,8 @@ var url = require('url');
 var models = require('../models/swagger');
 var users = require('./api/users');
 var PORT = process.env.PORT || 8008;
-var BASE_URL    = process.env.BASE_URL || "http://localhost:"+PORT;
+var BASE_URL    = process.env.BASE_URL || 'http://localhost:' + PORT;
+var API_STRING  = '/api/v0';
 
 // var locations = require('./api/locations');
 // var likes = require('./api/likes');
@@ -91,7 +92,7 @@ module.exports = function (subpath) {
   // and ditch the .{format} on each of the apis
   swagger.configureSwaggerPaths('', '/api-docs', '');
 
-  swagger.configure(BASE_URL + '/api/v0', '0.1.4');
+  swagger.configure(BASE_URL + API_STRING, '0.1.4');
 };
 
 
