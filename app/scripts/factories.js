@@ -25,4 +25,15 @@ angular.module('Lunch.factories', [])
         tags : ['Geek-chic']
     }]
   };
+})
+.factory('Geo', function() {
+  return {
+    'getCurrentPosition' : function() {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+          console.log('found position at: ', pos);
+          }, function(error) {
+              console.log('error position: ', error); 
+               });
+    }
+  };
 });
