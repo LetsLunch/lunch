@@ -5,16 +5,16 @@
     <ion-content class="has-header">
         <div id="userimage"></div>
         <div class="row">
-            <h3 class="username">{{username}}</h3>
+            <h3 class="username">{{userData.name}}</h3>
         </div>
         <div class="row">
-            <h4 class="location">{{location}}</h4>
+            <h4 class="location">{{userData.location}}</h4>
         </div>
             <div class="item item-divider">
                  Tags
             </div>
             <div class="row">
-                <div class="col" ng-repeat="tag in tags">
+                <div class="col" ng-repeat="tag in userData.tags">
                     {{tag}}
                 </div>
             </div>
@@ -22,7 +22,7 @@
                 <div class="icon ion-social-facebook">    likes</div>
             </div>
             <div class="row">
-                <div class="col" ng-repeat="like in likes">
+                <div class="col" ng-repeat="like in userData.likes">
                     {{like}}
                 </div>
             </div>

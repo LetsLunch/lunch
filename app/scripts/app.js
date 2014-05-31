@@ -24,7 +24,6 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
     $state.go('app.login');
   });
 
-
 })
 
 .config(function($stateProvider, $urlRouterProvider) {

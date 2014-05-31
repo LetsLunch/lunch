@@ -12,37 +12,40 @@ angular.module('Lunch.profile', ['Lunch.factories', 'openfb'])
     }
   })
 })
-.controller('ProfileCtrl', function($scope, userData, OpenFB, Geo) {
-    $scope.username;//userData.username;
-    $scope.likes = [];//userData.likes;
-    $scope.location = userData.location;
-    $scope.tags = userData.tags;
+.controller('ProfileCtrl', function($scope, storedUserData, OpenFB, Geo) {
+    $scope.userData = storedUserData;
+
     $scope.getLikes = function() {
         OpenFB.get('/me/likes')
-        .success(function(data,status, headers, config){
-          angular.forEach(data.data, function(value, key){
-            if(value.name){
-              $scope.likes.push(value.name);
-            }
-          });
+        .success(function(fbLikeObj,status, headers, config){
+          if(fbLikeObj.data !== $scope.userData.likes){  // warning this could end up duplicating likes (like id?)
+            angular.forEach(fbLikeObj.data, function(value, key){
+              if(value.name){
+                $scope.userData.likes.push(value.name);
+              }
+            });
+          }
         });
     };
-    //only called if picture not avalible in local storage
+
     $scope.getPicture = function() {
         OpenFB.get('/me/picture?redirect=0&height=200&type=normal&width=200')//'/me/picture')
         .success(function(data,status, headers, config){
-          console.log(data.data.url);
-          var image = "<img src='" + data.data.url + "'/>";
-          angular.element(document.querySelector('#userimage')).html(image);
-          $scope.userimage = image; // save to local storage
+          if(data !== $scope.userData.photo_url){
+            var image = "<img src='" + data.data.url + "'/>";
+            angular.element(document.querySelector('#userimage')).html(image);
+          } else {
+            $scope.userData.photo_url = image; 
+          }
         });
     };
+
     $scope.getDetails = function() {
         OpenFB.get('/me')
         .success(function(data,status, headers, config){
-          $scope.username = data.name;
-          alert(data.id);
-          alert(data.updated_time);
+          $scope.userData.name = data.name;
+          $scope.userData.id = data.id;
+          $scope.userData.updated_time = data.updated_time;
         });
     };
 

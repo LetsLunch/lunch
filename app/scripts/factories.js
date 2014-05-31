@@ -1,13 +1,25 @@
 'use strict';
 angular.module('Lunch.factories', [])
 
-.factory('userData', function() {
-  return {
-      username : 'John Doe',
-      likes : ['Football', 'Javascript', 'Food', 'Baked-beans'],
-      location : 'San Francisco',
-      tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
-  };
+.factory('storedUserData', function() {
+  // return {
+  //     username : 'John Doe',
+  //     likes : ['Football', 'Javascript', 'Food', 'Baked-beans'],
+  //     location : 'San Francisco',
+  //     tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
+  // };
+  var userData = window.localStorage['userData'];
+  if(!userData) {
+    userData = {
+        'id' : null,
+        'name': '',
+        'likes' : [],
+        'geolocation' : {},
+        'tags' : [],
+        'photo_url' : ''
+    };
+  }
+  return userData;
 })
 .factory('matchData', function(){
   return {
