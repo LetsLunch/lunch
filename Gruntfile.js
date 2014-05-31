@@ -455,6 +455,35 @@ module.exports = function (grunt) {
 
   grunt.registerTask('cordova', ['copy:all', 'cordova:build']);
 
+  grunt.registerTask('start:client:init', [
+    'cordova:init',
+    'plugin:add:org.apache.cordova.inappbrowser',
+    'plugin:add:org.apache.cordova.geolocation',
+    'plugin:add:https://github.com/phonegap-build/PushPlugin.git',
+    'platform:add:android',
+    'platform:add:ios',
+    ]);
+
+  grunt.registerTask('start:android', [
+    'start:client:init',
+    'build:android',
+    'run:android'
+    ]);
+
+  grunt.registerTask('start:ios', [
+    'start:client:init',
+    'build:ios',
+    'emulate:ios'
+    ]);
+
+  grunt.registerTask('start:client', [
+    'start:client:init',
+    'build',
+    'serve'
+    ]);
+
+  grunt.registerTask('start', ['start:client']);
+
   grunt.registerTask('coverage', ['karma:continuous', 'connect:coverage:keepalive']);
 
   grunt.registerTask('default', [
