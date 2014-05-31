@@ -458,6 +458,7 @@ module.exports = function (grunt) {
   grunt.registerTask('start:client:init', [
     'cordova:init',
     'plugin:add:org.apache.cordova.inappbrowser',
+    'plugin:add:org.apache.cordova.geolocation',
     'plugin:add:https://github.com/phonegap-build/PushPlugin.git',
     'platform:add:android',
     'platform:add:ios',
