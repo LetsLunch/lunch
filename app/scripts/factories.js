@@ -9,8 +9,11 @@ angular.module('Lunch.factories', [])
   //     tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
   // };
   var userData = window.localStorage['userData'];
+  console.log('locally stored user data:');
+  console.log(userData);
   if(!userData) {
-    userData = {
+
+  var  userData = {
         'id' : null,
         'name': '',
         'likes' : {},
@@ -18,6 +21,8 @@ angular.module('Lunch.factories', [])
         'tags' : [],
         'photo_url' : ''
     };
+  } else {
+    userData = angular.fromJson(userData);
   }
   return userData;
 })
@@ -56,4 +61,9 @@ angular.module('Lunch.factories', [])
         });
     }
   };
+})
+.factory('localStore', function($rootScope){
+  $rootScope.$on('userDataChanged', function(event, updatedUserData){
+     window.localStorage['userData'] = angular.toJson(updatedUserData);
+  });
 });
