@@ -4,27 +4,40 @@
     </ion-nav-buttons>
     <ion-content class="has-header">
         <div id="userimage"></div>
-        <div class="row">
-            <h3 class="username">{{userData.name}}</h3>
+        <div class="row username">
+            <h3>{{userData.name}}</h3>
         </div>
         <div class="row">
             <h4 class="location">{{userData.location}}</h4>
         </div>
-            <div class="item item-divider">
-                 Tags
-            </div>
-            <div class="row">
-                <div class="col" ng-repeat="tag in userData.tags">
+        <div class="item item-divider">
+             What do you want to talk about over lunch?
+        </div>
+  <!--   <div class="list"> -->
+            <ul class="list">
+                <li class="item item-checkbox" ng-repeat="tag in tagOptions">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                    </label>
                     {{tag}}
-                </div>
-            </div>
+                </li>
+            </ul>
+ <!--    </div> -->
+
             <div class="item item-divider"> 
                 <div class="icon ion-social-facebook">    likes</div>
             </div>
-            <div class="row">
-                <div class="col" ng-repeat="like in userData.likes">
-                    {{like}}
-                </div>
+        <!--     <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">-->
+           <!--        <ion-slide ng-repeat="like in userData.likes">
+                    <div class="row">
+                        {{like}}
+                    </div>
+                  </ion-slide>
+            </ion-slide-box>  -->
+            <div>
+            <div class="col" ng-repeat="like in userData.likes">
+                {{like}}
+            </div>
             </div>
         <a href="#/app/browse" class="button button-light">Look for a Lunch Buddy for today</a>
     </ion-content>

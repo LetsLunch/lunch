@@ -13,13 +13,18 @@ angular.module('Lunch.factories', [])
     userData = {
         'id' : null,
         'name': '',
-        'likes' : [],
-        'geolocation' : {},
+        'likes' : {},
+        'geolocation' : undefined,
         'tags' : [],
         'photo_url' : ''
     };
   }
   return userData;
+})
+.factory('tagOptions', function(){
+  return {
+    'options': ['Javascript','Cake', 'Cats', 'Cars','Robots']
+  };
 })
 .factory('matchData', function(){
   return {
@@ -38,14 +43,17 @@ angular.module('Lunch.factories', [])
     }]
   };
 })
-.factory('Geo', function() {
+.factory('Geo', function($rootScope) {
   return {
     'getCurrentPosition' : function() {
-        navigator.geolocation.getCurrentPosition(function(pos) {
-          console.log('found position at: ', pos);
-          }, function(error) {
-              console.log('error position: ', error); 
-               });
+        navigator.geolocation.getCurrentPosition(
+          function(pos) {
+             $rootScope.$emit('geolocation', pos); // update user data geolocation
+            //put in dummy location property 
+          }, 
+          function(error) {
+            console.log('error position: ', error);
+        });
     }
   };
 });
