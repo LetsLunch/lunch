@@ -5,6 +5,7 @@ www
 .DS_Store
 app/bower_components
 coverage
-platforms
+platforms/*
+!platforms/.gitkeep
 plugins
 app/fonts
