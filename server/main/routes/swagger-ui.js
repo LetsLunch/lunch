@@ -4,7 +4,7 @@
 var path = require('path');
 var express = require('express');
 
-var swaggerUIPath = path.resolve(__dirname, '/../../node_modules/neo4j-swagger-ui/dist/');
+var swaggerUIPath = path.resolve(__dirname, '../../../node_modules/neo4j-swagger-ui/dist/');
 var handler = express.static(swaggerUIPath);
 
 module.exports = function (app) {
