@@ -2,15 +2,9 @@
 angular.module('Lunch.factories', [])
 
 .factory('storedUserData', function() {
-  // return {
-  //     username : 'John Doe',
-  //     likes : ['Football', 'Javascript', 'Food', 'Baked-beans'],
-  //     location : 'San Francisco',
-  //     tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
-  // };
   var userData = window.localStorage['userData'];
-  console.log('locally stored user data:');
-  console.log(userData);
+  // console.log('locally stored user data:');
+  // console.log(userData);
   if(!userData) {
 
   var  userData = {
@@ -54,7 +48,6 @@ angular.module('Lunch.factories', [])
         navigator.geolocation.getCurrentPosition(
           function(pos) {
              $rootScope.$emit('geolocation', pos); // update user data geolocation
-            //put in dummy location property 
           }, 
           function(error) {
             console.log('error position: ', error);
