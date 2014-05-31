@@ -4,16 +4,14 @@
 
 
 var neo4j = require('neo4j'),
-    // db = new neo4j.GraphDatabase('http://162.243.116.40/'),
-    //db = new neo4j.GraphDatabase('http://neo4jmovies_backup:s85HZuuCPlaS6T6y7H8f@neo4jmoviesbackup.sb01.stations.graphenedb.com:24789/'),
-    db = new neo4j.GraphDatabase('http://localhost:7474/'),
+    db = new neo4j.GraphDatabase(process.env['NEO4J_URL'] ||
+                                'http://localhost:7474/'),
     _ = require('lodash')
 ;
 
 function formatResponse (options, finalResults, query, cypher_params, results, err) {
   if (err) console.log(err);
 
-  // if options.neo4j == true, add cypher query, params, results, and err to response
   if (options && options.neo4j) {
     return {
       results: finalResults,
