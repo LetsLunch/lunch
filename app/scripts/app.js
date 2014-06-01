@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login'])
+angular.module('Lunch', ['ngAnimate','ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window, OpenFB) {
   $ionicPlatform.ready(function() {

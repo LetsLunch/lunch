@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.profile', ['Lunch.factories', 'openfb'])  
+angular.module('Lunch.profile', ['Lunch.factories', 'openfb', 'ngAnimate'])  
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -76,7 +76,7 @@ angular.module('Lunch.profile', ['Lunch.factories', 'openfb'])
         $scope.userData.tags[clickedText] = false;
       } else {
         $scope.userData.tags[clickedText] = true;
-      }
+      }   
       $rootScope.$emit('userDataChanged', $scope.userData);
     };
 

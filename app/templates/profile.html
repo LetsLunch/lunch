@@ -9,19 +9,19 @@
         </div>
         <div class="row">
             <h4 ng-show="userData.location" class="location">{{userData.location}}</h4>
-        </div>
-        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light">Look for a Lunch Buddy for today</a></div>
+        </div>  
+        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light"  ng-class="{pressed:hover}"  ng-mouseover="hover = true"  ng-mouseleave="hover = false" >Look for a Lunch Buddy for today</a></div>
         <div class="item item-divider">
              What do you want to talk about over lunch?
         </div>
-        <span class="item tags col-33" ng-repeat="(tag, pressed) in userData.tags" ng-mouseover="myStyle={'background-color':'grey','color':'white','border-bottom':'white'}" ng-mouseout="myStyle={}" ng-click="tagClick($event)" ng-style="myStyle"> 
-            {{tag}}
+        <span class="item tags col-33" ng-repeat="(tag, pressed) in userData.tags" ng-click="tagClick($event)" ng-class="{pressed:pressed}"  ng-mouseover="pressed = !pressed"  ng-mouseleave="pressed = !pressed   " > 
+            {{tag}}   <!-- ng-style="myStyle" ng-mouseover="myStyle={'background-color':'grey','color':'white','border-bottom':'white'}" ng-mouseout="myStyle={}"  -->
         </span>
         <div class="item item-divider fbdivider"> 
             <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-72.png"> <a class="liketext">Your Facebook Likes</a></div>
         </div>
         <div>
-            <span class="item likes col-33" ng-repeat="like in userData.likes">
+            <span class="item likes col-33" ng-repeat="like in userData.likes" ng-class="{pressed:hover}"  ng-mouseover="hover = true"  ng-mouseleave="hover = false"   >
                 {{like}}
             </span>
         </div>
