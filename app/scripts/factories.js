@@ -22,7 +22,7 @@ angular.module('Lunch.factories', [])
 })
 .factory('tagOptions', function(){
   return {
-    'options': ['Javascript','Cake', 'Cats', 'Cars','Robots']
+    'options': ['Javascript','Cake', 'Cats', 'Cars','Robots', 'Yoga', 'Venture Capital', 'Lean-Startup']
   };
 })
 .factory('matchData', function(){

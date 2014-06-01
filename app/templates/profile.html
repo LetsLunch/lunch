@@ -4,28 +4,29 @@
     </ion-nav-buttons>
     <ion-content class="has-header">
         <div id="userimage"></div>
-        <div class="row username">
-            <h3>{{userData.name}}</h3>
+        <div id="username">
+            <h4 >{{userData.name}}</h4>
         </div>
         <div class="row">
-            <h4 class="location">{{userData.location}}</h4>
+            <h4 ng-show="userData.location" class="location">{{userData.location}}</h4>
         </div>
+        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light">Look for a Lunch Buddy for today</a></div>
         <div class="item item-divider">
              What do you want to talk about over lunch?
         </div>
   <!--   <div class="list"> -->
-            <ul class="list">
-                <li class="item item-checkbox" ng-repeat="tag in tagOptions">
-                    <label class="checkbox">
+<!--             <ul class="list"> -->
+                <span class="item tags col-33" ng-repeat="tag in tagOptions"> 
+                    <!-- item-checkbox<label class="checkbox">
                         <input type="checkbox">
-                    </label>
+                    </label> -->
                     {{tag}}
-                </li>
-            </ul>
+                </span>
+        <!--     </ul> -->
  <!--    </div> -->
 
-            <div class="item item-divider"> 
-                <div class="icon ion-social-facebook">    likes</div>
+            <div class="item item-divider fbdivider"> 
+                <div><img class="likeimg" src="../images/FB-LikeButton-online-72.png"> <a class="liketext">Your Facebook Likes</a></div>
             </div>
         <!--     <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">-->
            <!--        <ion-slide ng-repeat="like in userData.likes">
@@ -35,10 +36,9 @@
                   </ion-slide>
             </ion-slide-box>  -->
             <div>
-            <div class="col" ng-repeat="like in userData.likes">
+            <span class="item likes col-33" ng-repeat="like in userData.likes">
                 {{like}}
+            </span>
             </div>
-            </div>
-        <a href="#/app/browse" class="button button-light">Look for a Lunch Buddy for today</a>
     </ion-content>
 </ion-view>

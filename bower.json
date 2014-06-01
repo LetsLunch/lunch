@@ -1,4 +1,4 @@
-  {
+{
   "name": "Lunch",
   "version": "0.0.0",
   "dependencies": {
@@ -10,4 +10,3 @@
     "angular-scenario": "~1.2.12"
   }
 }
-
