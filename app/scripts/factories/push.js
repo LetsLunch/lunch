@@ -1,18 +1,22 @@
-'use strict';
+'use strict'; 
 
 //factory for processing push notifications, based on:
 //   intown.biz/2014/04/11/android-notifications/
 angular.module('push', [])
   .service('push', function() {
-    var pushNotification = window.plugins.pushNotification;
+    var pushNotification;
 
     var onDeviceReady = function(gcmAppId) {
+      // Hide pushNotification definition in scope,
+      // as it is undefined until document is 'deviceready'
+      pushNotification = window.plugins.pushNotification;
+
       console.info('Registering with GCM servers');
       pushNotification.register(
-        console.info.bind(console),
-        console.error.bind(console), {
-          senderID: '' + gcmAppId,
-          ecb: "onNotificationGCM"
+        function(e) { console.info(e); },
+        function(e) { console.error(e); }, {
+          'senderID': '' + gcmAppId,
+          'ecb': 'onNotificationGCM'
       });
     };
     
@@ -25,17 +29,17 @@ angular.module('push', [])
     // Register with the application server
     this.register = function(id) {
       // TODO
+      window.alert(id);
     };
 
     // Unregister from the GCM servers
-    this.unregister = function(id) {
+    this.unregister = function() {
       pushNotification.unregister(console.info.bind(console));
     };
   });
  
- 
 // ALL GCM notifications come through here. 
-window.onNotificationGCM = function(e) {
+function onNotificationGCM(e) {
   if (e.event === 'registered') {
       if ( e.regid.length > 0 ) {
         console.log('REGISTERED with GCM Server -> REGID: ' + e.regid);
@@ -52,7 +56,7 @@ window.onNotificationGCM = function(e) {
       // if the notification contains a soundname, play it.
       //var my_media = new Media("/android_asset/www/"+e.soundname);
       //my_media.play();
-      alert(e.payload.message);
+      window.alert(e.payload.message);
     // Background notification
     } else {   
       // TODO: background messages
