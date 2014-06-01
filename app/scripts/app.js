@@ -1,16 +1,18 @@
 'use strict';
-angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.factory.storedUserData'])
 
-.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB) {
+angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.factory.matchData'])
+
+.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push) {
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
-      StatusBar.styleDefault();
+      window.StatusBar.styleDefault();
     }
   });
 
   // Initialize with localhost to support development
   // (cordova will default to https://www.facebook.com/)
   OpenFB.init('765912086774968', 'http://localhost:9000/oauth.html');
+  push.init('142933827745');
 
   // Force login
   $rootScope.$on('$stateChangeStart', function(e, state) {
