@@ -1,14 +1,6 @@
 'use strict';
-angular.module('Lunch.factories', [])
+angular.module('Lunch.factory.matchData', [])
 
-.factory('userData', function() {
-  return {
-      username : 'John Doe',
-      likes : ['Football', 'Javascript', 'Food', 'Baked-beans'],
-      location : 'San Francisco',
-      tags : ['Fine Wine', 'Mario 64', 'Chicken Teriaki']
-  };
-})
 .factory('matchData', function(){
   return {
     'matches' : [

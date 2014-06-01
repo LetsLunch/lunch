@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.browse', ['Lunch.factories'])
+angular.module('Lunch.browse', ['Lunch.factory.matchData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
@@ -12,7 +12,7 @@ angular.module('Lunch.browse', ['Lunch.factories'])
       }
     })
 })
-.controller('BrowseCtrl', function($scope, userData, matchData, $location){
+.controller('BrowseCtrl', function($scope, matchData, $location){
 
     $scope.numMatches = matchData.matches.length;
     var initialize = function() {
