@@ -17,6 +17,8 @@ var Cypher = Architect.Cypher;
 var _singleLoc = function (results, callback) {
   if (results.length) {
     callback(null, new Loc(results[0].location));
+  if (results.length) {
+    callback(null, new Loc(results[0].newLocation));
   } else {
     callback(null, null);
   }
@@ -45,8 +47,6 @@ var _findByUserId = function (params, callback) {
 };
 
 var _create = function (params, callback) {
-  // parseFloat(params.lat),parseFloat(params.lng)
-
   var data = zipcoder.gps_lookup(parseFloat(params.lat),parseFloat(params.lng));
   var cypherParams = {
     userId : params.userId,
@@ -59,12 +59,12 @@ var _create = function (params, callback) {
 
   var query = [
     'MATCH (user:User{id:{userId}})',
-    'OPTIONAL MATCH (user)-[r:IS_AT]->(oldLocation:Location)',
+    'OPTIONAL MATCH (user)-[r:IS_AT]->(location:Location)',
     'DELETE r',
     'WITH user',
-    'MERGE (location:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
-    'CREATE (user)-[r:IS_AT]->(location)',
-    'RETURN location'
+    'MERGE (newLocation:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
+    'CREATE (user)-[r:IS_AT]->(newLocation)',
+    'RETURN newLocation'
   ].join('\n');
 
   console.log('create query', query);
