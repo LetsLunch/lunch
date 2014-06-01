@@ -1,4 +1,4 @@
-'urlse strict';
+'use strict';
 angular.module('Lunch.nomatches', [])
 .config(function($stateProvider){
   $stateProvider

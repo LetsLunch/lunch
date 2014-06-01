@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.browse', ['Lunch.factories'])
+angular.module('Lunch.browse', ['Lunch.factory.matchData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {

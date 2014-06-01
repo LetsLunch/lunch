@@ -99,11 +99,11 @@
 }
 /*
 .toggle(
-  -webkit-transition: -webkit-transition: linear 0.1s;
-  -moz-transition: linear 0.1s;
-  -ms-transition: linear 0.1s;
-  -o-transition: linear 0.1s;
-  transition: linear 0.1s;
+  -webkit-transition: -webkit-transition: linear 2s;
+  -moz-transition: linear 2s;
+  -ms-transition: linear 2s;
+  -o-transition: linear 2s;
+  transition: linear 2s;
 }
  
 .toggle.ng-enter{

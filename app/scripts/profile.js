@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.profile', ['Lunch.factories', 'openfb', 'ngAnimate'])  
+angular.module('Lunch.profile', ['Lunch.factories', 'openfb', 'Lunch.factory.Geo'])  
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -12,9 +12,8 @@ angular.module('Lunch.profile', ['Lunch.factories', 'openfb', 'ngAnimate'])
     }
   })
 })
-.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore) {
+.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, $http) {
     $scope.userData = storedUserData;
-    console.log($scope.userData.tags);
 
     $scope.getLikes = function() {
         OpenFB.get('/me/likes') // deal with the case where a user unlikes something, the remove it
@@ -45,6 +44,7 @@ angular.module('Lunch.profile', ['Lunch.factories', 'openfb', 'ngAnimate'])
         });
     };
 
+    console.log($http);
     $scope.getPicture = function() {
         OpenFB.get('/me/picture?redirect=0&height=125&type=normal&width=100')//'/me/picture')
         .success(function(data, status, headers, config){
