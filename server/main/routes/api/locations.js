@@ -77,13 +77,12 @@ exports.find = {
 
   action: function (req, res) {
     var options = {};
-    var errLabel = 'Route: GET /locations';
+    var errLabel = 'Route: GET /locations/{userId}';
     var params = {};
     var callback = _.partial(_callback, res, errLabel);
     
     options.neo4j = utils.existsInQuery(req, 'neo4j');
-    params = _prepareParams(req);
-
+    params = req.params;
     Locations.find(params, options, callback);
   }
 };

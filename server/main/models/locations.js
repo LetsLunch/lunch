@@ -15,9 +15,8 @@ var Cypher = Architect.Cypher;
 // To be combined with queries using _.partial()
 
 var _singleLoc = function (results, callback) {
-  console.log("_singleLoc results:  ",results);
   if (results.length) {
-    callback(null, new Loc(results[0].newLocation));
+    callback(null, new Loc(results[0].location));
   } else {
     callback(null, null);
   }
@@ -36,8 +35,8 @@ var _findByUserId = function (params, callback) {
   };
 
   var query = [
-    'MATCH (user:User{id:{userId}})-[r:IS_AT]->(loc:Location)',
-    'RETURN loc',
+    'MATCH (user:User{id:{userId}})-[r:IS_AT]->(location:Location)',
+    'RETURN location',
   ].join('\n');
 
   console.log('create query', query);
@@ -45,21 +44,10 @@ var _findByUserId = function (params, callback) {
   callback(null, query, cypherParams);
 };
 
-// creates the user with cypher
-// {
-//        lat: 52.519444,
-//        lng: 13.406667,
-//        zipcode: '10178',
-//        city: 'Berlin',
-//        country: 'Germany',
-//    }
 var _create = function (params, callback) {
-  console.log('params :->',params);
-  console.log(zipcoder.gps_lookup(parseFloat(params.lat),parseFloat(params.lng)));
   // parseFloat(params.lat),parseFloat(params.lng)
 
   var data = zipcoder.gps_lookup(parseFloat(params.lat),parseFloat(params.lng));
-  console.log("zipcoder: ",data);
   var cypherParams = {
     userId : params.userId,
     zipcode : data.zipcode,
@@ -71,12 +59,12 @@ var _create = function (params, callback) {
 
   var query = [
     'MATCH (user:User{id:{userId}})',
-    'OPTIONAL MATCH (user)-[r:IS_AT]->(location:Location)',
+    'OPTIONAL MATCH (user)-[r:IS_AT]->(oldLocation:Location)',
     'DELETE r',
     'WITH user',
-    'MERGE (newLocation:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
-    'CREATE (user)-[r:IS_AT]->(newLocation)',
-    'RETURN newLocation'
+    'MERGE (location:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
+    'CREATE (user)-[r:IS_AT]->(location)',
+    'RETURN location'
   ].join('\n');
 
   console.log('create query', query);
