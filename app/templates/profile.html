@@ -14,31 +14,16 @@
         <div class="item item-divider">
              What do you want to talk about over lunch?
         </div>
-  <!--   <div class="list"> -->
-<!--             <ul class="list"> -->
-                <span class="item tags col-33" ng-repeat="tag in tagOptions"> 
-                    <!-- item-checkbox<label class="checkbox">
-                        <input type="checkbox">
-                    </label> -->
-                    {{tag}}
-                </span>
-        <!--     </ul> -->
- <!--    </div> -->
-
-            <div class="item item-divider fbdivider"> 
-                <div><img class="likeimg" src="../images/FB-LikeButton-online-72.png"> <a class="liketext">Your Facebook Likes</a></div>
-            </div>
-        <!--     <ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)">-->
-           <!--        <ion-slide ng-repeat="like in userData.likes">
-                    <div class="row">
-                        {{like}}
-                    </div>
-                  </ion-slide>
-            </ion-slide-box>  -->
-            <div>
+        <span class="item tags col-33" ng-repeat="(tag, pressed) in userData.tags" ng-mouseover="myStyle={'background-color':'grey','color':'white','border-bottom':'white'}" ng-mouseout="myStyle={}" ng-click="tagClick($event)" ng-style="myStyle"> 
+            {{tag}}
+        </span>
+        <div class="item item-divider fbdivider"> 
+            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-72.png"> <a class="liketext">Your Facebook Likes</a></div>
+        </div>
+        <div>
             <span class="item likes col-33" ng-repeat="like in userData.likes">
                 {{like}}
             </span>
-            </div>
+        </div>
     </ion-content>
 </ion-view>

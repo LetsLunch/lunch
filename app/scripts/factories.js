@@ -3,27 +3,31 @@ angular.module('Lunch.factories', [])
 
 .factory('storedUserData', function() {
   var userData = window.localStorage['userData'];
-  console.log('locally stored user data:');
-  console.log(userData);
+  // console.log('locally stored user data:');
+  // console.log(userData);
   if(!userData) {
 
-  var  userData = {
+  var userData = {
         'id' : null,
         'name': '',
         'likes' : {},
         'geolocation' : undefined,
-        'tags' : [],
+        'tags' : {
+                   'Javascript':false,
+                   'Cake':false,
+                   'Cats':false,
+                   'Cars':false,
+                   'Robots':false,
+                   'Yoga':false,
+                   'Venture Capital':false,
+                   'Lean-Startup':false
+                 },
         'photo_url' : ''
     };
   } else {
     userData = angular.fromJson(userData);
   }
   return userData;
-})
-.factory('tagOptions', function(){
-  return {
-    'options': ['Javascript','Cake', 'Cats', 'Cars','Robots', 'Yoga', 'Venture Capital', 'Lean-Startup']
-  };
 })
 .factory('matchData', function(){
   return {

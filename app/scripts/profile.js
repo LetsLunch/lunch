@@ -12,9 +12,9 @@ angular.module('Lunch.profile', ['Lunch.factories', 'openfb'])
     }
   })
 })
-.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, tagOptions, localStore) {
+.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore) {
     $scope.userData = storedUserData;
-    $scope.tagOptions = tagOptions.options;
+    console.log($scope.userData.tags);
 
     $scope.getLikes = function() {
         OpenFB.get('/me/likes') // deal with the case where a user unlikes something, the remove it
@@ -66,6 +66,18 @@ angular.module('Lunch.profile', ['Lunch.factories', 'openfb'])
           $scope.userData.updated_time = data.updated_time;
           $rootScope.$emit('userDataChanged', $scope.userData);
         });
+    };
+
+    $scope.tagClick = function(e){
+      var clickedText = e.toElement.innerText;
+      var pressed = $scope.userData.tags[clickedText];
+      if(pressed){
+        //toggle
+        $scope.userData.tags[clickedText] = false;
+      } else {
+        $scope.userData.tags[clickedText] = true;
+      }
+      $rootScope.$emit('userDataChanged', $scope.userData);
     };
 
     $rootScope.$on('geolocation', function(event, geoposition){
