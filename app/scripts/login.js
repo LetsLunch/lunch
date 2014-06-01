@@ -12,7 +12,7 @@ angular.module('Lunch.login', [])
     }
   });
 })
-.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB) {
+.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB, Geo) {
   $scope.login = function() {
     OpenFB.login('public_profile,user_likes').then(
       function() {

@@ -3,8 +3,8 @@ angular.module('Lunch.factories', [])
 
 .factory('storedUserData', function() {
   var userData = window.localStorage['userData'];
-  // console.log('locally stored user data:');
-  // console.log(userData);
+  console.log('locally stored user data:');
+  console.log(userData);
   if(!userData) {
 
   var  userData = {
@@ -47,7 +47,7 @@ angular.module('Lunch.factories', [])
     'getCurrentPosition' : function() {
         navigator.geolocation.getCurrentPosition(
           function(pos) {
-             $rootScope.$emit('geolocation', pos); // update user data geolocation
+             $rootScope.$emit('geolocation', pos); // update user data geolocation  
           }, 
           function(error) {
             console.log('error position: ', error);
@@ -59,4 +59,5 @@ angular.module('Lunch.factories', [])
   $rootScope.$on('userDataChanged', function(event, updatedUserData){
      window.localStorage['userData'] = angular.toJson(updatedUserData);
   });
+
 });
