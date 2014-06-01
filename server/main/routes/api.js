@@ -7,6 +7,8 @@ var swagger = require('swagger-node-express');
 var url = require('url');
 var models = require('../models/swagger');
 var users = require('./api/users');
+var likes = require('./api/likes');
+var tags = require('./api/tags');
 var PORT = process.env.PORT || 8008;
 var BASE_URL    = process.env.BASE_URL || 'http://localhost:' + PORT;
 var API_STRING  = '/api/v0';
@@ -48,8 +50,13 @@ module.exports = function (subpath) {
     .addPut(users.updateById)
     .addDelete(users.deleteUser)
     .addDelete(users.deleteAllUsers)
-  //   .addPut(users.resetUsers)
+  
+    // Like Model and Methods
+    .addGet(likes.list)
+    .addPost(likes.addLike)
+    .addDelete(likes.deleteLikeRelation)
 
+   
     // Skill Model and Methods
     // .addGet(skills.findByName)
     // .addPost(skills.addSkill)
@@ -67,7 +74,7 @@ module.exports = function (subpath) {
     // .addGet(jobs.list)
     // .addGet(jobs.findById)
     // .addPost(jobs.addJob)
-    // ;
+   ;
 
   // swagger.configureDeclaration('users', {
   //   description: 'User Operations',
