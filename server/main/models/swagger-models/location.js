@@ -11,9 +11,9 @@ module.exports = {
       type: 'string',
       description: 'Name of City'
     },
-    country: {
+    state: {
       type: 'string',
-      description: 'Name of City'
+      description: 'Name of State'
     },
     lat: {
       type: 'string',
