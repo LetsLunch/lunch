@@ -56,7 +56,12 @@ module.exports = function (subpath) {
     .addPost(likes.addLike)
     .addDelete(likes.deleteLikeRelation)
 
-   
+     // Tag Model and Methods
+    .addGet(tags.list)
+    .addPost(tags.addTag)
+    .addDelete(tags.deleteTagRelation)
+
+  
     // Skill Model and Methods
     // .addGet(skills.findByName)
     // .addPost(skills.addSkill)
