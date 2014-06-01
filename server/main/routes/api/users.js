@@ -103,7 +103,7 @@ exports.addUser = {
       param.form('lastname', 'User lastname', 'string', true),
       param.form('email', 'User email', 'string', false),
       param.form('profileImage', 'User profile image url', 'string', false),
-      param.form('location', 'User\'s current location', 'object', false)
+      // param.form('location', 'User\'s current location', 'object', false)
     ],
     responseMessages : [swe.invalid('input')],
     nickname : 'addUser'
