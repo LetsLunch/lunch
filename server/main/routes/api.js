@@ -9,12 +9,11 @@ var models = require('../models/swagger');
 var users = require('./api/users');
 var likes = require('./api/likes');
 var tags = require('./api/tags');
+var locations = require('./api/locations');
 var PORT = process.env.PORT || 8008;
 var BASE_URL    = process.env.BASE_URL || 'http://localhost:' + PORT;
 var API_STRING  = '/api/v0';
 
-// var locations = require('./api/locations');
-// var likes = require('./api/likes');
 
 module.exports = function (subpath) {
 
@@ -61,24 +60,10 @@ module.exports = function (subpath) {
     .addPost(tags.addTag)
     .addDelete(tags.deleteTagRelation)
 
-  
-    // Skill Model and Methods
-    // .addGet(skills.findByName)
-    // .addPost(skills.addSkill)
-
     // // Location Model and Methods
-    // .addGet(locations.find)
-    // .addPost(locations.addLocation)
-    
-    // // Company Model and Methods
-    // .addGet(companies.list)
-    // .addGet(companies.findById)
-    // .addPost(companies.addCompany)
-
-    // // Job Model and Methods
-    // .addGet(jobs.list)
-    // .addGet(jobs.findById)
-    // .addPost(jobs.addJob)
+    .addGet(locations.find)
+    .addPost(locations.addLocation)
+ 
    ;
 
   // swagger.configureDeclaration('users', {
