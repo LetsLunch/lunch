@@ -17,8 +17,6 @@ var Cypher = Architect.Cypher;
 var _singleLoc = function (results, callback) {
   if (results.length) {
     callback(null, new Loc(results[0].location));
-  if (results.length) {
-    callback(null, new Loc(results[0].newLocation));
   } else {
     callback(null, null);
   }
