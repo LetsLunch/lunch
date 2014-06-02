@@ -1,4 +1,5 @@
 'use strict';
+var gcm = require('./chat/gcm');
 
 module.exports = function (app) {
   app.post('/chat', function(req, res, next) {
