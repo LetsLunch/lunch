@@ -19,7 +19,16 @@ angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
         profileImage : 'http://mostfamousperson.net/BillGates.png',
         likes : ['Computers', 'Health', 'Kale'],
         city : 'Redmond',
-        tags : ['Malaria', 'PCs', 'R&D']
+        tags : {
+                   'Javascript':false,
+                   'Cake':false,
+                   'Cats':false,
+                   'Cars':true,
+                   'Robots':true,
+                   'Yoga':false,
+                   'Finance':false,
+                   'Startups':true
+                 }
     },
     {
         id: 56789,
@@ -28,7 +37,16 @@ angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
         profileImage : 'http://www.tanld.com/Portals/0/Images/steve-jobs.jpg',
         likes : ['Design', 'Simplicity', 'Fruitarian-Diet'],
         city : 'Unknown',
-        tags : ['Geek-chic']
+        tags : {
+                   'Javascript':false,
+                   'Cake':false,
+                   'Cats':true,
+                   'Cars':false,
+                   'Robots':false,
+                   'Yoga':true,
+                   'Finance':false,
+                   'Startups':false
+                 }
     }];
   
   matchLength = matchData.length;

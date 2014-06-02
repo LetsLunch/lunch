@@ -3,28 +3,28 @@
     <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-	  	<img ng-src="{{photo_url}}">
-    <div class="row">
-    	<h2 class="username">{{firstname}} {{lastname}}</h2>
-		</div>
-		<div class="row">
-			<h4 class="location">{{city}}</h4>
-		</div>
+	  	<div class="userimage"><img ng-src="{{photo_url}}"></div>
+
+    	<h2 id="username">{{firstname}} {{lastname}}</h2>
+
+
+			<h4 id="location">{{city}}</h4>
+	
 			<div class="item item-divider">
-   			 Wants to talk about
+   			 {{firstname}} wants to talk about
   		</div>
-  		<div class="row">
-				<ion-item class="col"  ng-repeat="tag in tags">
-   				{{tag}}
-      	</ion-item>	
+  		<div class="tags">
+            <span class="item tag col-33" ng-repeat="(tag, pressed) in tags" ng-class="{pressed:pressed}"> 
+                {{tag}}   
+            </span>
       </div>
-			<div class="item item-divider"> 
-        <div class="icon ion-social-facebook">  likes</div>
-      </div>  
-  		<div class="row">
-				<ion-item class="col" ng-repeat="like in likes">
-   				{{like}}
-      	</ion-item>
+			 <div class="item item-divider fbdivider"> 
+            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">{{firstname}}'s Facebook Likes</a></div>
+      </div>
+  		<div class="likes">
+            <span class="item like col-33" ng-repeat="like in likes">
+                {{like}}
+            </span>
       </div>
  		<div class="button-bar">
 		  <a class="button assertive icon ion-close-round" ng-click="reject()"></a>

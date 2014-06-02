@@ -37,7 +37,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
             for(var like in $scope.userData.likes) {
               if(!idTrack[like]){
                 console.log('delete this like since it is no longer in fb likes');
-                requests.deleteLike(like.id, $scope.userData.id);
+                requests.deleteLike(like.id, {'userId': $scope.userData.id});
                 delete $scope.userData.likes[like]; // since the like no longer exists
                 //inform database using like.id and user.id and like.name ($scope.userData.likes[likeId])
               }

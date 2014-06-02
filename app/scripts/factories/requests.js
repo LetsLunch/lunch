@@ -20,9 +20,10 @@ angular.module('Lunch.factory.requests', [])
       $http({method: 'POST', url: baseUrl + urls.basicDetails + api_key, data: payload
       })
       .success(function(data,status,headers,config){
+        alert('success post Basic details'  );
       })
       .error(function(data,status,headers,config){
-        console.log('error in post basic details');
+        alert('error in post basic details');
       });
     },
     'postLike': function(payload){
@@ -34,8 +35,8 @@ angular.module('Lunch.factory.requests', [])
         console.log('error in postlike', data);
       });
     },
-     'deleteLike': function(likeId, userId){
-      $http({method: 'DELETE', url: baseUrl + urls.like + '/' + likeId + api_key , data: userId
+     'deleteLike': function(likeId, payload){
+      $http({method: 'DELETE', url: baseUrl + urls.like + '/' + likeId + api_key , data: payload
       })
       .success(function(data,status,headers,config){
         console.log('like deleted', data);
