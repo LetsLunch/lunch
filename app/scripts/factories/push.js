@@ -30,46 +30,40 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData'])
     this.register = function(gcmToken) {
       OpenFB.checkLogin().then(function() {
         // Register fb id and push token with application server
-        window.alert(storedUserData.id, gcmToken);
+        window.alert('FB ID: ' + storedUserData.id + '\n' +
+                     'GCM TOKEN: ' + gcmToken);
       });
     };
 
     // Unregister from the GCM servers
     this.unregister = function() {
       pushNotification.unregister(console.info.bind(console));
+      // Unregister push token from application server
     };
   });
  
 // ALL GCM notifications come through here. 
 function onNotificationGCM(e) {
+  var elem = angular.element(document.querySelector('[ng-app]'));
+  var injector = elem.injector();
   if (e.event === 'registered') {
       if ( e.regid.length > 0 ) {
         console.log('REGISTERED with GCM Server -> REGID: ' + e.regid);
-        var elem = angular.element(document.querySelector('[ng-app]'));
-        var injector = elem.injector();
         var push = injector.get('push'); // Assumes ng-app is a dependent
         push.register(e.regid);
       }
   } else if (e.event === 'message') {
     // Foreground notification
+    var chat = injector.get('storedChat'); // Assumes ng-app is a dependent
+    window.alert(e.payload);
+    window.alert(e.payload.message);
+    chat.postChat(e.payload);
     if (e.foreground) {
-      // TODO: foreground messages
-
-      // if the notification contains a soundname, play it.
-      //var my_media = new Media("/android_asset/www/"+e.soundname);
-      //my_media.play();
-      window.alert(e.payload.message);
     // Background notification
     } else {   
-      // TODO: background messages
       if (e.coldstart) {
-
       } else {
-
       }
-
-      // direct user here:
-      // DON'T DO THIS: window.location = "#/tab/featured";
     }
   }
-};
+}
