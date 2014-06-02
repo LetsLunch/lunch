@@ -35,10 +35,13 @@ module.exports = function(app) {
   // Configure API endpoints
   app.use(API_STRING, subpath);
 
+  // TODO: add authorization before all endpoints
   // API endpoint routes
   routes.api(subpath, BASE_URL, PORT, API_STRING);
   // API documentation routes
   routes.swaggerui(app);
+  // Chat enpoint routes
+  routes.chat(app);
   // Use documentation as landing page
   app.get('/', function(req, res) {
     res.redirect('./docs');
