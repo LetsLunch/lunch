@@ -5,6 +5,7 @@ angular.module('Lunch.factory.requests', [])
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
          
 })
+
 .factory('requests', function($rootScope, $http, AppServer){
   var baseUrl = AppServer + '/api/v0/';
   var api_key = '?api_key=special-key&neo4j=true';
@@ -13,7 +14,8 @@ angular.module('Lunch.factory.requests', [])
     'like' : 'likes',
     'tag' : 'tags',
     'location' :'locations',
-    'matches' : 'matches'
+    'matches' : 'matches',
+    'pushToken' : 'pushes'
   }
 	var exports = {
 		'postBasicDetails': function(payload){
@@ -95,6 +97,13 @@ angular.module('Lunch.factory.requests', [])
       })
       .error(function(data,status,headers,config){
         console.log('error in getLocationDetails', data);
+      });
+    },
+    'postPushToken': function(token, type){
+      $http({method: 'POST', url: baseUrl + urls.pushToken + api_key, data: payload
+      })
+      .error(function(data) {
+        console.error('error in postToken', data);
       });
     }
     // 'postApproval': function(){
