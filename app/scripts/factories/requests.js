@@ -1,58 +1,73 @@
 'use strict';
 angular.module('Lunch.factory.requests', [])
-// .config(function ( $httpProvider) {        
-//         delete $httpProvider.defaults.headers.common['X-Requested-With'];
-//          $httpProvider.defaults.useXDomain = true;﻿
+.config(function ( $httpProvider) {        
+        $httpProvider.defaults.useXDomain = true;﻿
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
          
-// })
+})
 .factory('requests', function($rootScope, $http){
+  var baseUrl = 'http://localhost:8008/api/v0/';
+  var api_key = '?api_key=special-key&neo4j=true';
+  var urls = {
+    'basicDetails' : 'users',
+    'like' : 'likes',
+    'location' :'locations'
+  }
 	var exports = {
 		'postBasicDetails': function(payload){
       // console.log(payload);
-      $http({method: 'POST', url: 'http://localhost:8008/users', data: payload,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With, api_key',
-        }
+      $http({method: 'POST', url: baseUrl + urls.basicDetails + api_key, data: payload
       })
       .success(function(data,status,headers,config){
-        alert(data);
+        // alert(angular.fromJson(data));
       })
       .error(function(data,status,headers,config){
-        alert('error', data);
+        // alert('error', data);
       });
     },
     'postLike': function(payload){
       // console.log(payload);
-      $http({method: 'POST', url: 'http://localhost:8008/likes', data: payload
+      $http({method: 'POST', url: baseUrl + urls.like + api_key, data: payload
       })
       .success(function(data,status,headers,config){
-        console.log(data);
+        // alert(angular.fromJson(data));
       })
       .error(function(data,status,headers,config){
-        console.log('error', data);
+        // alert('error', data);
+      });
+    },
+     'deleteLike': function(likeId, userId){
+      // console.log(payload);
+      $http({method: 'DELETE', url: baseUrl + urls.like + '/' + likeId + api_key , data: userId
+      })
+      .success(function(data,status,headers,config){
+        // alert(angular.fromJson(data));
+      })
+      .error(function(data,status,headers,config){
+        // alert('error', data);
       });
     },
     'postLocation': function(payload){
-      // console.log(payload);
-      $http({method: 'POST', url: 'http://localhost:8008/locations', data: payload
+      // alert(payload);
+      $http({method: 'POST', url: baseUrl + urls.location + api_key, data: payload
       })
       .success(function(data,status,headers,config){
-        console.log(data);
+        var parsedData = angular.fromJson(data);
+        $rootScope.$emit('userLocation', parsedData.city);
       })
       .error(function(data,status,headers,config){
-        console.log('error', data);
+        alert('in error postlocation');
       });
     },
-    'getLocation' : function(userId){
-      $http({method: 'GET', url: 'http://localhost:8008/locations' + userId
+    'getLocationDetails' : function(userId){
+      $http({method: 'GET', url: baseUrl + urls.location + '/'+ userId + api_key
       })
       .success(function(data,status,headers,config){
-        console.log(data);
+        var parsedData = angular.fromJson(data);
+        $rootScope.$emit('userLocation', parsedData.city);
       })
       .error(function(data,status,headers,config){
-        console.log('error', data);
+        // alert('error', data);
       });
     }
 	};

@@ -14,7 +14,6 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
 })
 .controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, requests) {
     $scope.userData = storedUserData;
-
     $scope.getLikes = function() {
         OpenFB.get('/me/likes') // deal with the case where a user unlikes something, the remove it
         .success(function(fbLikeObj,status, headers, config){
@@ -26,6 +25,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
                  //inform the database 
                  // add the new id locally
                 $scope.userData.likes[value.id] = value.name;
+                $scope.postLikes(like);
                 //  param = { userId: "231231" ,likes": [{ id:'4q21341',name:'fafdkj'},{}
               }
               //track id
@@ -36,6 +36,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
             for(var like in $scope.userData.likes) {
               if(!idTrack[like]){
                 console.log('delete this like since it is no longer in fb likes');
+                requests.deleteLike(like.id, $scope.userData.id);
                 delete $scope.userData.likes[like]; // since the like no longer exists
                   //inform database using like.id and user.id and like.name ($scope.userData.likes[likeId])
               }
@@ -52,6 +53,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
             angular.element(document.querySelector('#userimage')).html(image);
             $scope.userData.photo_url = data.data.url;
             //tell the database the image associated with the user has changed 
+            $scope.postUser();
             $rootScope.$emit('userDataChanged', $scope.userData);
           }
         });
@@ -64,6 +66,10 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
           $scope.userData.last_name = data.last_name;
           $scope.userData.id = data.id;
           $scope.userData.updated_time = data.updated_time;
+
+          //update the database with user information from fb
+          $scope.postUser();
+          //store updates to data locally
           $rootScope.$emit('userDataChanged', $scope.userData);
         });
     };
@@ -88,41 +94,52 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     $scope.postUser = function(){
       requests.postBasicDetails({
         'id' : $scope.userData.id,
-        'first_name': $scope.userData.first_name,
-        'last_name': $scope.userData.last_name,
+        'firstname': $scope.userData.first_name,
+        'lastname': $scope.userData.last_name,
         'profileImage': $scope.userData.photo_url
       });
-      //for all likes
-      angular.forEach($scope.userData.likes , function(key, likeName){
+    };
+
+    $scope.postLocation = function() {
+      requests.postLocation({
+        'userId': $scope.userData.id,
+        'lat': $scope.userData.geolocation.latitude,
+        'lng': $scope.userData.geolocation.longitude
+      });
+
+    };
+
+    $scope.postLikes = function(likes) {
+      angular.forEach(likes , function(likeName, key){
         requests.postLike({
           'userId' : $scope.userData.id,
           'id': key,
           'name': likeName
         });
       });
-
-      requests.postLocation({
-        'userId': $scope.userData.id,
-        'lat': $scope.userData.geolocation.latitude,
-        'lng': $scope.userData.geolocation.longitude
-      })
-
-
-      
     };
 
     $rootScope.$on('geolocation', function(event, geoposition){
       $scope.userData.geolocation = geoposition.coords;
       $rootScope.$emit('userDataChanged', $scope.userData);
       //send geoloc to db
+      $scope.postLocation();
+      // requests.getLocationDetails();
+    });
+
+    $rootScope.$on('userLocation', function(e, city){
+      $scope.userData.location = city;
+      $rootScope.$emit('userDataChanged', $scope.userData);
     });
 
     $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
         //these only refresh whenever there is no data in the connection and when there is an 
         //internet connection
-        $scope.getDetails();
-        $scope.getLikes();
-        $scope.getPicture();
+        if(!$scope.userData.id){
+          $scope.getDetails(); // this doesn't need to take place every time (only if not locally stored), immediately store in db
+        }
+        $scope.getLikes(); 
+        $scope.getPicture(); // check fb to see if a users profile pic has changed
         Geo.getCurrentPosition();
         $rootScope.$emit('userDataChanged', $scope.userData);
     });
