@@ -2,8 +2,8 @@
 
 //factory for processing push notifications, based on:
 //   intown.biz/2014/04/11/android-notifications/
-angular.module('push', [])
-  .service('push', function() {
+angular.module('push', ['openfb'])
+  .service('push', function(OpenFB) {
     var pushNotification;
 
     var onDeviceReady = function(gcmAppId) {
@@ -27,9 +27,10 @@ angular.module('push', [])
     };
 
     // Register with the application server
-    this.register = function(id) {
-      // TODO
-      window.alert(id);
+    this.register = function(gcmToken) {
+      OpenFB.checkLogin().then(function(fbToken) {
+        // Send server id, fbId
+      });
     };
 
     // Unregister from the GCM servers

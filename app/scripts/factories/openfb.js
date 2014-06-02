@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * OpenFB is a micro-library that lets you integrate your JavaScript application with Facebook.
  * OpenFB works for both BROWSER-BASED apps and CORDOVA/PHONEGAP apps.
@@ -21,6 +23,7 @@ angular.module('openfb', [])
 
         // Because the OAuth login spans multiple processes, we need to keep the success/error handlers as variables
         // inside the module instead of keeping them local within the login function.
+            deferredCheck,
             deferredLogin,
 
         // Indicates if the app is running inside Cordova
@@ -44,6 +47,16 @@ angular.module('openfb', [])
             fbAppId = appId;
             if (redirectURL) oauthRedirectURL = redirectURL;
             if (store) tokenStore = store;
+        }
+
+        function checkLogin() {
+            deferredCheck = $q.defer();
+
+            if (tokenStore['fbtoken']) {
+                deferredCheck.resolve(tokenStore['fbtoken']);
+            }
+
+            return deferredCheck.promise;
         }
 
         /**
@@ -125,6 +138,9 @@ angular.module('openfb', [])
                 obj = parseQueryString(queryString);
                 tokenStore['fbtoken'] = obj['access_token'];
                 deferredLogin.resolve();
+                if (deferredCheck) {
+                    deferredCheck.resolve(tokenStore['fbtoken']);
+                }
             } else if (url.indexOf("error=") > 0) {
                 queryString = url.substring(url.indexOf('?') + 1, url.indexOf('#'));
                 obj = parseQueryString(queryString);
@@ -209,6 +225,7 @@ angular.module('openfb', [])
 
         return {
             init: init,
+            checkLogin: checkLogin,
             login: login,
             logout: logout,
             revokePermissions: revokePermissions,
