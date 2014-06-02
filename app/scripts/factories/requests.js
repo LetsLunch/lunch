@@ -34,8 +34,8 @@ angular.module('Lunch.factory.requests', [])
         console.log('error in postlike', data);
       });
     },
-     'deleteLike': function(likeId, userId){
-      $http({method: 'DELETE', url: baseUrl + urls.like + '/' + likeId + api_key , data: userId
+     'deleteLike': function(likeId, payload){
+      $http({method: 'DELETE', url: baseUrl + urls.like + '/' + likeId + api_key , data: payload
       })
       .success(function(data,status,headers,config){
         console.log('like deleted', data);
