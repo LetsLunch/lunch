@@ -11,20 +11,30 @@ angular.module('Lunch.factory.storedUserData', ['Lunch.factory.localStore'])
         'name': '',
         'likes' : {},
         'geolocation' : undefined,
-      'tags' : {
+        'tags' : {
                    'Javascript':false,
                    'Cake':false,
                    'Cats':false,
                    'Cars':false,
                    'Robots':false,
                    'Yoga':false,
-                   'Venture Capital':false,
-                   'Lean-Startup':false
+                   'Finance':false,
+                   'Startups':false
                  },
+               // 'tags' : {
+               //     '0':[false,'Javascript'],  // id: [pressed, tagName]
+               //     '1':[false,'Cake'],
+               //     '2':[false,'Cats'],
+               //     '3':[false,'Cars'],
+               //     '4':[false,'Robots'],
+               //     '5':[false,'Yoga'],
+               //     '6':[false,'Finance'],
+               //     '6':[false, 'Startups'],
+               // },
         'photo_url' : ''
     };
   } else {
     userData = angular.fromJson(userData);
   }
   return userData;
-})
+});

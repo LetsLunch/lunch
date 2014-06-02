@@ -12,20 +12,29 @@ angular.module('Lunch.browse', ['Lunch.factory.matchData'])
       }
     })
 })
-.controller('BrowseCtrl', function($scope, matchData, $location){
+.controller('BrowseCtrl', function($rootScope, $scope, matchData, $location){
 
     $scope.numMatches = matchData.matches.length;
     var initialize = function() {
-      $scope.currentMatch = 0; // this should be persistent (currently this resets)
+      if(!$scope.currentMatch) {
+        $scope.currentMatch = 0; // this should be persistent (currently this resets)
+      } else {
+        console.log($scope.currentMatch);
+      }
       nextMatch($scope.currentMatch);
+      $rootScope.$on('$stateChangeStart', function(){
+        //when we leave page keep a track of the current match id
+      });
     }; // if no data have backup
 
     var nextMatch = function(i) {
       if($scope.currentMatch < $scope.numMatches) {
-        $scope.username = matchData.matches[i].username;
+        $scope.firstname = matchData.matches[i].firstname;
+        $scope.lastname = matchData.matches[i].lastname;
         $scope.likes = matchData.matches[i].likes;
-        $scope.location = matchData.matches[i].location;
+        $scope.city = matchData.matches[i].city;
         $scope.tags = matchData.matches[i].tags;
+        $scope.photo_url = matchData.matches[i].profileImage;
       } else {
         $location.path('/app/nomatches');
         //show splash screen of come back tomorrow!

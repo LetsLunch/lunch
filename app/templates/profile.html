@@ -10,9 +10,9 @@
         <div >
             <h4 id="location" ng-show="userData.location">{{userData.location}}</h4>
         </div>  
-        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light"  ng-click="postUser()"  >Look for a Lunch Buddy for today</a></div>
+        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light"  ng-click="postUser()"  >Find a Lunch Buddy</a></div>
         <div class="item item-divider">
-             What do you want to talk about over lunch?
+             Lunch topics
         </div>
         <span class="item tags col-33" ng-repeat="(tag, pressed) in userData.tags" ng-click="tagClick($event)" ng-class="{pressed:pressed}" > 
             {{tag}}   
