@@ -57,12 +57,12 @@ var _create = function (params, callback) {
 
   var query = [
     'MATCH (user:User{id:{userId}})',
-    'OPTIONAL MATCH (user)-[r:IS_AT]->(oldLocation:Location)',
+    'OPTIONAL MATCH (user)-[r:IS_AT]->(location:Location)',
     'DELETE r',
     'WITH user',
-    'MERGE (location:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
-    'CREATE (user)-[r:IS_AT]->(location)',
-    'RETURN location'
+    'MERGE (newLocation:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
+    'CREATE (user)-[r:IS_AT]->(newLocation)',
+    'RETURN newLocation'
   ].join('\n');
 
   console.log('create query', query);

@@ -96,7 +96,7 @@ angular.module('Lunch.factory.requests', [])
         console.log('error in getLocationDetails', data);
       });
     }
-    // 'sendApproval': function(){
+    // 'postApproval': function(){
     //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload
     //   })
     //   .success(function(data,status,headers,config){

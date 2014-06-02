@@ -21,8 +21,7 @@ var db = new neo4j.GraphDatabase(
 // ## Helpers
 var _prepareParams = function (req) {
   var params = req.body;
-  console.log('in locations');
-  console.log(req.body);
+
   params.id = req.params.id || req.body.id;
 
   return params;
