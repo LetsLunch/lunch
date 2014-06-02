@@ -20,9 +20,10 @@ angular.module('Lunch.factory.requests', [])
       $http({method: 'POST', url: baseUrl + urls.basicDetails + api_key, data: payload
       })
       .success(function(data,status,headers,config){
+        alert('success post Basic details'  );
       })
       .error(function(data,status,headers,config){
-        console.log('error in post basic details');
+        alert('error in post basic details');
       });
     },
     'postLike': function(payload){
