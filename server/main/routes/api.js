@@ -75,6 +75,10 @@ module.exports = function (subpath, BASE_URL, PORT, API_STRING) {
     // Match
     .addGet(match.getMatch)
     .addPost(match.addSelected)
+
+    // Push notification registration
+    // .addPost(push.addPush)
+    // .addDelete(push.deletePush)
  
    ;
 
