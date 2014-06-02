@@ -16,7 +16,7 @@ var Cypher = Architect.Cypher;
 // return a single tag
 var _singleTag = function (results, callback) {
   if (results.length) {
-    callback(null, new Push(results[0].tag));
+    callback(null, new Push(results[0].push));
   } else {
     callback(null, null);
   }
@@ -32,9 +32,9 @@ var _create = function (params, callback) {
   };
 
   var query = [
-    'MATCH (user:User{id:{userId}})',
+    'MATCH (user:User{id:{id}})',
     'WITH user',
-    'MERGE (push:Push{token:{token},type:{type}})',
+    'MERGE (push:Push{token:{token}, type:{type}})',
     'CREATE UNIQUE (user)<-[:PUSH_TO]-(push)',
     'RETURN push',
   ].join('\n');

@@ -67,11 +67,11 @@ exports.addPush = {
       $ref: 'Push'
     },
     parameters : [
-      param.form('userId', 'User UUID', 'string', true),
+      param.form('id', 'User UUID', 'string', true),
       param.form('token', 'Push notification token', 'string', true),
       param.form('type', 'Service type (gcm/apn)', 'string', true),
      ],
-    responseMessages : [swe.invalid('input')],
+    responseMessages : [],
     nickname : 'addPush'
   },
 
@@ -91,7 +91,7 @@ exports.addPush = {
 };
 
 // // Route: DELETE '/tags/:id'
-exports.deleteTagRelation = {
+exports.deletePush = {
 
   spec: {
     path: '/tags/{token}',
@@ -103,7 +103,7 @@ exports.deleteTagRelation = {
       param.path('token', 'Push notification token to be deleted', 'string', true)
 
     ],
-    responseMessages: [swe.invalid('input')],
+    responseMessages: [],
     nickname : 'deleteTagRelation'
   },
 
@@ -112,14 +112,12 @@ exports.deleteTagRelation = {
     var options = {};
     var params = {};
 
-    if (!token) throw swe.invalid('token');
-
     var errLabel = 'Route: DELETE /tags/{id}';
     var callback = _.partial(_callback, res, errLabel);
 
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
 
-    Pushes.deleteTagRelation(params, options, callback);
+    Pushes.deletePush(params, options, callback);
   }
 };
