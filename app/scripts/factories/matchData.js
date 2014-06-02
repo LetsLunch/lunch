@@ -1,6 +1,5 @@
 'use strict';
 angular.module('Lunch.factory.matchData', [])
-
 .factory('matchData', function(){
   return {
     'matches' : [

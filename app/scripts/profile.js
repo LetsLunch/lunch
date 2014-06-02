@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData'])  
+angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests'])  
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -12,7 +12,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     }
   })
 })
-.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, $http) {
+.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, requests) {
     $scope.userData = storedUserData;
 
     $scope.getLikes = function() {
@@ -44,7 +44,6 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
         });
     };
 
-    console.log($http);
     $scope.getPicture = function() {
         OpenFB.get('/me/picture?redirect=0&height=125&type=normal&width=100')//'/me/picture')
         .success(function(data, status, headers, config){
@@ -61,7 +60,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     $scope.getDetails = function() {
         OpenFB.get('/me')
         .success(function(data,status, headers, config){
-          $scope.userData.name = data.name;
+          $scope.userData.first_name = data.first_name;
+          $scope.userData.last_name = data.last_name;
           $scope.userData.id = data.id;
           $scope.userData.updated_time = data.updated_time;
           $rootScope.$emit('userDataChanged', $scope.userData);
@@ -80,8 +80,39 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
       $rootScope.$emit('userDataChanged', $scope.userData);
     };
 
+    //when the look for a lunch buddy is clicked this function is executed
+    //this will post the user details (photo, id, name)
+    //post the user likes
+    //post the user tags
+    //NOTE: this function assumes the photo url, likes and tags are successfully fetched from the server 
+    $scope.postUser = function(){
+      requests.postBasicDetails({
+        'id' : $scope.userData.id,
+        'first_name': $scope.userData.first_name,
+        'last_name': $scope.userData.last_name,
+        'profileImage': $scope.userData.photo_url
+      });
+      //for all likes
+      angular.forEach($scope.userData.likes , function(key, likeName){
+        requests.postLike({
+          'userId' : $scope.userData.id,
+          'id': key,
+          'name': likeName
+        });
+      });
+
+      requests.postLocation({
+        'userId': $scope.userData.id,
+        'lat': $scope.userData.geolocation.latitude,
+        'lng': $scope.userData.geolocation.longitude
+      })
+
+
+      
+    };
+
     $rootScope.$on('geolocation', function(event, geoposition){
-      $scope.userData.geolocation = geoposition;
+      $scope.userData.geolocation = geoposition.coords;
       $rootScope.$emit('userDataChanged', $scope.userData);
       //send geoloc to db
     });

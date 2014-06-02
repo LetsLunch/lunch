@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.factory.matchData'])
+angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.factory.storedUserData'])
 
 .run(function($ionicPlatform, $rootScope, $state, $window, OpenFB) {
   $ionicPlatform.ready(function() {
