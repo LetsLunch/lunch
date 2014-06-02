@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.browse', ['Lunch.factory.matchData'])
+angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.storedUserData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
@@ -10,49 +10,52 @@ angular.module('Lunch.browse', ['Lunch.factory.matchData'])
           controller: 'BrowseCtrl'
         }
       }
-    })
+  });
 })
-.controller('BrowseCtrl', function($scope, matchData, $location){
+.controller('BrowseCtrl', function($rootScope, $scope, matchData, $location, requests, storedUserData){
+    var userId = storedUserData.id;
+    var matchId;
 
-    $scope.numMatches = matchData.matches.length;
     var initialize = function() {
-      $scope.currentMatch = 0; // this should be persistent (currently this resets)
-      nextMatch($scope.currentMatch);
+      $scope.counter = matchData.counter;
+      nextMatch();
     }; // if no data have backup
 
-    var nextMatch = function(i) {
-      if($scope.currentMatch < $scope.numMatches) {
-        $scope.username = matchData.matches[i].username;
-        $scope.likes = matchData.matches[i].likes;
-        $scope.location = matchData.matches[i].location;
-        $scope.tags = matchData.matches[i].tags;
-      } else {
+    var nextMatch = function() {
+      if($scope.counter >= matchData.matches.length) {
         $location.path('/app/nomatches');
+      } else {
+        $scope.firstname = matchData.matches[$scope.counter].firstname;
+        $scope.lastname = matchData.matches[$scope.counter].lastname;
+        $scope.likes = matchData.matches[$scope.counter].likes;
+        $scope.city = matchData.matches[$scope.counter].city;
+        $scope.tags = matchData.matches[$scope.counter].tags;
+        $scope.photo_url = matchData.matches[$scope.counter].profileImage;
+        matchId = matchData.matches[$scope.counter].id;
         //show splash screen of come back tomorrow!
       }
     };
-    //take care if the no of matches will dynamically increase, as a new match is
-    //returned from the server
+
     initialize();
+     
+    var next = function(){
+      $scope.counter++;
+      $rootScope.$emit('nextMatch');
+      nextMatch();
+    };
 
     //records an approval for the currently displayed profile
     $scope.approve = function() {
-      $scope.currentMatch++;
-      nextMatch($scope.currentMatch);
+      next();
       //call service to send approval to db
+      //requests.postApproval(matchId, userId);
     };
 
     //records a disapproval for the currently displayed profile
     $scope.reject = function() {
-      $scope.currentMatch++;
-      nextMatch($scope.currentMatch);
+      next();
       //call service to send rejection to db
+      //requests.postRejection(matchId, userId);
     };
-
-    $scope.showPair = function() {
-      // this function will switch the screen to the matched screen
-      $location.path('/app/pair');
-    };
-    //
 
 });

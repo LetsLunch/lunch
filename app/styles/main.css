@@ -24,13 +24,19 @@
 #blurb,
 #facebook,
 #username,
+#location,  
 .search,
 .userimage {
   text-align: center;
 }
 
 #username {
-  margin-bottom: 5px;
+  margin-bottom: 3px;
+}
+
+#location {
+  margin-top: 0px;
+  padding-top: 0px;
 }
 
 .tags,

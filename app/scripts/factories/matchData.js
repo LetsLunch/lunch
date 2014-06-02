@@ -1,20 +1,47 @@
 'use strict';
-angular.module('Lunch.factory.matchData', [])
+angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
+.factory('matchData', function($rootScope){
+  var counter,
+      matchData,
+      matchLength;
 
-.factory('matchData', function(){
-  return {
-    'matches' : [
+  $rootScope.$on('matches', function(e, matchData){
+    counter = 0;
+    // matchData = matchData;
+    // matchLength = matchData.length;
+  });
+  counter = 0;
+  matchData =  [
     {
-        username : 'Bill Gates',
+        id : 12345,
+        firstname : 'Bill',
+        lastname : 'Gates',
+        profileImage : 'http://mostfamousperson.net/BillGates.png',
         likes : ['Computers', 'Health', 'Kale'],
-        location : 'Redmond',
+        city : 'Redmond',
         tags : ['Malaria', 'PCs', 'R&D']
     },
     {
-        username : 'Steve Jobs',
+        id: 56789,
+        firstname: 'Steve',
+        lastname: 'Jobs',
+        profileImage : 'http://www.tanld.com/Portals/0/Images/steve-jobs.jpg',
         likes : ['Design', 'Simplicity', 'Fruitarian-Diet'],
-        location : 'Unknown',
+        city : 'Unknown',
         tags : ['Geek-chic']
-    }]
+    }];
+  
+  matchLength = matchData.length;
+  
+  $rootScope.$on('nextMatch', function(e){
+    output.counter++;
+    if(counter > matchLength){
+        $rootScope.$emit('nomorematches');
+    };
+  });
+  var output = {
+    'matches' : matchData || undefined,
+    'counter' : counter
   };
+  return output;
 });
