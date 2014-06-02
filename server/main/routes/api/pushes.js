@@ -90,29 +90,27 @@ exports.addPush = {
   }
 };
 
-// // Route: DELETE '/tags/:id'
+// // Route: DELETE '/pushes/:token'
 exports.deletePush = {
 
   spec: {
-    path: '/tags/{token}',
+    path: '/pushes/{token}',
     notes: 'Deletes an existing push notification token and its relationship',
     summary: 'Delete a push notification token and its relationship',
     method: 'DELETE',
     type: 'object',
     parameters: [
-      param.path('token', 'Push notification token to be deleted', 'string', true)
-
+      param.form('token', 'Push notification token to be deleted', 'string', true)
     ],
     responseMessages: [],
-    nickname : 'deleteTagRelation'
+    nickname : 'deleteTokenRelation'
   },
 
   action: function (req, res) {
-    var token = req.params.token;
     var options = {};
     var params = {};
 
-    var errLabel = 'Route: DELETE /tags/{id}';
+    var errLabel = 'Route: DELETE /pushes/{token}';
     var callback = _.partial(_callback, res, errLabel);
 
     options.neo4j = utils.existsInQuery(req, 'neo4j');

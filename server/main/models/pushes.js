@@ -47,7 +47,7 @@ var _create = function (params, callback) {
 // delete the user and any relationships with cypher
 var _delete = function (params, callback) {
   var cypherParams = {
-    token: params.id
+    token: params.token
   };
 
   var query = [
