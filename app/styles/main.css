@@ -21,6 +21,15 @@
   /*#995533;*/
 }
 
+.tags  {
+  margin-left: 15px;
+} 
+
+.likes {
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
 #blurb,
 #facebook,
 #username,
@@ -39,8 +48,8 @@
   padding-top: 0px;
 }
 
-.tags,
-.likes,
+.tag,
+.like,
 .lunchbuddy {
   border-bottom: solid grey;
 }
@@ -63,18 +72,19 @@
   font-size: 80px;
 }
 
-.tags,
-.likes {
+.tag,
+.like {
   display: inline-block;
   font-size: 15px;
   padding: 8px;
 }
 
-.tags {
+.tag {
   margin: 5px;
+
 }
 
-.likes {
+.like {
   font-size: 12px;
   padding: 5px;
 }

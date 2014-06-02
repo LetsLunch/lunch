@@ -24,6 +24,12 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
     $state.go('app.login');
   });
 
+  $rootScope.$on('pushNotificationStart', function(e, userData) {
+      $state.go('app.match');
+      // at this point also send the message to a matched user factory 
+      // so that the match view has a means ot obtain the data required
+  });
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
