@@ -5,8 +5,8 @@ angular.module('Lunch.factory.requests', [])
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
          
 })
-.factory('requests', function($rootScope, $http){
-  var baseUrl = 'http://localhost:8008/api/v0/';
+.factory('requests', function($rootScope, $http, AppServer){
+  var baseUrl = AppServer + '/api/v0/';
   var api_key = '?api_key=special-key&neo4j=true';
   var urls = {
     'basicDetails' : 'users',
