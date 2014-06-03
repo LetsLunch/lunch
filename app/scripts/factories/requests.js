@@ -117,7 +117,7 @@ angular.module('Lunch.factory.requests', [])
       var deferredPayload = $q.defer();
       var payload = {
         message: message,
-        timestamp: new Date().toString()
+        timestamp: new Date().toISOString()
       };
       $http({
         method: 'POST',
