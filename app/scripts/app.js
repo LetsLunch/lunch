@@ -14,9 +14,16 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
 
   // Force login
   $rootScope.$on('$stateChangeStart', function(e, state) {
-    if (!$window.sessionStorage['fbtoken'] && state.name !== 'app.login') {
-      $state.go('app.login');
-      e.preventDefault();
+    if ($window.sessionStorage['fbtoken']) {
+      if (state.name === 'app.login') {
+        $state.go('app.profile');
+        e.preventDefault();
+      }
+    } else {
+      if (state.name !== 'app.login') {
+        $state.go('app.login');
+        e.preventDefault();
+      }
     }
   });
 
