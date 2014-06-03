@@ -11,25 +11,31 @@ angular.module('Lunch.service.storedChat', [])
     };
 
     this.getChats = function() {
-      return angular.fromJson(window.localStorage['chat']);
+      return angular.fromJson(window.localStorage.chat);
+    };
+
+    this.deleteChats = function() {
+      delete window.localStorage.chat;
     };
 
     this.postChat = function(payload) {
       var text = payload.message;
       var time = payload.timestamp;
+      var self = !!payload.user;
       
       // Resolve if requested
       if (deferredChat) {
-        deferredChat.resolve(text, time);
+        deferredChat.resolve(text, time, user);
       }
       
       // Store log
-      var chat = angular.fromJson(window.localStorage['chat']) || [];
+      var chat = angular.fromJson(window.localStorage.chat) || [];
       chat.push({
         text: text,
-        time: time
+        time: time,
+        self: self
       });
-      window.localStorage['chat'] = chat;
+      window.localStorage.chat = chat;
     };
   });
   
