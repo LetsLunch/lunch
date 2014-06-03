@@ -5,7 +5,8 @@ angular.module('Lunch.factory.requests', [])
         delete $httpProvider.defaults.headers.common['X-Requested-With'];
          
 })
-.factory('requests', function($rootScope, $http, AppServer){
+
+.factory('requests', function($rootScope, $http, $q, AppServer){
   var baseUrl = AppServer + '/api/v0/';
   var api_key = '?api_key=special-key&neo4j=true';
   var urls = {
@@ -13,7 +14,9 @@ angular.module('Lunch.factory.requests', [])
     'like' : 'likes',
     'tag' : 'tags',
     'location' :'locations',
-    'matches' : 'matches'
+    'matches' : 'matches',
+    'pushToken' : 'pushes',
+    'chat' : 'chat'
   }
 	var exports = {
 		'postBasicDetails': function(payload){
@@ -96,6 +99,34 @@ angular.module('Lunch.factory.requests', [])
       .error(function(data,status,headers,config){
         console.log('error in getLocationDetails', data);
       });
+    },
+    'postPushToken': function(payload){
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.pushToken + api_key,
+        data: payload
+      });
+    },
+    'deletePushToken': function(token) {
+      return $http({
+        method: 'DELETE',
+        url: baseUrl + urls.pushToken + '/' + token + api_key
+      });
+    },
+    'postChat': function(matchId, message) {
+      var deferredPayload = $q.defer();
+      var payload = {
+        message: message,
+        timestamp: new Date().toISOString()
+      };
+      $http({
+        method: 'POST',
+        url: baseUrl + urls.chat + '/' + matchId + api_key,
+        data: payload
+      }).then(function() {
+        deferredPayload.resolve(payload);
+      });
+      return deferredPayload.promise;
     }
     // 'postApproval': function(){
     //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload

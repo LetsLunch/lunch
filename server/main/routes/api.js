@@ -11,6 +11,7 @@ var swagger     = require('swagger-node-express'),
     tags        = require('./api/tags'),
     locations   = require('./api/locations'),
     match       = require('./api/match'),
+    pushes      = require('./api/pushes'),
     colog       = require('colog');
 
 var logQuery = function(req, res, next){
@@ -75,6 +76,10 @@ module.exports = function (subpath, BASE_URL, PORT, API_STRING) {
     // Match
     .addGet(match.getMatch)
     .addPost(match.addSelected)
+
+    // Push notification registration
+    .addPost(pushes.addPush)
+    .addDelete(pushes.deletePush)
  
    ;
 
