@@ -30,7 +30,7 @@ var _singleLoc = function (results, callback) {
 
 // find location of UserId with cypher
 var _findByUserId = function (params, callback) {
-  colog.info('params :->',params);
+  colog.info(params);
   var cypherParams = {
     userId : params.userId,
   };

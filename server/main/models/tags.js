@@ -56,7 +56,7 @@ var _matchAll = _.partial(_matchBy, []);
 
 // creates the user with cypher
 var _create = function (params, callback) {
-  colog.info('params :->',params);
+  colog.info(params);
   var cypherParams = {
     id : params.id,
     userId : params.userId,
