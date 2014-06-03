@@ -70,6 +70,10 @@ module.exports = function (subpath, BASE_URL, PORT, API_STRING) {
     // // Location Model and Methods
     .addGet(locations.find)
     .addPost(locations.addLocation)
+
+    // Match
+    .addGet(match.getMatch)
+    .addPost(match.addSelected)
  
    ;
 
