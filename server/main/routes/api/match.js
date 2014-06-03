@@ -43,7 +43,7 @@ var _callback = function (res, errLabel, err, results, queries) {
   var start = new Date();
 
   if (err || !results) {
-    if (err) console.error(errLabel + ' ', err);
+    if (err) colog.error(errLabel + ': ' + err);
     swe.invalid('input', res);
     return;
   }
