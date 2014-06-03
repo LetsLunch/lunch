@@ -9,22 +9,22 @@ var swagger     = require('swagger-node-express'),
     users       = require('./api/users'),
     likes       = require('./api/likes'),
     tags        = require('./api/tags'),
-    locations   = require('./api/locations');
+    locations   = require('./api/locations'),
+    colog       = require('colog');
 
 
 
 var logQuery = function(req, res, next){
+  colog.log(colog.color(req.url, 'cyan'));
   for (var key in req.body) {
-    console.info('\t' + key + ': ' + req.body[key]);
+    colog.log(colog.color('\t' + key + ': ' + req.body[key], 'white'));
   }
   next();
 };
 
 module.exports = function (subpath, BASE_URL, PORT, API_STRING) {
   // Log the query
-  if (process.env.DEVELOPMENT) {
-    subpath.use(logQuery);
-  }
+  subpath.use(logQuery);
 
   // Set the main handler in swagger to the express subpath
   swagger.setAppHandler(subpath);

@@ -4,6 +4,8 @@
   "dependencies": {
     "body-parser": "^1.2.2",
     "bower": "^1.3.3",
+    "cities": "^1.0.6",
+    "colog": "^1.0.4",
     "errorhandler": "^1.0.1",
     "express": "^4.3.0",
     "lodash": "^2.4.1",
@@ -12,8 +14,7 @@
     "neo4j": "^1.1.0",
     "neo4j-architect": "^0.1.1",
     "neo4j-swagger-ui": "0.0.14",
-    "swagger-node-express": "^2.0.3",
-    "cities": "^1.0.6"
+    "swagger-node-express": "^2.0.3"
   },
   "devDependencies": {
     "grunt": "~0.4.1",

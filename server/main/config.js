@@ -5,6 +5,7 @@ var subpath        = require('express')(),
     methodOverride = require('method-override'),
     logger         = require('morgan'),
     routes         = require('../main/routes'),
+    colog          = require('colog'),
     PORT           = process.env.PORT || 8008,
     BASE_URL       = process.env.BASE_URL || 'http://localhost:' + PORT,
     API_STRING     = '/api/v0';
@@ -17,6 +18,9 @@ module.exports = function(app) {
   if (process.env.DEVELOPMENT) {
     console.info('Morgan is here! (Your DEVELOPMENT variable is set)');
     app.use(logger('dev'));
+    colog.silent(false);
+  } else {
+    colog.silent(true);
   }
   app.use(bodyParser());
   app.use(methodOverride());
