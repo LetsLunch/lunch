@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var Push = require('./neo4j/push.js');
 var Architect = require('neo4j-architect');
+var colog = require('colog');
 
 Architect.init();
 
@@ -24,7 +25,6 @@ var _singleTag = function (results, callback) {
 
 // creates the user with cypher
 var _create = function (params, callback) {
-  console.log('params :->',params);
   var cypherParams = {
     id : params.id,
     token : params.token,
@@ -39,7 +39,7 @@ var _create = function (params, callback) {
     'RETURN push',
   ].join('\n');
 
-  console.log('create query', query);
+  colog.info(query);
 
   callback(null, query, cypherParams);
 };

@@ -1,42 +1,41 @@
 'use strict';
-var gcm = require('./chat/gcm');
-var request = require('request');
+
+var gcm     = require('./chat/gcm'),
+    request = require('request'),
+    colog   = require('colog');
 
 var postChat = function(req, res) {
   // Query neo4j for partner's tokens
   var query = 'MATCH (:User {id: {destination}})<-[:PUSH_TO]-(token) ' +
               'RETURN token';
   var params = {
-    destination: req.body.destination
+    destination: req.params.destination
   };
-  var body = {query: query, params: params};
-  console.log(JSON.stringify(body));
+  
   request.post({
     uri: 'http://localhost:7474/db/data/cypher',
-    json: body
+    json: {query: query, params: params}
   }, function(err, r, body) {
+    // Collect partner's tokens
     var tokens = [];
-
     for (var i = 0; i < body.data.length; i++) {
-      try {
-        if (body.data[i][0].data.type === 'gcm') {
-          tokens.push(body.data[i][0].data.token);
-        }
-      } catch (e) { // Account for weird cypherness
-        console.log(e + 'in chat.js');
+      if (body.data[i][0].data.type === 'gcm') {
+        tokens.push(body.data[i][0].data.token);
       }
     }
 
-    // Send chat to all of partner's devices
-    var message = new gcm.Message();
-    message.addData('message', "Hello, world!");
-    message.addData('timestamp', new Date());
-
-    message.delayWhileIdle = true;
-    message.timeToLive = 3000;
-
-    gcm.sender.send(message, tokens, 4, function (err, result) {
-      console.log('GCMed', err, result);
+    // Send chat to all of partner's tokened devices
+    var message = new gcm.Message({
+      collapseKey: 'demo',
+      delayWhileIdle: true,
+      timeToLive: 3,
+      data: {
+        message: req.body.message,
+        timestamp: new Date().toString()
+      }
+    });
+    gcm.sender.send(message, tokens, 4, function (err) {
+      colog.warning('Sent push over GCM: ' + err);
     });
 
     res.status(200);
@@ -45,6 +44,7 @@ var postChat = function(req, res) {
 };
 
 module.exports = function (app) {
-  app.post('/chat', postChat);
-  app.post('/api/v0/chat', postChat);
+  // TODO: Integrate into swagger API/docs
+  app.post('/chat/:destination', postChat);
+  app.post('/api/v0/chat/:destination', postChat);
 };

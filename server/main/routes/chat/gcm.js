@@ -1,7 +1,7 @@
 'use strict';
 
 var gcm    = require('node-gcm'),
-    sender = new gcm.Sender('142933827745');
+    sender = new gcm.Sender(process.env.GCM_KEY);
 
 module.exports = {
   sender: sender,
