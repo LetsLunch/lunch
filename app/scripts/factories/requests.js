@@ -15,7 +15,8 @@ angular.module('Lunch.factory.requests', [])
     'tag' : 'tags',
     'location' :'locations',
     'matches' : 'matches',
-    'pushToken' : 'pushes'
+    'pushToken' : 'pushes',
+    'chat' : 'chat'
   }
 	var exports = {
 		'postBasicDetails': function(payload){
@@ -100,11 +101,24 @@ angular.module('Lunch.factory.requests', [])
       });
     },
     'postPushToken': function(payload){
-      $http({method: 'POST', url: baseUrl + urls.pushToken + api_key, data: payload
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.pushToken + api_key,
+        data: payload
       });
     },
     'deletePushToken': function(token) {
-      $http({method: 'DELETE', url: baseUrl + urls.pushToken + '/' + token + api_key});
+      return $http({
+        method: 'DELETE',
+        url: baseUrl + urls.pushToken + '/' + token + api_key
+      });
+    },
+    'postChat': function(matchId, message) {
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.chat + '/' + matchId + api_key,
+        data: {message: message}
+      });
     }
     // 'postApproval': function(){
     //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload
