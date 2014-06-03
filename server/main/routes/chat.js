@@ -6,7 +6,7 @@ var gcm     = require('./chat/gcm'),
 
 var pushMessage = function(id, payload) {
   // Define Cypher query for user's tokens
-  var query = 'MATCH (:User {id: {id}})<-[:PUSH_TO]-(token) ' +
+  var query = 'MATCH (:User {id: {id}})<-[:PUSH_TO]-(token:Push) ' +
               'RETURN token';
   var params = { id: id };
   
