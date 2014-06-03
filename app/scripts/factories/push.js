@@ -61,17 +61,8 @@ function onNotificationGCM(e) {
         push.register(e.regid);
       }
   } else if (e.event === 'message') {
-    // Foreground notification
     var chat = injector.get('storedChat'); // Assumes ng-app is a dependent
-    window.alert(e.payload);
-    window.alert(e.payload.message);
     chat.postChat(e.payload);
-    if (e.foreground) {
-    // Background notification
-    } else {   
-      if (e.coldstart) {
-      } else {
-      }
-    }
+    // TODO: Differentiate FG/BG notifications
   }
 }
