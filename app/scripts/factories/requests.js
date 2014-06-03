@@ -6,7 +6,7 @@ angular.module('Lunch.factory.requests', [])
          
 })
 
-.factory('requests', function($rootScope, $http, AppServer){
+.factory('requests', function($rootScope, $http, $q, AppServer){
   var baseUrl = AppServer + '/api/v0/';
   var api_key = '?api_key=special-key&neo4j=true';
   var urls = {
@@ -114,11 +114,19 @@ angular.module('Lunch.factory.requests', [])
       });
     },
     'postChat': function(matchId, message) {
-      return $http({
+      var deferredPayload = $q.defer();
+      var payload = {
+        message: message,
+        timestamp: new Date().toString()
+      };
+      $http({
         method: 'POST',
         url: baseUrl + urls.chat + '/' + matchId + api_key,
-        data: {message: message}
+        data: payload
+      }).then(function() {
+        deferredPayload.resolve(payload);
       });
+      return deferredPayload.promise;
     }
     // 'postApproval': function(){
     //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload

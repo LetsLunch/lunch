@@ -31,7 +31,7 @@ var postChat = function(req, res) {
       timeToLive: 3,
       data: {
         message: req.body.message,
-        timestamp: new Date().toString()
+        timestamp: req.body.timestamp
       }
     });
     gcm.sender.send(message, tokens, 4, function (err) {
