@@ -66,8 +66,10 @@ var _create = function (params, callback) {
   var query = [
     'MATCH (user:User{id:{userId}})',
     'WITH user',
-    'MERGE (like:Like{id:{id},name:{name}})',
-    'CREATE UNIQUE (user)-[:LIKES]->(like)',
+    'MERGE (like:Like{id:{id}})',
+    'ON CREATE SET like.name = {name}',
+    'ON MATCH SET like.name = {name}',
+    'CREATE UNIQUE (like)<-[:LIKES]-(user)',
     'RETURN like',
   ].join('\n');
 

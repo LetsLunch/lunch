@@ -66,9 +66,11 @@ var _create = function (params, callback) {
   var query = [
     'MATCH (user:User{id:{userId}})',
     'WITH user',
-    'MERGE (tag:Tag{id:{id},name:{name}})',
-    'CREATE UNIQUE (user)-[:HAS_TAG]->(tag)',
-    'RETURN tag',
+    'MERGE (tag:Tag{id:{id}})',
+    'ON CREATE SET tag.name = {name}',
+    'ON MATCH SET tag.name = {name}',
+    'CREATE UNIQUE (tag)<-[:HAS_TAG]-(user)',
+    'RETURN tag'
   ].join('\n');
 
   colog.info(query);

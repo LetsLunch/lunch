@@ -61,13 +61,21 @@ var _create = function (params, callback) {
     id : params.id,
     firstname : params.firstname,
     lastname : params.lastname,
+    profileImage : params.profileImage,
   };
 
   var query = [
-    'MERGE (user:User {firstname: {firstname}, lastname: {lastname}, id: {id}})',
+
+    'MERGE (user:User{id: {id}})',
     'ON CREATE',
-    'SET user.created = timestamp()',
+    'SET user.created = timestamp(),',
+      'user.firstname ={firstname},',
+      'user.lastname: {lastname}',
+      'user.profileImage = {profileImage}',
     'ON MATCH',
+      'SET user.firstname ={firstname},',
+      'user.lastname: {lastname}',
+      'user.profileImage = {profileImage}',
     'SET user.lastLogin = timestamp()',
     'RETURN user'
   ].join('\n');
