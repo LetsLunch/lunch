@@ -16,17 +16,18 @@ angular.module('Lunch.factory.requests', [])
     'location' :'locations',
     'matches' : 'matches',
     'pushToken' : 'pushes',
-    'chat' : 'chat'
+    'chat' : 'chat',
+    'match' : 'match'
   }
 	var exports = {
 		'postBasicDetails': function(payload){
       $http({method: 'POST', url: baseUrl + urls.basicDetails + api_key, data: payload
       })
       .success(function(data,status,headers,config){
-        alert('success post Basic details'  );
+        console.log('success post Basic details'  );
       })
       .error(function(data,status,headers,config){
-        alert('error in post basic details');
+        console.log('error in post basic details');
       });
     },
     'postLike': function(payload){
@@ -89,15 +90,15 @@ angular.module('Lunch.factory.requests', [])
         console.log('error in getLocationDetails', data);
       });
     },
-    'getMatches': function(){
-      $http({method: 'GET', url: baseUrl + urls.matches + api_key
+    'getMatches': function(input){
+      $http({method: 'GET', url: baseUrl + urls.match + '/' + input.userId + api_key 
       })
       .success(function(data,status,headers,config){
         var parsedData = angular.fromJson(data);
         $rootScope.$emit('matches', parsedData);
       })
       .error(function(data,status,headers,config){
-        console.log('error in getLocationDetails', data);
+        console.log('error in getMatchs', data);
       });
     },
     'postPushToken': function(payload){
