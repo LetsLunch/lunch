@@ -52,18 +52,17 @@ var _create = function (params, callback) {
     zipcode : data.zipcode,
     city : data.city,
     state : data.state,
-    lat : params.lat,
-    lng : params.lng
   };
 
   var query = [
     'MATCH (user:User{id:{userId}})',
-    'OPTIONAL MATCH (user)-[r:IS_AT]->(location:Location)',
+    'OPTIONAL MATCH (user)-[r:IS_AT]->(oldLocation:Location)',
     'DELETE r',
     'WITH user',
-    'MERGE (newLocation:Location{id:{zipcode},zipcode:{zipcode},city:{city},state:{state},lat:{lat},lng:{lng}})',
-    'CREATE (user)-[r:IS_AT]->(newLocation)',
-    'RETURN newLocation'
+    'MERGE (location:Location{id:{zipcode}})',
+      'ON CREATE SET location.zipcode = {zipcode},location.city={city},location.state={state}',
+    'CREATE (user)-[r:IS_AT]->(location)',
+    'RETURN location'
   ].join('\n');
 
   colog.info(query);
