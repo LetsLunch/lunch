@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var Tag = require('./neo4j/tag.js');
 var Architect = require('neo4j-architect');
+var colog = require('colog');
 
 Architect.init();
 
@@ -44,7 +45,7 @@ var _matchBy = function (keys, params, callback) {
     'RETURN tag'
   ].join('\n');
 
-  console.log('_matchBy query', query);
+  colog.info(query);
 
   callback(null, query, cypherParams);
 };
@@ -55,7 +56,7 @@ var _matchAll = _.partial(_matchBy, []);
 
 // creates the user with cypher
 var _create = function (params, callback) {
-  console.log('params :->',params);
+  colog.info('params :->',params);
   var cypherParams = {
     id : params.id,
     userId : params.userId,
@@ -70,7 +71,7 @@ var _create = function (params, callback) {
     'RETURN tag',
   ].join('\n');
 
-  console.log('create query', query);
+  colog.info(query);
 
   callback(null, query, cypherParams);
 };

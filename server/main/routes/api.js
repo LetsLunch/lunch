@@ -12,8 +12,6 @@ var swagger     = require('swagger-node-express'),
     locations   = require('./api/locations'),
     colog       = require('colog');
 
-
-
 var logQuery = function(req, res, next){
   colog.log(colog.color(req.url, 'cyan'));
   for (var key in req.body) {
