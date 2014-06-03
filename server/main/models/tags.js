@@ -78,25 +78,6 @@ var _create = function (params, callback) {
   callback(null, query, cypherParams);
 };
 
-// update the user with cypher
-// var _update = function (params, callback) {
-
-//   var cypherParams = {
-//     id : params.id,
-//     firstname : params.firstname,
-//     lastname : params.lastname,
-//   };
-
-//   var query = [
-//     'MATCH (user:User {id:{id}})',
-//     'SET user.firstname = {firstname}',
-//     'SET user.lastname = {lastname}',
-//     'RETURN user'
-//   ].join('\n');
-
-//   callback(null, query, cypherParams);
-// };
-
 // delete the user and any relationships with cypher
 var _delete = function (params, callback) {
   var cypherParams = {
