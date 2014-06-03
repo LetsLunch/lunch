@@ -99,15 +99,12 @@ angular.module('Lunch.factory.requests', [])
         console.log('error in getLocationDetails', data);
       });
     },
-    'postPushToken': function(token, type){
+    'postPushToken': function(payload){
       $http({method: 'POST', url: baseUrl + urls.pushToken + api_key, data: payload
-      })
-      .error(function(data) {
-        console.error('error in postToken', data);
       });
     },
     'deletePushToken': function(token) {
-      $http({method: 'DELETE', url: basUrl + urls.pushToken + '/' + token + api_key});
+      $http({method: 'DELETE', url: baseUrl + urls.pushToken + '/' + token + api_key});
     }
     // 'postApproval': function(){
     //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload

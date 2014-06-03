@@ -32,7 +32,7 @@ var _create = function (params, callback) {
   };
 
   var query = [
-    'MATCH (user:User{id:{id}})',
+    'MERGE (user:User{id:{id}})',
     'WITH user',
     'MERGE (push:Push{token:{token}, type:{type}})',
     'CREATE UNIQUE (user)<-[:PUSH_TO]-(push)',
