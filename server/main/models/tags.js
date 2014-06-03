@@ -66,34 +66,17 @@ var _create = function (params, callback) {
   var query = [
     'MATCH (user:User{id:{userId}})',
     'WITH user',
-    'MERGE (tag:Tag{id:{id},name:{name}})',
-    'CREATE UNIQUE (user)-[:HAS_TAG]->(tag)',
-    'RETURN tag',
+    'MERGE (tag:Tag{id:{id}})',
+    'ON CREATE SET tag.name = {name}',
+    'ON MATCH SET tag.name = {name}',
+    'CREATE UNIQUE (tag)<-[:HAS_TAG]-(user)',
+    'RETURN tag'
   ].join('\n');
 
   colog.info(query);
 
   callback(null, query, cypherParams);
 };
-
-// update the user with cypher
-// var _update = function (params, callback) {
-
-//   var cypherParams = {
-//     id : params.id,
-//     firstname : params.firstname,
-//     lastname : params.lastname,
-//   };
-
-//   var query = [
-//     'MATCH (user:User {id:{id}})',
-//     'SET user.firstname = {firstname}',
-//     'SET user.lastname = {lastname}',
-//     'RETURN user'
-//   ].join('\n');
-
-//   callback(null, query, cypherParams);
-// };
 
 // delete the user and any relationships with cypher
 var _delete = function (params, callback) {

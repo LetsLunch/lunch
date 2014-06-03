@@ -10,6 +10,7 @@ var swagger     = require('swagger-node-express'),
     likes       = require('./api/likes'),
     tags        = require('./api/tags'),
     locations   = require('./api/locations'),
+    match       = require('./api/match'),
     colog       = require('colog');
 
 var logQuery = function(req, res, next){
@@ -70,6 +71,10 @@ module.exports = function (subpath, BASE_URL, PORT, API_STRING) {
     // // Location Model and Methods
     .addGet(locations.find)
     .addPost(locations.addLocation)
+
+    // Match
+    .addGet(match.getMatch)
+    .addPost(match.addSelected)
  
    ;
 

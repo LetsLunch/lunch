@@ -61,40 +61,38 @@ var _create = function (params, callback) {
     id : params.id,
     firstname : params.firstname,
     lastname : params.lastname,
+    profileImage : params.profileImage,
   };
 
   var query = [
-    'MERGE (user:User {firstname: {firstname}, lastname: {lastname}, id: {id}})',
+
+    'MERGE (user:User{id: {id}})',
     'ON CREATE',
-    'SET user.created = timestamp()',
-    'ON MATCH',
-    'SET user.lastLogin = timestamp()',
-    'RETURN user'
-  ].join('\n');
+      'SET user.created = timestamp()',
+    'SET user.lastLogin = timestamp()'
+  ];
+
+  if (cypherParams.firstname){
+    query.push( 
+    'SET user.firstname ={firstname}');
+  }
+  if (cypherParams.lastname){
+    query.push(
+    'SET user.lastname= {lastname}');
+  }
+  if (cypherParams.profileImage){
+    query.push(
+    'SET user.profileImage = {profileImage}');
+  } 
+  query.push(
+    'RETURN user');
+  
+  query = query.join('\n');
 
   colog.info(query);
 
   callback(null, query, cypherParams);
 };
-
-// update the user with cypher
-// var _update = function (params, callback) {
-
-//   var cypherParams = {
-//     id : params.id,
-//     firstname : params.firstname,
-//     lastname : params.lastname,
-//   };
-
-//   var query = [
-//     'MATCH (user:User {id:{id}})',
-//     'SET user.firstname = {firstname}',
-//     'SET user.lastname = {lastname}',
-//     'RETURN user'
-//   ].join('\n');
-
-//   callback(null, query, cypherParams);
-// };
 
 // delete the user and any relationships with cypher
 var _delete = function (params, callback) {
