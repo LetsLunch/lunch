@@ -1,0 +1,139 @@
+/* Your app's CSS, go crazy, make it your own */
+
+.ionic-logo {
+  display: block;
+  margin: 15px auto;
+  width: 96px;
+  height: 96px;
+}
+
+.col {
+  background-color: #F0F8FF;
+  border-color: #ddd;
+  /*#FAEBD7;*/
+  margin: 10px;
+  text-align: center;
+  color: #4a87ee;
+  border-radius: 10px;
+  border-width: 1px;
+  border-style: solid;
+  font-size: 14px;
+  /*#995533;*/
+}
+
+.tags  {
+  margin-left: 15px;
+} 
+
+.likes {
+  margin-left: 5px;
+  margin-top: 5px;
+}
+
+#blurb,
+#facebook,
+#username,
+#location,  
+.search,
+.userimage {
+  text-align: center;
+}
+
+#username {
+  margin-bottom: 3px;
+}
+
+#location {
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
+.tag,
+.like,
+.lunchbuddy {
+  border-bottom: solid grey;
+}
+
+.lunchbuddy {
+  margin-bottom: 5px;
+}
+
+.userimage {
+  margin-top: 15px;
+}
+
+#fbbutton {
+  border-radius: 10px;
+  background-color: #3b5998;
+  color: white;
+}
+
+#lunchtitle {
+  font-size: 80px;
+}
+
+.tag,
+.like {
+  display: inline-block;
+  font-size: 15px;
+  padding: 8px;
+}
+
+.tag {
+  margin: 5px;
+
+}
+
+.like {
+  font-size: 12px;
+  padding: 5px;
+}
+
+.facebook {
+  position: relative;
+  margin-right: 3px;
+  top: 7px;
+}
+
+.liketext {
+  position: relative;
+  bottom: 7px;
+  margin-left: 12px;
+}
+
+.fbdivider {
+  padding: 5px;
+}
+
+.pressed {
+  background-color:grey;
+  color:white;
+  border-bottom:white;
+  -moz-box-shadow:    inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #000000;
+  box-shadow:         inset 0 0 10px #000000;
+}
+/*
+.toggle(
+  -webkit-transition: -webkit-transition: linear 2s;
+  -moz-transition: linear 2s;
+  -ms-transition: linear 2s;
+  -o-transition: linear 2s;
+  transition: linear 2s;
+}
+ 
+.toggle.ng-enter{
+  opacity: 0;
+}
+ 
+.toggle.ng-enter-active{
+  opacity: 1;
+}
+ 
+.toggle.ng-leave{
+  opacity: 1;
+}
+ 
+.toggle.ng-leave-active{
+  opacity: 0;
+} */
