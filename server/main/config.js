@@ -10,6 +10,12 @@ var subpath        = require('express')(),
     BASE_URL       = process.env.BASE_URL || 'http://localhost:' + PORT,
     API_STRING     = '/api/v0';
 
+var allowCORS = function(req, res, next) {
+  res.set('Access-Control-Allow-Headers', 'Content-Type');
+  res.set('Access-Control-Allow-Origin', '*');
+  next();
+};
+
 module.exports = function(app) {
   // all environments
   app.set('port', PORT);
@@ -24,6 +30,7 @@ module.exports = function(app) {
   }
   app.use(bodyParser());
   app.use(methodOverride());
+  app.use(allowCORS);
 
   // Configure API endpoints
   app.use(API_STRING, subpath);
