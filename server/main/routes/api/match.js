@@ -4,7 +4,7 @@
 var _ = require('lodash');
 var sw = require('swagger-node-express');
 var utils = require('../../utils');
-
+var colog = require('colog');
 // ## Models
 var Match = require('../../models/match');
 
@@ -82,8 +82,8 @@ exports.getMatch = {
     var callback = _.partial(_callback, res, errLabel);
     
     options.neo4j = utils.existsInQuery(req, 'neo4j');
-    params = _prepareParams(req);;
-    console.log(params);
+    params = _prepareParams(req);
+    colog.info(params);
 
     Match.getAll(params, options, callback);
   }
@@ -104,7 +104,7 @@ exports.addSelected = {
     },
     parameters : [
       param.path('id', 'User Id', 'string'),
-      param.form('selUserId', 'Selected User Id', 'string', true),
+      param.form('selectedUserId', 'Selected User Id', 'string', true),
     ],
     responseMessages : [swe.invalid('input')],
     nickname : 'addSelected'
@@ -119,42 +119,7 @@ exports.addSelected = {
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
     // Check for params 
-    Match.selected(params, options, callback);
+    Match.userSelected(params, options, callback);
 
   }
 };
-
-// // // Route: DELETE '/tags/:id'
-// exports.deleteTagRelation = {
-
-//   spec: {
-//     path: '/tags/{id}',
-//     notes: 'Deletes an existing user and Tag relationships',
-//     summary: 'Delete a  user and tag relationships',
-//     method: 'DELETE',
-//     type: 'object',
-//     parameters: [
-//       param.path('id', 'ID of tag to be deleted', 'string'),
-//       param.form('userId', 'User Id', 'string', true),
-
-//     ],
-//     responseMessages: [swe.invalid('input')],
-//     nickname : 'deleteTagRelation'
-//   },
-
-//   action: function (req, res) {
-//     var id = req.params.id;
-//     var options = {};
-//     var params = {};
-
-//     if (!id) throw swe.invalid('id');
-
-//     var errLabel = 'Route: DELETE /tags/{id}';
-//     var callback = _.partial(_callback, res, errLabel);
-
-//     options.neo4j = utils.existsInQuery(req, 'neo4j');
-//     params = _prepareParams(req);
-
-//     Tags.deleteTagRelation(params, options, callback);
-//   }
-// };

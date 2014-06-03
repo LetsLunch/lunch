@@ -5,6 +5,7 @@ var _ = require('lodash');
 var User = require('./neo4j/user.js');
 var zipcoder = require('cities');
 var Architect = require('neo4j-architect');
+var colog = require('colog');
 
 Architect.init();
 
@@ -38,7 +39,7 @@ var _manyUsers = function (results, callback) {
 
 // find location of UserId with cypher
 var _findAllMatches = function (params, callback) {
-  console.log('params :->',params);
+  colog.info(params);
   var cypherParams = {
     userId : params.id,
   };
@@ -66,7 +67,7 @@ var _findAllMatches = function (params, callback) {
     'RETURN o as results',
   ].join('\n');
 
-  console.log('create query', query);
+  colog.log('create query', query);
 
   callback(null, query, cypherParams);
 };
@@ -74,15 +75,15 @@ var _findAllMatches = function (params, callback) {
 var _selected = function (params, callback) {
   var cypherParams = {
     userId : params.userId,
-    selUserId : params.selUserId,
+    selectedUserId : params.selectedUserId,
   };
 
   var query = [
-    'MATCH (user:User{id:{userId}})-[:SELECTED]->(selUser:User)',
-     'RETURN selUser'
+    'MATCH (user:User{id:{userId}})-[:SELECTED]->(selectedUser:User{id:{selectedUserId}})',
+     'RETURN selectedUser'
   ].join('\n');
 
-  console.log('create query', query);
+  colog.info('create query', query);
 
   callback(null, query, cypherParams);
 };
@@ -93,10 +94,10 @@ var _selected = function (params, callback) {
 
 var findAllMatches = new Construct(_findAllMatches, _manyUsers);
 
-var selected = new Construct(_selected, _singleUser);
+var userSelected = new Construct(_selected, _singleUser);
 
 // export exposed functions
 module.exports = {
   getAll: findAllMatches.done(),
-  selected: selected.done(),
+  userSelected: userSelected.done(),
 };
