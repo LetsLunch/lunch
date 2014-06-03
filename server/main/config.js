@@ -1,12 +1,13 @@
 'use strict';
 
-var subpath = require('express')(),
-    bodyParser = require('body-parser'),
+var subpath        = require('express')(),
+    bodyParser     = require('body-parser'),
     methodOverride = require('method-override'),
-    logger  = require('morgan'),
-    routes  = require('../main/routes'),
-    PORT    = process.env.PORT || 8008,
-    API_STRING  = '/api/v0';
+    logger         = require('morgan'),
+    routes         = require('../main/routes'),
+    PORT           = process.env.PORT || 8008,
+    BASE_URL       = process.env.BASE_URL || 'http://localhost:' + PORT,
+    API_STRING     = '/api/v0';
 
 module.exports = function(app) {
   // all environments
@@ -24,7 +25,7 @@ module.exports = function(app) {
   app.use(API_STRING, subpath);
 
   // API endpoint routes
-  routes.api(subpath);
+  routes.api(subpath, BASE_URL, PORT, API_STRING);
   // API documentation routes
   routes.swaggerui(app);
   // Use documentation as landing page
