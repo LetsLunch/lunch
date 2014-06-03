@@ -98,7 +98,7 @@ angular.module('Lunch.factory.requests', [])
         $rootScope.$emit('matches', parsedData);
       })
       .error(function(data,status,headers,config){
-        alert('error in getMatchs', data);
+        console.log('error in getMatchs', data);
       });
     },
     'postPushToken': function(payload){
