@@ -8,7 +8,8 @@ angular.module('Lunch.factory.storedUserData', ['Lunch.factory.localStore'])
 
   var userData = {
         'id' : null,
-        'name': '',
+        'first_name': '',
+        'last_name' : '',
         'likes' : {},
         'geolocation' : undefined,
         'tags' : {

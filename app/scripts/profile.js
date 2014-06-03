@@ -108,7 +108,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
       $rootScope.$emit('userDataChanged', $scope.userData);
     };
 
-    $scope.postUser = function(){
+    $scope.postUser = function(){ 
       requests.postBasicDetails({
         'id' : $scope.userData.id,
         'firstname': $scope.userData.first_name,
@@ -123,6 +123,12 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
         'userId': $scope.userData.id,
         'lat': $scope.userData.geolocation.latitude,
         'lng': $scope.userData.geolocation.longitude
+      });
+    };
+
+    $scope.getMatches = function() {
+      requests.getMatches({
+        'userId': $scope.userData.id
       });
     };
 
@@ -141,7 +147,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
       $scope.getPicture();
       if(!$scope.userData.id) $scope.getDetails(); 
-      $scope.getLikes(); 
+      $scope.getLikes();
+
       Geo.getCurrentPosition();
       $rootScope.$emit('userDataChanged', $scope.userData);
     });
