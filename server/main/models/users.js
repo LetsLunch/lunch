@@ -58,7 +58,7 @@ var _matchBy = function (keys, params, callback) {
     'WITH user,like',
     'MATCH (user)-[:HAS_TAG]->(tag:Tag)',
     'WITH user,like,tag',
-    'RETURN user,collect(like) as likes,collect(tag) as tags'
+    'RETURN user,COLLECT( DISTINCT like) as likes,COLLECT( DISTINCT tag) as tags'
   ].join('\n');
 
   colog.info(query);
