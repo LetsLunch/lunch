@@ -105,6 +105,9 @@ angular.module('Lunch.factory.requests', [])
       .error(function(data) {
         console.error('error in postToken', data);
       });
+    },
+    'deletePushToken': function(token) {
+      $http({method: 'DELETE', url: basUrl + urls.pushToken + '/' + token + api_key});
     }
     // 'postApproval': function(){
     //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload

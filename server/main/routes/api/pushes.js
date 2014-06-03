@@ -100,7 +100,7 @@ exports.deletePush = {
     method: 'DELETE',
     type: 'object',
     parameters: [
-      param.form('token', 'Push notification token to be deleted', 'string', true)
+      param.path('token', 'Push notification token to be deleted', 'string')
     ],
     responseMessages: [],
     nickname : 'deleteTokenRelation'
@@ -115,6 +115,8 @@ exports.deletePush = {
 
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
+    // Allow token in path
+    params.token = req.params.token;
 
     Pushes.deletePush(params, options, callback);
   }

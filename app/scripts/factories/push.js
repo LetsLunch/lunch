@@ -28,14 +28,15 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
 
     // Register with the application server
     this.register = function(gcmToken) {
+      window.localStorage.gcmToken = gcmToken;
       OpenFB.checkLogin().then(function() {
         // Register fb id and push token with application server
-        window.alert('FB ID: ' + storedUserData.id + '\n' +
-                     'GCM TOKEN: ' + gcmToken);
-        requests.postPushToken({
-          id: storedUserData.id,
-          token: gcmToken,
-          type: 'gcm'
+        OpenFB.get('/me').success(function(data){
+          requests.postPushToken({
+            id: data.id,
+            token: gcmToken,
+            type: 'gcm'
+          });
         });
       });
     };
@@ -43,7 +44,9 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
     // Unregister from the GCM servers
     this.unregister = function() {
       pushNotification.unregister(console.info.bind(console));
-      // Unregister push token from application server
+      if (window.localStorage.gcmToken) {
+        requests.deletePushToken(window.localStorage.gcmToken);
+      }
     };
   });
  
