@@ -4,19 +4,18 @@ var gcm     = require('./chat/gcm'),
     request = require('request'),
     colog   = require('colog');
 
-var postChat = function(req, res) {
-  // Query neo4j for partner's tokens
-  var query = 'MATCH (:User {id: {destination}})<-[:PUSH_TO]-(token) ' +
+var pushMessage = function(id, payload) {
+  // Define Cypher query for user's tokens
+  var query = 'MATCH (:User {id: {id}})<-[:PUSH_TO]-(token:Push) ' +
               'RETURN token';
-  var params = {
-    destination: req.params.destination
-  };
+  var params = { id: id };
   
+  // Query neo4j instance
   request.post({
-    uri: 'http://localhost:7474/db/data/cypher',
-    json: {query: query, params: params}
+    uri: process.env['NEO4J_URL'] || 'http://localhost:7474/',
+    json: { query: query, params: params }
   }, function(err, r, body) {
-    // Collect partner's tokens
+    //Collect tokens
     var tokens = [];
     for (var i = 0; i < body.data.length; i++) {
       if (body.data[i][0].data.type === 'gcm') {
@@ -24,23 +23,37 @@ var postChat = function(req, res) {
       }
     }
 
-    // Send chat to all of partner's tokened devices
+    // Push message to all tokens
     var message = new gcm.Message({
       collapseKey: 'demo',
       delayWhileIdle: true,
       timeToLive: 3,
-      data: {
-        message: req.body.message,
-        timestamp: req.body.timestamp
-      }
+      data: payload
     });
+
     gcm.sender.send(message, tokens, 4, function (err) {
       colog.warning('Sent push over GCM: ' + err);
     });
-
-    res.status(200);
-    res.end();
   });
+
+};
+
+var postChat = function(req, res) {
+  var destinationId = req.params.destination;
+  var payload = {
+    message: req.body.message,
+    timestamp: req.body.timestamp
+  };
+
+  pushMessage(destinationId, payload);
+
+  res.status(200);
+  res.end();
+};
+
+var match = function(rick, morty) {
+  pushMessage(rick, { match: morty });
+  pushMessage(morty, { match: rick });
 };
 
 module.exports = function (app) {
@@ -48,3 +61,5 @@ module.exports = function (app) {
   app.post('/chat/:destination', postChat);
   app.post('/api/v0/chat/:destination', postChat);
 };
+
+module.exports.match = match;
