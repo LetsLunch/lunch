@@ -11,6 +11,7 @@ var swagger     = require('swagger-node-express'),
     tags        = require('./api/tags'),
     locations   = require('./api/locations'),
     match       = require('./api/match'),
+    pushes      = require('./api/pushes'),
     colog       = require('colog');
 
 var logQuery = function(req, res, next){
