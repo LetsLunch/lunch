@@ -5,6 +5,7 @@ var _ = require('lodash');
 var Loc = require('./neo4j/location.js');
 var zipcoder = require('cities');
 var Architect = require('neo4j-architect');
+var colog = require('colog');
 
 Architect.init();
 
@@ -29,7 +30,7 @@ var _singleLoc = function (results, callback) {
 
 // find location of UserId with cypher
 var _findByUserId = function (params, callback) {
-  console.log('params :->',params);
+  colog.info(params);
   var cypherParams = {
     userId : params.userId,
   };
@@ -39,7 +40,7 @@ var _findByUserId = function (params, callback) {
     'RETURN location',
   ].join('\n');
 
-  console.log('create query', query);
+  colog.info(query);
 
   callback(null, query, cypherParams);
 };
@@ -65,7 +66,7 @@ var _create = function (params, callback) {
     'RETURN newLocation'
   ].join('\n');
 
-  console.log('create query', query);
+  colog.info(query);
 
   callback(null, query, cypherParams);
 };

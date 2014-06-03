@@ -1,35 +1,35 @@
 'use strict';
 
-var subpath = require('express')(),
-    bodyParser = require('body-parser'),
+var subpath        = require('express')(),
+    bodyParser     = require('body-parser'),
     methodOverride = require('method-override'),
-    errorHandler = require('errorhandler'),
-    logger  = require('morgan'),
-    routes  = require('../main/routes'),
-    PORT    = process.env.PORT || 8008,
-    API_STRING  = '/api/v0';
+    logger         = require('morgan'),
+    routes         = require('../main/routes'),
+    colog          = require('colog'),
+    PORT           = process.env.PORT || 8008,
+    BASE_URL       = process.env.BASE_URL || 'http://localhost:' + PORT,
+    API_STRING     = '/api/v0';
 
 module.exports = function(app) {
   // all environments
   app.set('port', PORT);
 
-  // Configure API endpoints
-  app.use(API_STRING, subpath);
-  subpath.use(bodyParser());
-  subpath.use(methodOverride());
-
   // Configure general requests
-  app.use(logger('dev'));
+  if (process.env.DEVELOPMENT) {
+    console.info('Morgan is here! (Your DEVELOPMENT variable is set)');
+    app.use(logger('dev'));
+    colog.silent(false);
+  } else {
+    colog.silent(true);
+  }
   app.use(bodyParser());
   app.use(methodOverride());
 
-  // development only
-  if ('development' === app.get('env')) {
-    app.use(errorHandler());
-  }
+  // Configure API endpoints
+  app.use(API_STRING, subpath);
 
   // API endpoint routes
-  routes.api(subpath);
+  routes.api(subpath, BASE_URL, PORT, API_STRING);
   // API documentation routes
   routes.swaggerui(app);
   // Use documentation as landing page

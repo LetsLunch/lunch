@@ -3,19 +3,26 @@
 /* jshint camelcase:false */
 
 // ## Module Dependencies
-var swagger = require('swagger-node-express');
-var url = require('url');
-var models = require('../models/swagger');
-var users = require('./api/users');
-var likes = require('./api/likes');
-var tags = require('./api/tags');
-var locations = require('./api/locations');
-var PORT = process.env.PORT || 8008;
-var BASE_URL    = process.env.BASE_URL || 'http://localhost:' + PORT;
-var API_STRING  = '/api/v0';
+var swagger     = require('swagger-node-express'),
+    url         = require('url'),
+    models      = require('../models/swagger'),
+    users       = require('./api/users'),
+    likes       = require('./api/likes'),
+    tags        = require('./api/tags'),
+    locations   = require('./api/locations'),
+    colog       = require('colog');
 
+var logQuery = function(req, res, next){
+  colog.log(colog.color(req.url, 'cyan'));
+  for (var key in req.body) {
+    colog.log(colog.color('\t' + key + ': ' + req.body[key], 'white'));
+  }
+  next();
+};
 
-module.exports = function (subpath) {
+module.exports = function (subpath, BASE_URL, PORT, API_STRING) {
+  // Log the query
+  subpath.use(logQuery);
 
   // Set the main handler in swagger to the express subpath
   swagger.setAppHandler(subpath);
@@ -65,12 +72,6 @@ module.exports = function (subpath) {
     .addPost(locations.addLocation)
  
    ;
-
-  // swagger.configureDeclaration('users', {
-  //   description: 'User Operations',
-  //   // authorizations: ['oath2'],
-  //   produces: ['application/json']
-  // });
 
   // set api info
   swagger.setApiInfo({

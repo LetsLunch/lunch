@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var sw = require('swagger-node-express');
 var utils = require('../../utils');
+var colog = require('colog');
 
 // ## Models
 var Locations = require('../../models/locations');
@@ -43,7 +44,7 @@ var _callback = function (res, errLabel, err, results, queries) {
   var start = new Date();
 
   if (err || !results) {
-    if (err) console.error(errLabel + ' ', err);
+    if (err) colog.error(errLabel + err);
     swe.invalid('input', res);
     return;
   }
@@ -117,8 +118,6 @@ exports.addLocation = {
 
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
-    // Check for params 
-    // console.log("addLocation req:-",req);
     Locations.create(params, options, callback);
 
   }
