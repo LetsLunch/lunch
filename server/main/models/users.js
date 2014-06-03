@@ -3,6 +3,7 @@
 // ## Module Dependencies
 var _ = require('lodash');
 var User = require('./neo4j/user.js');
+var UserProfile = require('./neo4j/userprofile.js');
 var Architect = require('neo4j-architect');
 var colog = require('colog');
 
@@ -22,6 +23,15 @@ var _singleUser = function (results, callback) {
     callback(null, null);
   }
 };
+// return a single user
+var _singleUserProfile = function (results, callback) {
+  if (results.length) {
+    callback(null, new UserProfile(results[0]));
+  } else {
+    callback(null, null);
+  }
+};
+
 
 // return many users
 var _manyUsers = function (results, callback) {
@@ -42,7 +52,12 @@ var _matchBy = function (keys, params, callback) {
   var query = [
     'MATCH (user:User)',
     Cypher.where('user', keys),
-    'RETURN user'
+    'WITH user',
+    'MATCH (user)-[:LIKES]->(like:Like)',
+    'WITH user,like',
+    'MATCH (user)-[:HAS_TAG]->(tag:Tag)',
+    'WITH user,like,tag',
+    'RETURN user,COLLECT( DISTINCT like) as likes,COLLECT( DISTINCT tag) as tags'
   ].join('\n');
 
   colog.info(query);
@@ -124,7 +139,7 @@ var _deleteAll = function (params, callback) {
 
 // create a new user
 
-var getById = new Construct(_matchByUUID).query().then(_singleUser);
+var getById = new Construct(_matchByUUID).query().then(_singleUserProfile);
 
 var getAll = new Construct(_matchAll, _manyUsers);
 
