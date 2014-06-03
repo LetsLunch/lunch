@@ -46,16 +46,13 @@ angular.module('Lunch.chats', ['Lunch.factory.storedUserData'])
 
   $scope.postMessage = function(text){
     if(text){
-      console.log(storedUserData);
       $scope.chatMessages.unshift({
-        'firstname': storedUserData.first_name,
-        'lastname' : storedUserData.last_name,
+        'first_name': storedUserData.first_name,
+        'last_name' : storedUserData.last_name,
         'messageText' : text,
         'timestamp' : new Date(),
         'user' : true 
       })
-      console.log(text);
-
     }
   };
 
