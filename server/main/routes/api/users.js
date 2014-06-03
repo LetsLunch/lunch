@@ -100,8 +100,8 @@ exports.addUser = {
     },
     parameters : [
       param.form('id', 'User UUID', 'string', true),
-      param.form('firstname', 'User firstname', 'string', true),
-      param.form('lastname', 'User lastname', 'string', true),
+      param.form('firstname', 'User firstname', 'string', false),
+      param.form('lastname', 'User lastname', 'string', false),
       param.form('email', 'User email', 'string', false),
       param.form('profileImage', 'User profile image url', 'string', false),
       // param.form('location', 'User\'s current location', 'object', false)
