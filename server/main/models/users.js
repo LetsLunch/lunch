@@ -26,7 +26,6 @@ var _singleUser = function (results, callback) {
 // return a single user
 var _singleUserProfile = function (results, callback) {
   if (results.length) {
-    // console.log(new UserProfile(results[0]));
     callback(null, new UserProfile(results[0]));
   } else {
     callback(null, null);
