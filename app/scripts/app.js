@@ -35,7 +35,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'Lunch.profile', 'Lunch.browse', 'L
 .config(function($provide, $stateProvider, $urlRouterProvider) {
   // Set application server
   // TODO: Change this to your production server
-  $provide.constant('AppServer', 'http://10.8.28.232:8008');
+  $provide.constant('AppServer', 'http://127.0.0.1:8008');
 
   // Set initial paths
   $stateProvider
