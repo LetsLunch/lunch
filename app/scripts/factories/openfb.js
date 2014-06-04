@@ -59,7 +59,7 @@ angular.module('openfb', [])
                     get('/me').success(function(data) {
                         tokenStore['id'] = data.id;
                         deferredCheck.resolve(data.id, tokenStore['fbtoken']);
-                    }).fail(function(err) {
+                    }).catch(function(err) {
                         deferredCheck.reject(err);
                     });
                 }
