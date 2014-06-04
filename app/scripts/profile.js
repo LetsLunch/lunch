@@ -28,7 +28,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
             //inform the database if a new id
             //add the new id and like data locally
             $scope.userData.likes[value.id] = value.name;
-            $scope.postLikes(like);
+            $scope.postLikes(value);
           }
           //track id
           idTrack[value.id] = true;
