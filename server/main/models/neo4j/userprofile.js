@@ -5,6 +5,7 @@ var _ = require('lodash');
 
 var UserProfile = function (_node) {
   this.user = _node.user.data;
+  this.location = _node.location.data;
   var that = this;
   that.likes = [];
   that.tags = [];
