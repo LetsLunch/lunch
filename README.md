@@ -1,9 +1,23 @@
 lunch
 =====
 
+## Setting environment variables
+
+### Application side
+
+*Your application IDs, provided through Facebook and Google, will need to be available to the mobile application. This is done through angular.run.*
+
+* In `app/scripts/app.js`, replace the IDs in `OpenFB.init` and `push.init` with your Facebook and Google application IDs, respectively.
+
+### Server side
+
+*Server side variables are set through the shell, and accessed using process.env.VAR_NAME.*
+
+* *TODO*
+
 ### Booting up a client
 
-After copying the repo, you can boot up a client through a browser or emulator:
+You can boot up a client through a browser or emulator:
 
 * `npm i && grunt start:client` *Start up the client through a web browser*
 
