@@ -33,7 +33,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   OpenFB.init(fbAPI, 'http://localhost:9000/oauth.html');
   push.init(gcmAPI);
 
-  // Force login
+  // Force authentication
   $rootScope.$on('$stateChangeStart', function(e, state) {
     if ($window.sessionStorage['fbtoken']) {
       if (state.name === 'app.login') {
@@ -48,15 +48,8 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
     }
   });
 
+  // Catch oAuth2 exceptions
   $rootScope.$on('OAuthException', function() {
     $state.go('app.login');
   });
-
-  $rootScope.$on('pushNotificationStart', function(e, userData) {
-      $state.go('app.match');
-      // at this point also send the message to a matched user factory 
-      // so that the match view has a means ot obtain the data required
-  });
-
 });
-
