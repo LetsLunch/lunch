@@ -27,6 +27,16 @@ angular.module('Lunch.factory.requests', [])
         data: payload
       });
     },
+    'getDetails' : function(userId){
+      console.log('details');
+      var deferredResponse = $q.defer();
+      $http({method: 'GET', url: baseUrl + urls.basicDetails + '/' + userId + api_key})
+      .then(function(data) {
+        deferredResponse.resolve(data);
+        console.log('in get details');
+      });
+      return deferredResponse.promise;
+    },
     'postLike': function(payload){
       return $http({
         method: 'POST',

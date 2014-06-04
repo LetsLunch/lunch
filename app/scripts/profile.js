@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests'])  
+angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests', 'Lunch.factory.matchData'])  
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -13,7 +13,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
   });
 })
 
-.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, requests) {
+.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, requests, matchData) {
   // Store data in scope
   $scope.userData = storedUserData;
 
@@ -67,6 +67,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
           });
         }
       });
+      //get matches since we have the user id from facebook
+      $scope.getMatches();
     };
 
     $scope.getPicture = function() {
@@ -94,6 +96,14 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
           $scope.postUser();
           //store updates to data locally
           $rootScope.$emit('userDataChanged', $scope.userData);
+        })
+        .error(function(data){
+          //if we have data for the user, and fb api is not available 
+          // still post user data and tags
+          if($scope.userData.id){
+            $scope.postUser();
+            $scope.postTags();
+          }
         });
     };
 
@@ -141,8 +151,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     };
 
     $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
+      $scope.getDetails();
       $scope.getPicture();
-      if(!$scope.userData.id) $scope.getDetails(); 
       $scope.getLikes();
 
       Geo.getCurrentPosition()

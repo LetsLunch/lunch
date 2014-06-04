@@ -1,65 +1,66 @@
 'use strict';
 angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
-.factory('matchData', function($rootScope){
-  var counter,
-      matchData,
-      matchLength;
+.factory('matchData', function($rootScope, requests){
+  var counter = 0,
+      matchData = [];
 
-  $rootScope.$on('matches', function(e, matchData){
-    counter = 0;
-    // matchData = matchData;
-    // matchLength = matchData.length;
+  $rootScope.$on('matches', function(){
+    console.log('matches event listener');
   });
-  counter = 0;
-  matchData =  [
-    {
-        id : 12345,
-        firstname : 'Bill',
-        lastname : 'Gates',
-        profileImage : 'http://mostfamousperson.net/BillGates.png',
-        likes : ['Computers', 'Health', 'Kale'],
-        city : 'Redmond',
-        tags : {
-                   'Javascript':false,
-                   'Cake':false,
-                   'Cats':false,
-                   'Cars':true,
-                   'Robots':true,
-                   'Yoga':false,
-                   'Finance':false,
-                   'Startups':true
-                 }
-    },
-    {
-        id: 56789,
-        firstname: 'Steve',
-        lastname: 'Jobs',
-        profileImage : 'http://www.tanld.com/Portals/0/Images/steve-jobs.jpg',
-        likes : ['Design', 'Simplicity', 'Fruitarian-Diet'],
-        city : 'Unknown',
-        tags : {
-                   'Javascript':false,
-                   'Cake':false,
-                   'Cats':true,
-                   'Cars':false,
-                   'Robots':false,
-                   'Yoga':true,
-                   'Finance':false,
-                   'Startups':false
-                 }
-    }];
-  
-  matchLength = matchData.length;
-  
+
+  var processMatchData = function(id){
+      var user = requests.getDetails(id);
+
+      user.then(function(returned){
+        console.log(returned.data);
+        var likes = [],
+            tags = {  // later on it is possible to set the displayed tags
+                      //based on what was locally stored
+                       'Javascript':false,
+                       'Cake':false,
+                       'Cats':false,
+                       'Cars':true,
+                       'Robots':true,
+                       'Yoga':false,
+                       'Finance':false,
+                       'Startups':true
+                   };
+
+        angular.forEach(returned.data.likes, function(value){
+          likes.push(value.name);
+        });
+
+         angular.forEach(returned.data.tags, function(value){
+          tags[value.name] = true;
+        });
+
+        var user = {
+          id: returned.data.user.id,
+          firstname: returned.data.user.firstname,
+          lastname: returned.data.user.lastname,
+          profileImage: returned.data.user.profileImage,
+          likes : likes,
+          tags: tags,
+          city : returned.data.user.location || undefined  // this needs to be fixed
+        };
+        // angular.forEach(returned.data.tags, function(value))
+        //need to store and display the matched user once fetched
+        matchData.unshift(user);
+      });
+  };
+
   $rootScope.$on('nextMatch', function(e){
     output.counter++;
-    if(counter > matchLength){
-        $rootScope.$emit('nomorematches');
-    };
+    if(counter > matchData.length){
+      $rootScope.$emit('nomorematches');
+    }
   });
+
   var output = {
     'matches' : matchData || undefined,
-    'counter' : counter
+    'counter' : counter,
+    'processMatchData' : processMatchData
   };
+
   return output;
 });
