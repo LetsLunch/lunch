@@ -1,17 +1,18 @@
 'use strict';
-angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
-.factory('matchData', function($rootScope, requests){
+angular.module('matchData', ['Lunch.factory.requests'])
+.service('matchData', function(requests){
   var counter = 0,
       matchData = [];
 
-  $rootScope.$on('matches', function(){
-    console.log('matches event listener');
-  });
+  // $scope.$on('matches', function(){
+  //   console.log('matches event listener');
+  // });
 
-  var processMatchData = function(id){
-      var user = requests.getDetails(id);
+  this.processMatchData = function(matchedUsers){
+    angular.forEach(matchedUsers, function(user){
+      var userDetails = requests.getDetails(id);
 
-      user.then(function(returned){
+      userDetails.then(function(returned){
         console.log(returned.data);
         var likes = [],
             tags = {  // later on it is possible to set the displayed tags
@@ -46,21 +47,26 @@ angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
         // angular.forEach(returned.data.tags, function(value))
         //need to store and display the matched user once fetched
         matchData.unshift(user);
+        console.log('in match data');
+        console.log(matchData);
       });
+      
+    })
   };
 
-  $rootScope.$on('nextMatch', function(e){
-    output.counter++;
-    if(counter > matchData.length){
-      $rootScope.$emit('nomorematches');
-    }
-  });
-
-  var output = {
-    'matches' : matchData || undefined,
-    'counter' : counter,
-    'processMatchData' : processMatchData
+  this.getMatches = function() {
+    return matchData;
   };
 
-  return output;
+  this.getCount = function() {
+    return counter;
+  };
+
+  this.nextMatch =  function(e){
+    counter++;
+    // if(counter > matchData.length){
+    //   $scope.$emit('nomorematches'); // check if this works
+    // }
+  };
+
 });

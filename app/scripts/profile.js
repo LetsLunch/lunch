@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests', 'Lunch.factory.matchData'])  
+angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests', 'matchData'])  
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -150,10 +150,20 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
       });
     };
 
-    $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
-      $scope.getDetails();
-      $scope.getPicture();
-      $scope.getLikes();
+    // Get phone-based user data
+    $scope.$on('geolocation', function(event, geoposition){
+      $scope.userData.geolocation = geoposition.coords;
+      $rootScope.$emit('userDataChanged', $scope.userData);
+      //send geoloc to db
+      $scope.postLocation();
+    });
+
+    $rootScope.$on('userLocation', function(e, city){
+      console.log('user location');
+      console.log(city);
+      $scope.userData.location = city; 
+      $rootScope.$emit('userDataChanged', $scope.userData);
+    });
 
       Geo.getCurrentPosition()
         .then(function(pos) { $scope.postLocation(pos); })

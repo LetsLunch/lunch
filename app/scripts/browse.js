@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.storedUserData'])
+angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
@@ -17,21 +17,21 @@ angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.stored
     var matchId;
 
     var initialize = function() {
-      $scope.counter = matchData.counter;
+      $scope.counter = matchData.getCount().counter;
       nextMatch();
     }; // if no data have backup
 
     var nextMatch = function() {
-      if($scope.counter >= matchData.matches.length) {
+      if($scope.counter >= matchData.getMatches().length) {
         $location.path('/app/nomatches');
       } else {
-        $scope.firstname = matchData.matches[$scope.counter].firstname;
-        $scope.lastname = matchData.matches[$scope.counter].lastname;
-        $scope.likes = matchData.matches[$scope.counter].likes;
-        $scope.city = matchData.matches[$scope.counter].city;
-        $scope.tags = matchData.matches[$scope.counter].tags;
-        $scope.photo_url = matchData.matches[$scope.counter].profileImage;
-        matchId = matchData.matches[$scope.counter].id;
+        $scope.firstname = matchData.getMatches()[$scope.counter].firstname;
+        $scope.lastname = matchData.getMatches()[$scope.counter].lastname;
+        $scope.likes = matchData.getMatches()[$scope.counter].likes;
+        $scope.city = matchData.getMatches()[$scope.counter].city;
+        $scope.tags = matchData.getMatches()[$scope.counter].tags;
+        $scope.photo_url = matchData.getMatches()[$scope.counter].profileImage;
+        matchId = matchData.getMatches()[$scope.counter].id;
         //show splash screen of come back tomorrow!
       }
     };
@@ -40,7 +40,7 @@ angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.stored
      
     var next = function(){
       $scope.counter++;
-      $rootScope.$emit('nextMatch');
+      matchData.nextMatch();
       nextMatch();
     };
 
@@ -48,7 +48,10 @@ angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.stored
     $scope.approve = function() {
       next();
       //call service to send approval to db
-      //requests.postApproval(matchId, userId);
+      requests.postApproval({
+          id: storedUserData.id, 
+          selectedUserId : matchId
+      });
     };
 
     //records a disapproval for the currently displayed profile
