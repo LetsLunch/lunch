@@ -1,5 +1,7 @@
-'use strict'; 
-angular.module('Lunch.login', [])
+'use strict';
+
+angular.module('Lunch.login', ['Lunch.logout'])
+
 .config(function($stateProvider){
   $stateProvider
   .state('app.login', {
@@ -12,7 +14,8 @@ angular.module('Lunch.login', [])
     }
   });
 })
-.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB, Geo) {
+
+.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB) {
   $scope.login = function() {
     OpenFB.login('public_profile,user_likes').then(
       function() {
@@ -21,5 +24,9 @@ angular.module('Lunch.login', [])
       function() {
         window.alert('Login failed.');
       });
+  };
+
+  $scope.updateSlide = function(index) {
+    $ionicSlideBoxDelegate.$getByHandle('loginSlider').slide(index);
   };
 });
