@@ -53,7 +53,16 @@ angular.module('openfb', [])
             deferredCheck = $q.defer();
 
             if (tokenStore['fbtoken']) {
-                deferredCheck.resolve(tokenStore['fbtoken']);
+                if (tokenStore['id']) {
+                    deferredCheck.resolve(tokenStore['id'], tokenStore['fbtoken']);
+                } else {
+                    get('/me').success(function(data) {
+                        tokenStore['id'] = data.id;
+                        deferredCheck.resolve(data.id, tokenStore['fbtoken']);
+                    }).fail(function(err) {
+                        deferredCheck.reject(err);
+                    });
+                }
             }
 
             return deferredCheck.promise;
@@ -154,6 +163,7 @@ angular.module('openfb', [])
          * Application-level logout: we simply discard the token.
          */
         function logout() {
+            delete tokenStore['id'];
             delete tokenStore['fbtoken'];
         }
 
