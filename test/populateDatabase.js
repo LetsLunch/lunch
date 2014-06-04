@@ -14,7 +14,7 @@ var request  = require('request'),
 var User = function (id) {
   var name = namer().split(' ');
   
-  this.id = id;
+  this.id = '' + id;
   this.firstname = name[0];
   this.lastname = name[1];
   this.profileImage = 'http://www.example.com/' + id;
@@ -32,7 +32,7 @@ var Like = function (id) {
 
   if (id >= likes.length) { throw 'Unexpected id in Like: ' + id; }
   
-  this.id = id;
+  this.id = '' + id;
   this.name = likes[id];
 };
 var Tag = function (id) {
@@ -48,7 +48,7 @@ var Tag = function (id) {
 
   if (id >= tags.length) { throw 'Unexpected id in Tag: ' + id; }
 
-  this.id = id;
+  this.id = '' + id;
   this.name = tags[id];
 };
 var Location = function (id) {
@@ -87,13 +87,13 @@ var params = {
 var relate = [];
 var iUser, iTag, iLike;
 for (iUser = 0; iUser < 10; iUser++) {
-  relate.push('MERGE (u'+iUser+':User {id:'+iUser+'})');
+  relate.push('MERGE (u'+iUser+':User {id:\''+iUser+'\'})');
 }
 for (iTag = 0; iTag < 7; iTag++) {
-  relate.push('MERGE (t'+iTag+':Tag {id:'+iTag+'})');
+  relate.push('MERGE (t'+iTag+':Tag {id:\''+iTag+'\'})');
 }
 for (iLike = 0; iLike < 7; iLike++) {
-  relate.push('MERGE (l'+iLike+':Like {id:'+iLike+'})');
+  relate.push('MERGE (l'+iLike+':Like {id:\''+iLike+'\'})');
 }
 relate.push('MERGE (z'+94102+':Location {id:\''+94102+'\'})');
 relate.push('MERGE (z'+49093+':Location {id:\''+49093+'\'})');
