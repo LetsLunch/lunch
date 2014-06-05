@@ -53,7 +53,8 @@ angular.module('Lunch.chats', ['Lunch.factory.storedUserData'])
   };
 
   // Listen for incoming messages
-  storedChat.getChatPromise.then(null, null, function(post) {
+  window.storedChat = storedChat;
+  storedChat.getChatPromise().then(null, null, function(post) {
     $scope.chatMessages.push(post);
   });
 
