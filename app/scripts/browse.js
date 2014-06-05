@@ -1,5 +1,5 @@
 'use strict';
-angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
+angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.storedUserData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
@@ -15,47 +15,51 @@ angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
 .controller('BrowseCtrl', function($rootScope, $scope, matchData, $location, requests, storedUserData){
     var userId = storedUserData.id;
     var matchId;
+    var matchedData = matchData.getMatches();
+    $scope.counter = matchData.getCount();
 
-    var initialize = function() {
-      $scope.counter = matchData.getCount();
-      nextMatch();
-    }; // if no data have backup
 
-    var nextMatch = function() {
-      if($scope.counter >= matchData.getMatches().length) {
-        $location.path('/app/nomatches');
+    var renderNextMatch = function() {
+      if($scope.counter >= matchedData.length) {
+        $state.go('noMatches');
       } else {
-        console.log(matchData.getMatches());
-        console.log($scope.counter);
-        $scope.firstname = matchData.getMatches()[$scope.counter].firstname;
-        $scope.lastname = matchData.getMatches()[$scope.counter].lastname;
-        $scope.likes = matchData.getMatches()[$scope.counter].likes;
-        $scope.city = matchData.getMatches()[$scope.counter].city;
-        $scope.tags = matchData.getMatches()[$scope.counter].tags;
-        $scope.photo_url = matchData.getMatches()[$scope.counter].profileImage;
-        matchId = matchData.getMatches()[$scope.counter].id;
-        //show splash screen of come back tomorrow!
+        var userData = matchedData[$scope.counter];
+        $scope.firstname = userData.firstname;
+        $scope.lastname = userData.lastname;
+        $scope.likes = userData.likes;
+        $scope.city = userData.city;
+        $scope.tags = userData.tags;
+        $scope.photo_url = userData.profileImage;
+        matchId = userData.id;
+        // TODO: show splash screen of come back tomorrow!
       }
     };
 
-    initialize();
+    renderNextMatch();
 
     var next = function(){
-      $scope.counter++;
-      matchData.nextMatch();
-      nextMatch();
+      if($scope.counter < matchedData.length){
+        $scope.counter++;
+        matchData.incrementMatchedUserCounter();
+      }
+      renderNextMatch();
     };
 
-    //records an approval for the currently displayed profile
+    // records an approval for the currently displayed profile
     $scope.postDecision = function(decision) {
       next();
-      //call service to send approval to db
+      // call service to send approval to db
       requests.postDecision({
           id: storedUserData.id,
           selectedUserId : matchId,
           accepted: decision
-      }); // if approval header has a response that denotes a match
-       //switch to the chat app
+      })
+      .then(function(returnedData){
+        var parsedData = angular.fromJson(returnedData);
+          if(returnedData.id){      // TO DO - check against above matchId
+            $state.go('app.chats'); // TO DO - redirect to either chats or pair
+          }
+      });
     };
 
 });

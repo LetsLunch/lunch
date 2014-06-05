@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests', 'matchData'])
+angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests', 'Lunch.service.matchData'])
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {

@@ -1,19 +1,15 @@
 'use strict';
-angular.module('matchData', ['Lunch.factory.requests'])
+angular.module('Lunch.service.matchData', ['Lunch.factory.requests'])
 .service('matchData', function(requests){
   var counter = 0,
       matchData = [];
-
-  // $scope.$on('matches', function(){
-  //   console.log('matches event listener');
-  // });
 
   this.processMatchData = function(matchedUsers){
     angular.forEach(matchedUsers.data, function(user){
       requests.getDetails(user.id).then(function(returned){
         var likes = [],
-            tags = {  // later on it is possible to set the displayed tags
-                      //based on what was locally stored
+            tags = {  // TODO: post MVP set displayed tags
+                      // based on what was locally stored
                        'Javascript':false,
                        'Cake':false,
                        'Cats':false,
@@ -23,10 +19,8 @@ angular.module('matchData', ['Lunch.factory.requests'])
                        'Finance':false,
                        'Startups':true
                    };
-        // console.log(returned);
         angular.forEach(returned.data.likes, function(value){
           likes.push(value.name);
-          // console.log(value);
         });
 
          angular.forEach(returned.data.tags, function(value){
@@ -40,10 +34,8 @@ angular.module('matchData', ['Lunch.factory.requests'])
           profileImage: returned.data.user.profileImage,
           likes : likes,
           tags: tags,
-          city : returned.data.user.location || undefined  // this needs to be fixed
+          city : returned.data.user.location || undefined  //TODO this may need to be flexible to deal with city/other name tag denoting location
         };
-        // angular.forEach(returned.data.tags, function(value))
-        //need to store and display the matched user once fetched
         matchData.unshift(user);
       });
 
@@ -58,11 +50,8 @@ angular.module('matchData', ['Lunch.factory.requests'])
     return counter;
   };
 
-  this.nextMatch =  function(e){
+  this.incrementMatchedUserCounter =  function(){
     counter++;
-    // if(counter > matchData.length){
-    //   $scope.$emit('nomorematches'); // check if this works
-    // }
   };
 
 });

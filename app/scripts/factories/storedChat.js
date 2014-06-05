@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Lunch.service.storedChat', [])  
+angular.module('Lunch.service.storedChat', [])
   .service('storedChat', function($q) {
     // Make new chats available through promises and stash them locally
     var deferredChat = $q.defer();
@@ -21,9 +21,9 @@ angular.module('Lunch.service.storedChat', [])
       var text = payload.message;
       var time = payload.timestamp;
       var self = !!payload.user;
-      
+
       deferredChat.resolve(payload);
-      
+
       // Store log
       var chat = angular.fromJson(window.localStorage.chat) || [];
       chat.push({
@@ -34,4 +34,4 @@ angular.module('Lunch.service.storedChat', [])
       window.localStorage.chat = chat;
     };
   });
-  
+
