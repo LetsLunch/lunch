@@ -148,7 +148,12 @@ angular.module('openfb', [])
                 tokenStore['fbtoken'] = obj['access_token'];
                 deferredLogin.resolve();
                 if (deferredCheck) {
-                    deferredCheck.resolve(tokenStore['fbtoken']);
+                    get('/me').success(function(data) {
+                        tokenStore['id'] = data.id;
+                        deferredCheck.resolve(data.id, tokenStore['fbtoken']);
+                    }).catch(function(err) {
+                        deferredCheck.reject(err, tokenStore['fbtoken']);
+                    });
                 }
             } else if (url.indexOf("error=") > 0) {
                 queryString = url.substring(url.indexOf('?') + 1, url.indexOf('#'));
