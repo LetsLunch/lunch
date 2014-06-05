@@ -1,66 +1,52 @@
 'use strict';
-angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.factory.storedUserData'])
-.service('matchData', function(requests, storedUserData, $q){
-  var counter = 0,
-      matchData = [];
 
-  var processMatchData = function(matchedUsers){
-    angular.forEach(matchedUsers.data, function(user){
-      // client to track if server has already sent a particular matched user
-      //this should be a queued for loop
+angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.factory.storedUserData'])
+.service('matchData', function(requests, OpenFB, $q){
+
+  var processMatchData = function(matches){
+    var matchData = [];
+
+    angular.forEach(matches, function(user){
+      // Every user is returned in a promise
       var userPromise = $q.defer();
       matchData.unshift(userPromise);
-      requests.getDetails(user.id).then(function(returned){
-        var likes = [],
+      requests.getDetails(user.id).then(function(details){
+        var user = {},
+            likes = [],
             tags = {};
-        angular.forEach(returned.data.likes, function(value){
+
+        angular.forEach(details.data.likes, function(value){
           likes.push(value.name);
         });
 
-         angular.forEach(returned.data.tags, function(value){
+         angular.forEach(details.data.tags, function(value){
           tags[value.name] = true;
         });
 
-        var user = {
-          id: returned.data.user.id,
-          firstname: returned.data.user.firstname,
-          lastname: returned.data.user.lastname,
-          profileImage: returned.data.user.profileImage,
-          likes : likes,
-          tags: tags,
-          city : returned.data.user.location || undefined  //TODO this may need to be flexible to deal with city/other name tag denoting location
-        };
-        // matchData.unshift(user);
-        deferredUserObj.resolve(userPromise)
+        details.user.likes = likes;
+        details.user.tags = tags;
+        details.user.city = details.data.user.location || undefined;
+        angular.extend(user, details.user);
+
+        userPromise.resolve(user);
         });
     });
+
+    // Only resolve when all user promises resolve
     return $q.all(matchData);
   };
 
   this.getMatches = function() {
-    return matchData;
-  };
-
-  this.getCount = function() {
-    return counter;
-  };
-
-  this.getMatchesFromServer = function() {
     var deferredMatchData =  $q.defer();
-    requests.getMatches({
-       'userId': storedUserData.id
-    }).then(function(matches){
-      processMatchData(matches).then(function(processedData){
-        deferredMatchData.resolve(processedData);
-        //sets counter to zero for new array of users
-        counter = 0;
-      })
-    })
+    
+    OpenFB.checkLogin().then(function(id) {
+      return requests.getMatches({ 'userId': id })
+    }).then(function(matchData){
+      return processMatchData(matchData.data)
+    }).then(function(processedData){
+      deferredMatchData.resolve(processedData);
+    });
+
     return deferredMatchData.promise;
   };
-
-  this.incrementMatchedUserCounter =  function(){
-    counter++;
-  };
-
 });
