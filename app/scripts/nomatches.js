@@ -2,7 +2,7 @@
 angular.module('Lunch.nomatches', [])
 .config(function($stateProvider){
   $stateProvider
-  .state('app.noMatches', {
+  .state('app.nomatches', {
     url: '/nomatches',
     views: {
       'menuContent' :{

@@ -1,65 +1,52 @@
 'use strict';
-angular.module('Lunch.factory.matchData', ['Lunch.factory.requests'])
-.factory('matchData', function($rootScope){
-  var counter,
-      matchData,
-      matchLength;
 
-  $rootScope.$on('matches', function(e, matchData){
-    counter = 0;
-    // matchData = matchData;
-    // matchLength = matchData.length;
-  });
-  counter = 0;
-  matchData =  [
-    {
-        id : 12345,
-        firstname : 'Bill',
-        lastname : 'Gates',
-        profileImage : 'http://mostfamousperson.net/BillGates.png',
-        likes : ['Computers', 'Health', 'Kale'],
-        city : 'Redmond',
-        tags : {
-                   'Javascript':false,
-                   'Cake':false,
-                   'Cats':false,
-                   'Cars':true,
-                   'Robots':true,
-                   'Yoga':false,
-                   'Finance':false,
-                   'Startups':true
-                 }
-    },
-    {
-        id: 56789,
-        firstname: 'Steve',
-        lastname: 'Jobs',
-        profileImage : 'http://www.tanld.com/Portals/0/Images/steve-jobs.jpg',
-        likes : ['Design', 'Simplicity', 'Fruitarian-Diet'],
-        city : 'Unknown',
-        tags : {
-                   'Javascript':false,
-                   'Cake':false,
-                   'Cats':true,
-                   'Cars':false,
-                   'Robots':false,
-                   'Yoga':true,
-                   'Finance':false,
-                   'Startups':false
-                 }
-    }];
-  
-  matchLength = matchData.length;
-  
-  $rootScope.$on('nextMatch', function(e){
-    output.counter++;
-    if(counter > matchLength){
-        $rootScope.$emit('nomorematches');
-    };
-  });
-  var output = {
-    'matches' : matchData || undefined,
-    'counter' : counter
+angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.factory.storedUserData'])
+.service('matchData', function(requests, OpenFB, $q){
+
+  var processMatchData = function(matches){
+    var matchData = [];
+
+    angular.forEach(matches, function(user){
+      // Every user is returned in a promise
+      var userPromise = $q.defer();
+      matchData.unshift(userPromise);
+      requests.getDetails(user.id).then(function(details){
+        var user = {},
+            likes = [],
+            tags = {};
+
+        angular.forEach(details.data.likes, function(value){
+          likes.push(value.name);
+        });
+
+         angular.forEach(details.data.tags, function(value){
+          tags[value.name] = true;
+        });
+
+        details.user.likes = likes;
+        details.user.tags = tags;
+        details.user.city = details.data.user.location || undefined;
+        angular.extend(user, details.user);
+
+        userPromise.resolve(user);
+        });
+    });
+
+    // Only resolve when all user promises resolve
+    return $q.all(matchData);
   };
-  return output;
+
+  this.getMatches = function() {
+    var deferredMatchData =  $q.defer();
+    
+    OpenFB.checkLogin().then(function(id) {
+      return requests.getMatches({ 'userId': id })
+    }).then(function(matchData){
+      return processMatchData(matchData.data)
+    }).then(function(processedData){
+      deferredMatchData.resolve(processedData);
+    });
+
+    return deferredMatchData.promise;
+  };
 });

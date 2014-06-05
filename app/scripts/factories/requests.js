@@ -14,7 +14,6 @@ angular.module('Lunch.factory.requests', [])
     'like' : 'likes',
     'tag' : 'tags',
     'location' :'locations',
-    'matches' : 'matches',
     'pushToken' : 'pushes',
     'chat' : 'chat',
     'match' : 'match'
@@ -25,6 +24,12 @@ angular.module('Lunch.factory.requests', [])
         method: 'POST',
         url: baseUrl + urls.basicDetails + api_key,
         data: payload
+      });
+    },
+    'getDetails' : function(userId){
+      return $http({
+        method: 'GET',
+        url: baseUrl + urls.basicDetails + '/' + userId + api_key
       });
     },
     'postLike': function(payload){
@@ -101,16 +106,14 @@ angular.module('Lunch.factory.requests', [])
         deferredPayload.resolve(payload);
       });
       return deferredPayload.promise;
+    },
+    'postDecision': function(payload){
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.match + '/' + payload.id + api_key,
+        data: payload
+      });
     }
-    // 'postApproval': function(){
-    //   $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload
-    //   })
-    //   .success(function(data,status,headers,config){
-    //   })
-    //   .error(function(data,status,headers,config){
-    //     console.log('error in posttag', data);
-    //   });
-    // }
 	};
 
 	return exports;

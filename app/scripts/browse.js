@@ -1,5 +1,6 @@
 'use strict';
-angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.storedUserData'])
+
+angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.storedUserData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
@@ -12,50 +13,52 @@ angular.module('Lunch.browse', ['Lunch.factory.matchData', 'Lunch.factory.stored
       }
   });
 })
-.controller('BrowseCtrl', function($rootScope, $scope, matchData, $location, requests, storedUserData){
-    var userId = storedUserData.id;
+
+.controller('BrowseCtrl', function($rootScope, $state, $scope, matchData, $location, requests, OpenFB, match){
     var matchId;
+    var matchedData = matchData.getMatches();
 
-    var initialize = function() {
-      $scope.counter = matchData.counter;
-      nextMatch();
-    }; // if no data have backup
+    var renderMatch = function(match){
+        match.photo_url = match.profileImage;
+        matchId = match.id;
+        angular.extend($scope, match);
+    };
 
-    var nextMatch = function() {
-      if($scope.counter >= matchData.matches.length) {
-        $location.path('/app/nomatches');
+    var next = function(){
+      if(matchedData.length){
+        renderMatch(matchedData.unshift());
       } else {
-        $scope.firstname = matchData.matches[$scope.counter].firstname;
-        $scope.lastname = matchData.matches[$scope.counter].lastname;
-        $scope.likes = matchData.matches[$scope.counter].likes;
-        $scope.city = matchData.matches[$scope.counter].city;
-        $scope.tags = matchData.matches[$scope.counter].tags;
-        $scope.photo_url = matchData.matches[$scope.counter].profileImage;
-        matchId = matchData.matches[$scope.counter].id;
-        //show splash screen of come back tomorrow!
+        matchData.getMatches().then(function(data){
+          if (data.length) {
+            matchedData = data;
+            next();
+          } else {
+            $state.go('app.nomatches')
+          }
+        });
       }
     };
 
-    initialize();
-     
-    var next = function(){
-      $scope.counter++;
-      $rootScope.$emit('nextMatch');
-      nextMatch();
-    };
+    next();
 
-    //records an approval for the currently displayed profile
-    $scope.approve = function() {
-      next();
-      //call service to send approval to db
-      //requests.postApproval(matchId, userId);
-    };
-
-    //records a disapproval for the currently displayed profile
-    $scope.reject = function() {
-      next();
-      //call service to send rejection to db
-      //requests.postRejection(matchId, userId);
+    // records an approval for the currently displayed profile
+    $scope.postDecision = function(decision){
+      // call service to send approval to db
+      OpenFB.checkLogin(function(id){
+        requests.postDecision({
+            id: id,
+            selectedUserId : matchId,
+            accepted: decision
+        })
+        .then(function(returnedData){
+          var parsedData = angular.fromJson(returnedData);
+            if(parsedData.id){
+              match = parsedData.id;
+              $state.go('app.matched');
+            }
+          next();
+        });
+      });
     };
 
 });
