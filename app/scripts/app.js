@@ -23,8 +23,8 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
 
 .run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI) {
   $ionicPlatform.ready(function() {
-    if(window.StatusBar) {
-      window.StatusBar.styleDefault();
+    if($window.StatusBar) {
+      $window.StatusBar.styleDefault();
     }
   });
 
