@@ -11,7 +11,7 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
       // Hide pushNotification definition in scope,
       // as it is undefined until document is 'deviceready'
       pushNotification = isMobile ?
-        window.plugins.pushNotification :
+        $window.plugins.pushNotification :
         {
           register: console.info.bind(console, '(MockGCM) Registered'),
           unregister: console.info.bind(console, '(MockGCM) Unregistered')
@@ -38,12 +38,12 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
     // Register with the application server
     this.register = function(gcmToken) {
       // Only reregister if we've registered before
-      if (window.localStorage.gcmToken && !gcmToken) {
+      if ($window.localStorage.gcmToken && !gcmToken) {
         register();
         // This prevents two registrations on first login
         return;
       }
-      window.localStorage.gcmToken = gcmToken;
+      $window.localStorage.gcmToken = gcmToken;
       OpenFB.checkLogin().then(function(fbId) {
         // Register fb id and push token with application server
         requests.postPushToken({
@@ -57,7 +57,7 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
     // Unregister from the GCM servers
     this.unregister = function() {
       pushNotification.unregister(console.info.bind(console));
-      if (window.localStorage.gcmToken) {
+      if ($window.localStorage.gcmToken) {
         requests.deletePushToken($window.localStorage.gcmToken);
       }
     };
