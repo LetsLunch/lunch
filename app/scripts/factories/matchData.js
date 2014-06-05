@@ -1,28 +1,18 @@
 'use strict';
 angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.factory.storedUserData'])
-.service('matchData', function(requests, storedUserData){
+.service('matchData', function(requests, storedUserData, $q){
   var counter = 0,
       matchData = [],
       trackMatchId = {};
 
-  this.processMatchData = function(matchedUsers){
+  var processMatchData = function(matchedUsers){
     angular.forEach(matchedUsers.data, function(user){
       // client to track if server has already sent a particular matched user
       if(!trackMatchId[user.id]){
         trackMatchId[user.id] = true;
         requests.getDetails(user.id).then(function(returned){
           var likes = [],
-              tags = {  // TODO: post MVP set displayed tags
-                        // based on what was locally stored
-                         'Javascript':false,
-                         'Cake':false,
-                         'Cats':false,
-                         'Cars':true,
-                         'Robots':true,
-                         'Yoga':false,
-                         'Finance':false,
-                         'Startups':true
-                     };
+              tags = {};
           angular.forEach(returned.data.likes, function(value){
             likes.push(value.name);
           });
@@ -56,9 +46,14 @@ angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.fact
   };
 
   this.getMatchFromServer = function() {
-    return requests.getMatches({
+    var deferredMatchData =  $q.defer();
+    requests.getMatches({
        'userId': storedUserData.id
-    });
+    }).then(function(match){
+      processMatchData(match);
+      deferredMatchData.resolve(matchData);
+    })
+    return deferredMatchData.promise;
   };
 
   this.incrementMatchedUserCounter =  function(){

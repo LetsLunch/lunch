@@ -12,7 +12,7 @@ angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.stored
       }
   });
 })
-.controller('BrowseCtrl', function($rootScope, $scope, matchData, $location, requests, storedUserData){
+.controller('BrowseCtrl', function($rootScope, $state, $scope, matchData, $location, requests, storedUserData){
     var userId = storedUserData.id;
     var matchId;
     var matchedData = matchData.getMatches();
@@ -21,7 +21,7 @@ angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.stored
 
     var renderMatch = function() {
       if($scope.counter >= matchedData.length) {
-        $location.path('/app/nomatches');
+        $state.go('app.nomatches');
       } else {
         var userData = matchedData[$scope.counter];
         $scope.firstname = userData.firstname;
@@ -43,13 +43,14 @@ angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.stored
         matchData.incrementMatchedUserCounter();
         renderMatch();
       }
-      //initiate fetching a match from the server after user
+      // initiate fetching a match from the server after user
       // approves / declines
+      // Set matched data array of user objects to updated matched data array
+      //of users, only when the match has been returned from the server and processed
       matchData.getMatchFromServer().then(function(data){
-        matchData.processMatchData(data);
-        //get updated matched data from the service
-        matchedData = matchData.getMatches();
+        matchedData = data;
       });
+
     };
 
     // records an approval for the currently displayed profile
@@ -64,7 +65,7 @@ angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.stored
       .then(function(returnedData){
         var parsedData = angular.fromJson(returnedData);
           if(returnedData.id){      // TO DO - check against above matchId
-            $state.go('app.chats'); // TO DO - redirect to either chats or pair
+            $state.go('app.matched');
           }
       });
     };

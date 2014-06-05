@@ -68,8 +68,9 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
          });
        }
      });
-     //get matches since we have the user id from facebook
-     getMatches();
+     //get matches since we have the user id from facebook and tag information
+     // getMatches();
+     matchData.getMatchFromServer();
    };
 
    var getPicture = function() {
@@ -145,14 +146,15 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
      });
    };
 
-   var getMatches = function() {
-     requests.getMatches({
-       'userId': $scope.userData.id
-     }).then(function(data){
-       var matchedUsers = angular.fromJson(data);
-       matchData.processMatchData(data);
-     });
-   };
+   // var getMatches = function() {
+   //   requests.getMatches({
+   //     'userId': $scope.userData.id
+   //   }).then(function(data){
+   //     var matchedUsers = angular.fromJson(data);
+   //     matchData.processMatchData(data);
+   //   });
+   // };
+
 
    $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
      getDetails();
