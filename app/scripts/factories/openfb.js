@@ -16,7 +16,7 @@ angular.module('openfb', [])
         var FB_LOGIN_URL = 'https://www.facebook.com/dialog/oauth',
 
         // By default we store fbtoken in sessionStorage. This can be overriden in init()
-            tokenStore = window.sessionStorage,
+            tokenStore = $window.sessionStorage,
 
             fbAppId,
             oauthRedirectURL,
@@ -47,6 +47,10 @@ angular.module('openfb', [])
             fbAppId = appId;
             if (redirectURL) oauthRedirectURL = redirectURL;
             if (store) tokenStore = store;
+        }
+
+        function isLoggedIn() {
+            return !!tokenStore['fbtoken'];
         }
 
         function checkLogin() {
@@ -240,6 +244,7 @@ angular.module('openfb', [])
 
         return {
             init: init,
+            isLoggedIn: isLoggedIn,
             checkLogin: checkLogin,
             login: login,
             logout: logout,
