@@ -18,7 +18,11 @@ var Cypher = Architect.Cypher;
 // return a single user
 
 var _singleUser = function (results, callback) {
-  callback(null, new User(results[0].user));
+  if (results.length) {
+    callback(null, new User(results[0].user));
+  } else {
+    callback(null, {});
+  }
 };
 
 var _singleUserProfile = function (results, callback) {
