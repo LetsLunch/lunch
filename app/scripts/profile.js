@@ -29,7 +29,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
             //inform the database if a new id
             //add the new id and like data locally
             $scope.userData.likes[value.id] = value.name;
-            $scope.postLikes(value);
+            postLikes(value);
           }
           //track id
           idTrack[value.id] = true;
@@ -48,129 +48,120 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     });
   };
 
-    $scope.postLikes = function(likes) {
-      angular.forEach(likes, function(like, key){
-        requests.postLike({
-          'userId' : $scope.userData.id,
-          'id': like.id,
-          'name': like.name
-        });
-      });
-    };
+  var postLikes = function(likes) {
+     angular.forEach(likes, function(like, key){
+       requests.postLike({
+         'userId' : $scope.userData.id,
+         'id': like.id,
+         'name': like.name
+       });
+     });
+   };
 
-    $scope.postTags = function() {
-      angular.forEach($scope.userData.tags, function(value, key){
-        if(value){ // only posts if tag is selected
-          requests.postTag({
-            'userId' : $scope.userData.id,
-            'id': key,
-            'name': key
-          });
-        }
-      });
-      //get matches since we have the user id from facebook
-      $scope.getMatches();
-    };
+  var postTags = function() {
+     angular.forEach($scope.userData.tags, function(value, key){
+       if(value){ // only posts if tag is selected
+         requests.postTag({
+           'userId' : $scope.userData.id,
+           'id': key,
+           'name': key
+         });
+       }
+     });
+     //get matches since we have the user id from facebook
+     getMatches();
+   };
 
-    $scope.getPicture = function() {
-        OpenFB.get('/me/picture?redirect=0&height=133&type=normal&width=100')//'/me/picture')
-        .success(function(data){
-          if(data !== $scope.userData.photo_url){
-            var image = "<div class='userimage'><img src='" + data.data.url + "'/></div>";
-            angular.element(document.querySelector('#userimage')).html(image);
-            $scope.userData.photo_url = data.data.url;
-            //tell the database the image associated with the user has changed 
-            $scope.postUser();
-            $rootScope.$emit('userDataChanged', $scope.userData);
-          }
-        });
-    };
+   var getPicture = function() {
+       OpenFB.get('/me/picture?redirect=0&height=133&type=normal&width=100')//'/me/picture')
+       .success(function(data){
+         if(data !== $scope.userData.photo_url){
+           var image = "<div class='userimage'><img src='" + data.data.url + "'/></div>";
+           angular.element(document.querySelector('#userimage')).html(image);
+           $scope.userData.photo_url = data.data.url;
+           //tell the database the image associated with the user has changed
+           postUser();
+           $rootScope.$emit('userDataChanged', $scope.userData);
+         }
+       });
+   };
 
-    $scope.getDetails = function() {
-        OpenFB.get('/me')
-        .success(function(data){
-          $scope.userData.first_name = data.first_name;
-          $scope.userData.last_name = data.last_name;
-          $scope.userData.id = data.id;
-          $scope.userData.updated_time = data.updated_time;
-          //update the database with user information from fb
-          $scope.postUser();
-          //store updates to data locally
-          $rootScope.$emit('userDataChanged', $scope.userData);
-        })
-        .error(function(data){
-          //if we have data for the user, and fb api is not available 
-          // still post user data and tags
-          if($scope.userData.id){
-            $scope.postUser();
-            $scope.postTags();
-          }
-        });
-    };
+   var getDetails = function() {
+       OpenFB.get('/me')
+       .success(function(data){
+         $scope.userData.first_name = data.first_name;
+         $scope.userData.last_name = data.last_name;
+         $scope.userData.id = data.id;
+         $scope.userData.updated_time = data.updated_time;
+         //update the database with user information from fb
+         postUser();
+         //store updates to data locally
+         $rootScope.$emit('userDataChanged', $scope.userData);
+       })
+       .error(function(data){
+         //if we have data for the user, and fb api is not available
+         // still post user data and tags
+         if($scope.userData.id){
+           postUser();
+           postTags();
+         }
+       });
+   };
 
-    $scope.tagClick = function(e){
-      var clickedText = e.toElement.innerText;
-      var pressed = $scope.userData.tags[clickedText];
-      if(pressed){
-        //toggle
-        $scope.userData.tags[clickedText] = false;
-      } else {
-        $scope.userData.tags[clickedText] = true;
-      }   
-      $rootScope.$emit('userDataChanged', $scope.userData);
-    };
+   $scope.tagClick = function(e){
+     var clickedText = e.toElement.innerText;
+     var pressed = $scope.userData.tags[clickedText];
+     if(pressed){
+       //toggle
+       $scope.userData.tags[clickedText] = false;
+     } else {
+       $scope.userData.tags[clickedText] = true;
+     }
+     $rootScope.$emit('userDataChanged', $scope.userData);
+   };
 
-    $scope.postUser = function(){ 
-      requests.postBasicDetails({
-        'id' : $scope.userData.id,
-        'firstname': $scope.userData.first_name,
-        'lastname': $scope.userData.last_name,
-        'profileImage': $scope.userData.photo_url
-      });
-      $scope.postTags();
-    };
+   var postUser = function(){
+     requests.postBasicDetails({
+       'id' : $scope.userData.id,
+       'firstname': $scope.userData.first_name,
+       'lastname': $scope.userData.last_name,
+       'profileImage': $scope.userData.photo_url
+     });
+     postTags();
+   };
 
-    $scope.postLocation = function(pos) {
-      $scope.userData.geolocation = pos.coords;
-      OpenFB.checkLogin().then(function(id) {
-        requests.postLocation({
-          'userId': id,
-          'lat': pos.coords.latitude,
-          'lng': pos.coords.longitude
-        }).then(function(res) {
-          console.info('You are in ' + angular.fromJson(res).data.city);
-          $scope.userData.location = angular.fromJson(res).data.city;
-          $rootScope.$emit('userDataChanged', $scope.userData);
-        });
-      });
-    };
+   var postLocation = function(pos) {
+     $scope.userData.geolocation = pos.coords;
+     OpenFB.checkLogin().then(function(id) {
+       requests.postLocation({
+         'userId': id,
+         'lat': pos.coords.latitude,
+         'lng': pos.coords.longitude
+       }).then(function(res) {
+         console.info('You are in ' + angular.fromJson(res).data.city);
+         $scope.userData.location = angular.fromJson(res).data.city;
+         $rootScope.$emit('userDataChanged', $scope.userData);
+       });
+     });
+   };
 
-    $scope.getMatches = function() {
-      requests.getMatches({
-        'userId': $scope.userData.id
-      }).then(function(data){
-        var matchedUsers = angular.fromJson(data);
-        matchData.processMatchData(data);
-      });
-    };
+   var getMatches = function() {
+     requests.getMatches({
+       'userId': $scope.userData.id
+     }).then(function(data){
+       var matchedUsers = angular.fromJson(data);
+       matchData.processMatchData(data);
+     });
+   };
 
-    // Get phone-based user data
-    $scope.$on('geolocation', function(event, geoposition){
-      $scope.userData.geolocation = geoposition.coords;
-      $rootScope.$emit('userDataChanged', $scope.userData);
-      //send geoloc to db
-      $scope.postLocation();
-    });
+   $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
+     getDetails();
+     getPicture();
+     $scope.getLikes();
 
-    $rootScope.$on('userLocation', function(e, city){
-      console.log('user location');
-      console.log(city);
-      $scope.userData.location = city; 
-      $rootScope.$emit('userDataChanged', $scope.userData);
-    });
+     Geo.getCurrentPosition()
+       .then(function(pos) { postLocation(pos); })
+       .catch(function(err) { console.error(err); });
 
-      Geo.getCurrentPosition()
-        .then(function(pos) { $scope.postLocation(pos); })
-        .catch(function(err) { console.error(err); });
-    });
+   });
 });
