@@ -29,14 +29,12 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
     // Register with the application server
     this.register = function(gcmToken) {
       window.localStorage.gcmToken = gcmToken;
-      OpenFB.checkLogin().then(function() {
+      OpenFB.checkLogin().then(function(fbId) {
         // Register fb id and push token with application server
-        OpenFB.get('/me').success(function(data){
-          requests.postPushToken({
-            id: data.id,
-            token: gcmToken,
-            type: 'gcm'
-          });
+        requests.postPushToken({
+          id: fbId,
+          token: gcmToken,
+          type: 'gcm'
         });
       });
     };

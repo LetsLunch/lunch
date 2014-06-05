@@ -18,87 +18,60 @@ angular.module('Lunch.factory.requests', [])
     'pushToken' : 'pushes',
     'chat' : 'chat',
     'match' : 'match'
-  }
+  };
 	var exports = {
 		'postBasicDetails': function(payload){
-      $http({method: 'POST', url: baseUrl + urls.basicDetails + api_key, data: payload
-      })
-      .success(function(data,status,headers,config){
-        console.log('success post Basic details'  );
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in post basic details');
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.basicDetails + api_key,
+        data: payload
       });
     },
     'postLike': function(payload){
-      $http({method: 'POST', url: baseUrl + urls.like + api_key, data: payload
-      })
-      .success(function(data,status,headers,config){
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in postlike', data);
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.like + api_key,
+        data: payload
       });
     },
      'deleteLike': function(likeId, payload){
-      $http({method: 'DELETE', url: baseUrl + urls.like + '/' + likeId + api_key , data: payload
-      })
-      .success(function(data,status,headers,config){
-        console.log('like deleted', data);
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in deleteLike', data);
+      return $http({
+        method: 'DELETE',
+        url: baseUrl + urls.like + '/' + likeId + api_key,
+        data: payload
       });
     },
     'postTag': function(payload){
-      $http({method: 'POST', url: baseUrl + urls.tag + api_key, data: payload
-      })
-      .success(function(data,status,headers,config){
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in posttag', data);
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.tag + api_key,
+        data: payload
       });
     },
     'deleteTag': function(tagId, userId){
-      $http({method: 'DELETE', url: baseUrl + urls.tag + '/' + tagId + api_key , data: userId
-      })
-      .success(function(data,status,headers,config){
-        console.log('tag deleted', data);
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in deleteLike', data);
+      return $http({
+        method: 'DELETE',
+        url: baseUrl + urls.tag + '/' + tagId + api_key,
+        data: userId
       });
     },
     'postLocation': function(payload){
-      $http({method: 'POST', url: baseUrl + urls.location + api_key, data: payload
-      })
-      .success(function(data,status,headers,config){
-        var parsedData = angular.fromJson(data);
-        $rootScope.$emit('userLocation', parsedData.city);
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in postLocation');
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.location + api_key,
+        data: payload
       });
     },
     'getLocationDetails' : function(userId){
-      $http({method: 'GET', url: baseUrl + urls.location + '/'+ userId + api_key
-      })
-      .success(function(data,status,headers,config){
-        var parsedData = angular.fromJson(data);
-        $rootScope.$emit('userLocation', parsedData.city);
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in getLocationDetails', data);
+      return $http({
+        method: 'GET',
+        url: baseUrl + urls.location + '/'+ userId + api_key
       });
     },
     'getMatches': function(input){
-      $http({method: 'GET', url: baseUrl + urls.match + '/' + input.userId + api_key 
-      })
-      .success(function(data,status,headers,config){
-        var parsedData = angular.fromJson(data);
-        $rootScope.$emit('matches', parsedData);
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in getMatchs', data);
+      return $http({
+        method: 'GET',
+        url: baseUrl + urls.match + '/' + input.userId + api_key
       });
     },
     'postPushToken': function(payload){

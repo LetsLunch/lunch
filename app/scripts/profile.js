@@ -119,11 +119,18 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
       $scope.postTags();
     };
 
-    $scope.postLocation = function() {
-      requests.postLocation({
-        'userId': $scope.userData.id,
-        'lat': $scope.userData.geolocation.latitude,
-        'lng': $scope.userData.geolocation.longitude
+    $scope.postLocation = function(pos) {
+      $scope.userData.geolocation = pos.coords;
+      OpenFB.checkLogin().then(function(id) {
+        requests.postLocation({
+          'userId': id,
+          'lat': pos.coords.latitude,
+          'lng': pos.coords.longitude
+        }).then(function(res) {
+          console.info('You are in ' + angular.fromJson(res).data.city);
+          $scope.userData.location = angular.fromJson(res).data.city;
+          $rootScope.$emit('userDataChanged', $scope.userData);
+        });
       });
     };
 
@@ -133,26 +140,13 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
       });
     };
 
-    // Get phone-based user data
-    $scope.$on('geolocation', function(event, geoposition){
-      $scope.userData.geolocation = geoposition.coords;
-      $rootScope.$emit('userDataChanged', $scope.userData);
-      //send geoloc to db
-      $scope.postLocation();
-    });
-
-    $rootScope.$on('userLocation', function(e, city){
-      $scope.userData.location = city;
-      $rootScope.$emit('userDataChanged', $scope.userData);
-    });
-
     $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
       $scope.getPicture();
       if(!$scope.userData.id) $scope.getDetails(); 
       $scope.getLikes();
 
-      Geo.getCurrentPosition();
-      $rootScope.$emit('userDataChanged', $scope.userData);
+      Geo.getCurrentPosition()
+        .then(function(pos) { $scope.postLocation(pos); })
+        .catch(function(err) { console.error(err); });
     });
-    //on scope change 
 });
