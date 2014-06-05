@@ -20,9 +20,10 @@ var db = new neo4j.GraphDatabase(
 
 // ## Helpers
 var _prepareParams = function (req) {
+
   var params = req.body;
 
-  params = req.params || req.body;
+  params = _.extend(params,req.params);
 
   return params;
 };
@@ -91,12 +92,12 @@ exports.getMatch = {
 
 
 // Route: POST '/match/{userId}'
-exports.addSelected = {
+exports.userSelected = {
   
   spec: {
     path : '/match/{id}',
-    notes : 'adds selected relationships between users to the graph',
-    summary : 'Add selected relationships to the graph',
+    notes : 'posts the selected user is accepted or rejected',
+    summary : 'Add accepted/ rejected relationships to the graph',
     method: 'POST',
     type : 'object',
     items : {
@@ -105,19 +106,22 @@ exports.addSelected = {
     parameters : [
       param.path('id', 'User Id', 'string'),
       param.form('selectedUserId', 'Selected User Id', 'string', true),
+      param.form('accepted', 'is the selected user Accepted ', 'string', true),
+
     ],
     responseMessages : [swe.invalid('input')],
-    nickname : 'addSelected'
+    nickname : 'userSelected'
   },
 
   action: function(req, res) {
     var options = {};
     var params = {};
-    var errLabel = 'Route: POST /match/{userId}';
+    var errLabel = 'Route: POST /match/{id}';
     var callback = _.partial(_callback, res, errLabel);
 
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
+    console.log(params);
     // Check for params 
     Match.userSelected(params, options, callback);
 
