@@ -51,9 +51,8 @@ var postChat = function(req, res) {
   res.end();
 };
 
-var match = function(rick, morty) {
-  pushMessage(rick, { match: morty });
-  pushMessage(morty, { match: rick });
+var match = function(originator, destination) {
+  pushMessage(destination, { message: 'You\'ve got lunch!', match: originator });
 };
 
 module.exports = function (app) {
