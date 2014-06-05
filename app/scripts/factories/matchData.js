@@ -38,7 +38,7 @@ angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.fact
 
   this.getMatches = function() {
     var deferredMatchData =  $q.defer();
-    
+
     OpenFB.checkLogin().then(function(id) {
       return requests.getMatches({ 'userId': id })
     }).then(function(matchData){

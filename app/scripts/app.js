@@ -59,21 +59,4 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
       // so that the match view has a means ot obtain the data required
   });
 
-})
-
-.config(function($provide, $stateProvider, $urlRouterProvider) {
-  // Set application server
-  // TODO: Change this to your production server
-  $provide.constant('AppServer', 'http://127.0.0.1:8008');
-
-  // Set initial paths
-  $stateProvider
-  .state('app', {
-    url: '/app',
-    abstract: true,
-    templateUrl: 'templates/menu.html'
-  });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/profile');
 });

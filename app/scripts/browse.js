@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.storedUserData'])
+angular.module('Lunch.browse', ['openfb', 'Lunch.service.matchData', 'Lunch.factory.storedUserData'])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
