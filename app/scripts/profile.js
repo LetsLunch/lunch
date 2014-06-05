@@ -49,11 +49,11 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
   };
 
     $scope.postLikes = function(likes) {
-      angular.forEach(likes, function(likeName, key){
+      angular.forEach(likes, function(like, key){
         requests.postLike({
           'userId' : $scope.userData.id,
-          'id': key,
-          'name': likeName
+          'id': like.id,
+          'name': like.name
         });
       });
     };
@@ -148,6 +148,9 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     $scope.getMatches = function() {
       requests.getMatches({
         'userId': $scope.userData.id
+      }).then(function(data){
+        var matchedUsers = angular.fromJson(data);
+        matchData.processMatchData(data);
       });
     };
 

@@ -17,7 +17,7 @@ angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
     var matchId;
 
     var initialize = function() {
-      $scope.counter = matchData.getCount().counter;
+      $scope.counter = matchData.getCount();
       nextMatch();
     }; // if no data have backup
 
@@ -25,6 +25,8 @@ angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
       if($scope.counter >= matchData.getMatches().length) {
         $location.path('/app/nomatches');
       } else {
+        console.log(matchData.getMatches());
+        console.log($scope.counter);
         $scope.firstname = matchData.getMatches()[$scope.counter].firstname;
         $scope.lastname = matchData.getMatches()[$scope.counter].lastname;
         $scope.likes = matchData.getMatches()[$scope.counter].likes;
@@ -37,7 +39,7 @@ angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
     };
 
     initialize();
-     
+
     var next = function(){
       $scope.counter++;
       matchData.nextMatch();
@@ -49,7 +51,7 @@ angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
       next();
       //call service to send approval to db
       requests.postApproval({
-          id: storedUserData.id, 
+          id: storedUserData.id,
           selectedUserId : matchId
       });
     };

@@ -27,12 +27,10 @@ angular.module('Lunch.factory.requests', [])
       });
     },
     'getDetails' : function(userId){
-      var deferredResponse = $q.defer();
-      $http({method: 'GET', url: baseUrl + urls.basicDetails + '/' + userId + api_key})
-      .then(function(data) {
-        deferredResponse.resolve(data);
+      return $http({
+        method: 'GET',
+        url: baseUrl + urls.basicDetails + '/' + userId + api_key
       });
-      return deferredResponse.promise;
     },
     'postLike': function(payload){
       return $http({
@@ -110,12 +108,10 @@ angular.module('Lunch.factory.requests', [])
       return deferredPayload.promise;
     },
     'postApproval': function(userId){
-      $http({method: 'POST', url: baseUrl + urls.match + '/' + userId + api_key, data: payload
-      })
-      .success(function(data,status,headers,config){
-      })
-      .error(function(data,status,headers,config){
-        console.log('error in posttag', data);
+      return $http({
+        method: 'POST',
+        url: baseUrl + urls.match + '/' + userId + api_key,
+        data: payload
       });
     }
 	};

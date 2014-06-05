@@ -9,11 +9,8 @@ angular.module('matchData', ['Lunch.factory.requests'])
   // });
 
   this.processMatchData = function(matchedUsers){
-    angular.forEach(matchedUsers, function(user){
-      var userDetails = requests.getDetails(id);
-
-      userDetails.then(function(returned){
-        console.log(returned.data);
+    angular.forEach(matchedUsers.data, function(user){
+      requests.getDetails(user.id).then(function(returned){
         var likes = [],
             tags = {  // later on it is possible to set the displayed tags
                       //based on what was locally stored
@@ -26,9 +23,10 @@ angular.module('matchData', ['Lunch.factory.requests'])
                        'Finance':false,
                        'Startups':true
                    };
-
+        // console.log(returned);
         angular.forEach(returned.data.likes, function(value){
           likes.push(value.name);
+          // console.log(value);
         });
 
          angular.forEach(returned.data.tags, function(value){
@@ -47,11 +45,9 @@ angular.module('matchData', ['Lunch.factory.requests'])
         // angular.forEach(returned.data.tags, function(value))
         //need to store and display the matched user once fetched
         matchData.unshift(user);
-        console.log('in match data');
-        console.log(matchData);
       });
-      
-    })
+
+    });
   };
 
   this.getMatches = function() {
