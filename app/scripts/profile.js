@@ -70,7 +70,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
      });
      //get matches since we have the user id from facebook and tag information
      // getMatches();
-     matchData.getMatchFromServer();
+     matchData.getMatchesFromServer();
    };
 
    var getPicture = function() {
