@@ -47,20 +47,15 @@ angular.module('Lunch.browse', ['matchData', 'Lunch.factory.storedUserData'])
     };
 
     //records an approval for the currently displayed profile
-    $scope.approve = function() {
+    $scope.postDecision = function(decision) {
       next();
       //call service to send approval to db
-      requests.postApproval({
+      requests.postDecision({
           id: storedUserData.id,
-          selectedUserId : matchId
-      });
-    };
-
-    //records a disapproval for the currently displayed profile
-    $scope.reject = function() {
-      next();
-      //call service to send rejection to db
-      //requests.postRejection(matchId, userId);
+          selectedUserId : matchId,
+          accepted: decision
+      }); // if approval header has a response that denotes a match
+       //switch to the chat app
     };
 
 });

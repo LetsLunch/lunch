@@ -107,10 +107,10 @@ angular.module('Lunch.factory.requests', [])
       });
       return deferredPayload.promise;
     },
-    'postApproval': function(userId){
+    'postDecision': function(payload){
       return $http({
         method: 'POST',
-        url: baseUrl + urls.match + '/' + userId + api_key,
+        url: baseUrl + urls.match + '/' + payload.id + api_key,
         data: payload
       });
     }

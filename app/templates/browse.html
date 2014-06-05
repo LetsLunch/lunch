@@ -9,16 +9,16 @@
 
 
 			<h4 id="location">{{city}}</h4>
-	
+
 			<div class="item item-divider">
    			 {{firstname}} wants to talk about
   		</div>
   		<div class="tags">
-            <span class="item tag col-33" ng-repeat="(tag, pressed) in tags" ng-class="{pressed:pressed}"> 
-                {{tag}}   
+            <span class="item tag col-33" ng-repeat="(tag, pressed) in tags" ng-class="{pressed:pressed}">
+                {{tag}}
             </span>
       </div>
-			 <div class="item item-divider fbdivider"> 
+			 <div class="item item-divider fbdivider">
             <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">{{firstname}}'s Facebook Likes</a></div>
       </div>
   		<div class="likes">
@@ -27,9 +27,9 @@
             </span>
       </div>
  		<div class="button-bar">
-		  <a class="button assertive icon ion-close-round" ng-click="reject()"></a>
-		  <a class="button balanced icon ion-checkmark-round" ng-click="approve()"></a>
+		  <a class="button assertive icon ion-close-round" ng-click="postDecision('false')"></a>
+		  <a class="button balanced icon ion-checkmark-round" ng-click="postDecision('true')"></a>
 		</div>
   </ion-content>
 </ion-view>
-	
+
