@@ -6,7 +6,7 @@ angular.module('Lunch.service.storedChat', [])
     var deferredChat = $q.defer();
 
     this.getChatPromise = function() {
-      return deferredChat.promise();
+      return deferredChat.promise;
     };
 
     this.getChats = function() {
@@ -22,7 +22,7 @@ angular.module('Lunch.service.storedChat', [])
       var time = payload.timestamp;
       var self = !!payload.user;
       
-      deferredChat.resolve(payload);
+      deferredChat.notify(payload);
       
       // Store log
       var chat = angular.fromJson(window.localStorage.chat) || [];

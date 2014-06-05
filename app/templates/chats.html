@@ -7,13 +7,10 @@
         <div ng-repeat="chatMessage in chatMessages" class="row chatMsgRow right">
           <div class="card chatMessage">
               <div class="item item-text-wrap">
-                <div class="chatname" ng-class="{userchat:chatMessage.user}">
-                 {{chatMessage.first_name}} {{chatMessage.last_name}}
-               </div>
-                <div class="chattext"> 
-                 {{chatMessage.messageText}}
+                <div class="chattext" ng-class="{userchat:chatMessage.self}"> 
+                 {{chatMessage.text}}
                 </div>
-                <div class="time">{{chatMessage.timestamp | date : 'shortTime'}}   {{chatMessage.timestamp | date : 'shortDate'}}</div>
+                <div class="time">{{chatMessage.time | date : 'shortTime'}}   {{chatMessage.time | date : 'shortDate'}}</div>
               </div>
           </div>
         </div>

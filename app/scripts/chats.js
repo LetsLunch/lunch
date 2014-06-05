@@ -12,48 +12,50 @@ angular.module('Lunch.chats', ['Lunch.factory.storedUserData'])
     }
   });
 })
-.controller('ChatsCtrl', function($scope, storedUserData) {
+.controller('ChatsCtrl', function($scope, storedUserData, storedChat) {
   $scope.inputtext = '';
 
   $scope.chatMessages = [{
-    'first_name': 'Bario',
-    'last_name' : 'Ancelotti',
-    'messageText' : 'Such is the power of JS',
-    'timestamp' : new Date(),
-    'user' : true
+    'text' : 'Such is the power of JS',
+    'time' : new Date(),
+    'self' : true
   },
   {
-    'first_name': 'Mario',
-    'last_name' : 'Ancelotti',
-    'messageText' : 'This is a basic Card which contains an item that has wrapping text.',
-    'timestamp' : new Date(),
-    'user' : true
+    'text' : 'This is a basic Card which contains an item that has wrapping text.',
+    'time' : new Date(),
+    'self' : true
   },
   {
-    'first_name': 'Bob',
-    'last_name' : 'Geldof',
-    'messageText' : 'Such is the power of JS, it is irresesitable',
-    'timestamp' : new Date(),
-    'user' : false
+    'text' : 'Such is the power of JS, it is irresesitable',
+    'time' : new Date(),
+    'self' : false
   },
   {
-    'first_name': 'Bob',
-    'last_name' : 'Geldof',
-    'messageText' : 'Such is the power of JS, it is irresesitable',
-    'timestamp' : new Date(),
-    'user' : false
+    'text' : 'Such is the power of JS, it is irresesitable',
+    'time' : new Date(),
+    'self' : false
   }];
 
-  $scope.postMessage = function(text){
-    if(text){
-      $scope.chatMessages.unshift({
-        'first_name': storedUserData.first_name,
-        'last_name' : storedUserData.last_name,
-        'messageText' : text,
-        'timestamp' : new Date(),
-        'user' : true 
-      })
-    }
+  // Get past messages
+  //$scope.chatMessages = storedChat.getChats();
+
+  // Post new messages
+  $scope.postMessage = function(text) {
+    var payload = {
+      message: text,
+      timestamp: new Date(),
+      self: true
+    };
+    
+    storedChat.postChat(payload);
+
+    $scope.inputtext = '';
   };
+
+  // Listen for incoming messages
+  window.storedChat = storedChat;
+  storedChat.getChatPromise().then(null, null, function(post) {
+    $scope.chatMessages.push(post);
+  });
 
 });
