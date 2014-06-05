@@ -19,9 +19,9 @@ angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.stored
     $scope.counter = matchData.getCount();
 
 
-    var renderNextMatch = function() {
+    var renderMatch = function() {
       if($scope.counter >= matchedData.length) {
-        $state.go('noMatches');
+        $location.path('/app/nomatches');
       } else {
         var userData = matchedData[$scope.counter];
         $scope.firstname = userData.firstname;
@@ -35,14 +35,21 @@ angular.module('Lunch.browse', ['Lunch.service.matchData', 'Lunch.factory.stored
       }
     };
 
-    renderNextMatch();
+    renderMatch();
 
     var next = function(){
       if($scope.counter < matchedData.length){
         $scope.counter++;
         matchData.incrementMatchedUserCounter();
+        renderMatch();
       }
-      renderNextMatch();
+      //initiate fetching a match from the server after user
+      // approves / declines
+      matchData.getMatchFromServer().then(function(data){
+        matchData.processMatchData(data);
+        //get updated matched data from the service
+        matchedData = matchData.getMatches();
+      });
     };
 
     // records an approval for the currently displayed profile
