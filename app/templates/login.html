@@ -1,6 +1,6 @@
 <ion-view>
 <ion-content class="has-header">
-    		<ion-slide-box show-pager="false" on-slide-changed="slideHasChanged($index)"> <!-- ng-click="nextSlide($index)"  -->
+    		<ion-slide-box delegate-handle="loginSlider" show-pager="true" pager-click="updateSlide(index)">
 				  <ion-slide>
 				    <div id="blurb">
 				    	<h2>Meet someone over</h2>
