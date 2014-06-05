@@ -15,10 +15,11 @@ angular.module('Lunch.login', ['Lunch.logout'])
   });
 })
 
-.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB) {
+.controller('LoginCtrl', function($scope, $state, $ionicSlideBoxDelegate, OpenFB, push) {
   $scope.login = function() {
     OpenFB.login('public_profile,user_likes').then(
       function() {
+        push.register();
         $state.go('app.profile');
       },
       function() {
