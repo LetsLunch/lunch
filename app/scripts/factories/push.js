@@ -3,32 +3,47 @@
 //factory for processing push notifications, based on:
 //   intown.biz/2014/04/11/android-notifications/
 angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory.requests'])
-  .service('push', function(OpenFB, storedUserData, requests) {
+  .service('push', function($window, OpenFB, storedUserData, requests, gcmAPI) {
     var pushNotification;
+    var isMobile;
 
-    var onDeviceReady = function(gcmAppId) {
+    var register = function() {
       // Hide pushNotification definition in scope,
       // as it is undefined until document is 'deviceready'
-      pushNotification = window.plugins.pushNotification;
+      pushNotification = isMobile ?
+        $window.plugins.pushNotification :
+        {
+          register: console.info.bind(console, '(MockGCM) Registered'),
+          unregister: console.info.bind(console, '(MockGCM) Unregistered')
+        };
 
       console.info('Registering with GCM servers');
       pushNotification.register(
         function(e) { console.info(e); },
         function(e) { console.error(e); }, {
-          'senderID': '' + gcmAppId,
+          'senderID': '' + gcmAPI,
           'ecb': 'onNotificationGCM'
       });
     };
     
     // Register with the GCM servers
-    this.init = function(gcmAppId) {
+    this.init = function() {
       document.addEventListener(
-        'deviceready', onDeviceReady.bind(null, gcmAppId), false);
+        'deviceready', function() {
+          isMobile = true;
+          register();
+        }, false);
     };
 
     // Register with the application server
     this.register = function(gcmToken) {
-      window.localStorage.gcmToken = gcmToken;
+      // Only reregister if we've registered before
+      if ($window.localStorage.gcmToken && !gcmToken) {
+        register();
+        // This prevents two registrations on first login
+        return;
+      }
+      $window.localStorage.gcmToken = gcmToken;
       OpenFB.checkLogin().then(function(fbId) {
         // Register fb id and push token with application server
         requests.postPushToken({
@@ -42,8 +57,8 @@ angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory
     // Unregister from the GCM servers
     this.unregister = function() {
       pushNotification.unregister(console.info.bind(console));
-      if (window.localStorage.gcmToken) {
-        requests.deletePushToken(window.localStorage.gcmToken);
+      if ($window.localStorage.gcmToken) {
+        requests.deletePushToken($window.localStorage.gcmToken);
       }
     };
   });

@@ -31,7 +31,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   // Initialize with localhost to support development
   // (cordova will default to https://www.facebook.com/)
   OpenFB.init(fbAPI, 'http://localhost:9000/oauth.html', $window.localStorage);
-  push.init(gcmAPI);
+  push.init();
 
   // Force authentication
   $rootScope.$on('$stateChangeStart', function(e, state) {
