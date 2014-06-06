@@ -92,20 +92,12 @@ angular.module('Lunch.factory.requests', [])
         url: baseUrl + urls.pushToken + '/' + token + api_key
       });
     },
-    'postChat': function(matchId, message) {
-      var deferredPayload = $q.defer();
-      var payload = {
-        message: message,
-        timestamp: new Date().toISOString()
-      };
-      $http({
+    'postChat': function(matchId, payload) {
+      return $http({
         method: 'POST',
         url: baseUrl + urls.chat + '/' + matchId + api_key,
         data: payload
-      }).then(function() {
-        deferredPayload.resolve(payload);
       });
-      return deferredPayload.promise;
     },
     'postDecision': function(payload){
       return $http({

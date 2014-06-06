@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('Lunch.service.storedChat', [])
-  .service('storedChat', function($q) {
+angular.module('Lunch.service.storedChat', ['Lunch.factory.requests'])
+  .service('storedChat', function($q, requests, match) {
     // Make new chats available through promises and stash them locally
     var deferredChat = $q.defer();
 
@@ -32,6 +32,9 @@ angular.module('Lunch.service.storedChat', [])
         self: self
       });
       window.localStorage.chat = chat;
+
+      // Send to match
+      requests.postChat(match.id, payload);
     };
   });
 

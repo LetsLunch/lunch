@@ -22,7 +22,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   $urlRouterProvider.otherwise('/app/login');
 })
 
-.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI, match) {
+.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI, match, storedChat) {
   $ionicPlatform.ready(function() {
     if($window.StatusBar) {
       $window.StatusBar.styleDefault();
@@ -34,10 +34,11 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   OpenFB.init(fbAPI, 'http://localhost:9000/oauth.html', $window.localStorage);
   push.init();
 
-  // Reset matches if it's a new day
+  // Reset match if it's a new day
   if ($window.localStorage.matchDate !== new Date().toDateString()) {
     delete $window.localStorage.match;
     delete $window.localStorage.matchDate;
+    storedChat.deleteChats();
   }
 
   // Force authentication

@@ -15,35 +15,14 @@ angular.module('Lunch.chats', ['Lunch.factory.storedUserData'])
 .controller('ChatsCtrl', function($scope, storedUserData, storedChat) {
   $scope.inputtext = '';
 
-  $scope.chatMessages = [{
-    'text' : 'Such is the power of JS',
-    'time' : new Date(),
-    'self' : true
-  },
-  {
-    'text' : 'This is a basic Card which contains an item that has wrapping text.',
-    'time' : new Date(),
-    'self' : true
-  },
-  {
-    'text' : 'Such is the power of JS, it is irresesitable',
-    'time' : new Date(),
-    'self' : false
-  },
-  {
-    'text' : 'Such is the power of JS, it is irresesitable',
-    'time' : new Date(),
-    'self' : false
-  }];
-
   // Get past messages
-  //$scope.chatMessages = storedChat.getChats();
+  $scope.chatMessages = storedChat.getChats();
 
   // Post new messages
   $scope.postMessage = function(text) {
     var payload = {
       message: text,
-      timestamp: new Date(),
+      timestamp: new Date().toISOString(),
       self: true
     };
     
