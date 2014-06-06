@@ -116,7 +116,6 @@ for (iUser = 0; iUser < 10; iUser++) {
 }
 
 relate = relate.join('\n');
-console.log(relate);
 
 // Populate the big db
 json({ query: 'MATCH (u)-[r]-() DELETE u,r' },
