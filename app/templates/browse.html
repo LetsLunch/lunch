@@ -3,18 +3,18 @@
     <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-	  	<div class="userimage"><img ng-src="{{photo_url}}"></div>
+	  	<div class="userimage"><img ng-src="{{profileImage}}"></div>
 
     	<h2 id="username">{{firstname}} {{lastname}}</h2>
 
 
-			<h4 id="location">{{city}}</h4>
+			<h4 id="location">{{location}}</h4>
 
 			<div class="item item-divider">
    			 {{firstname}} wants to talk about
   		</div>
   		<div class="tags">
-            <span class="item tag col-33" ng-repeat="(tag, pressed) in tags" ng-class="{pressed:pressed}">
+            <span class="item tag col-33 pressed" ng-repeat="tag in tags">
                 {{tag}}
             </span>
       </div>
@@ -32,4 +32,3 @@
 		</div>
   </ion-content>
 </ion-view>
-
