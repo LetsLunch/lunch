@@ -52,7 +52,7 @@ angular.module('Lunch.browse', ['openfb', 'Lunch.service.matchData', 'Lunch.fact
         })
         .then(function(returnedData){
           var parsedData = angular.fromJson(returnedData);
-          if(parsedData.config.data.accepted){
+          if(parsedData.config){
             match.id = parsedData.config.data.id;
             $state.go('app.matched');
           } else {

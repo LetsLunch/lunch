@@ -23,5 +23,6 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
         $state.go('app.browse');
       });
     };
+    
     initialize();
 });
