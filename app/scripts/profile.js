@@ -142,15 +142,6 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     });
   };
 
-  // var getMatches = function() {
-  //   requests.getMatches({
-  //     'userId': $scope.userData.id
-  //   }).then(function(data){
-  //     var matchedUsers = angular.fromJson(data);
-  //     matchData.processMatchData(data);
-  //   });
-  // };
-
   $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
     getDetails();
     getPicture();
