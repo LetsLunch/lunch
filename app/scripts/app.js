@@ -19,10 +19,10 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/profile');
+  $urlRouterProvider.otherwise('/app/login');
 })
 
-.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI) {
+.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI, match) {
   $ionicPlatform.ready(function() {
     if($window.StatusBar) {
       $window.StatusBar.styleDefault();
@@ -38,9 +38,15 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   $rootScope.$on('$stateChangeStart', function(e, state) {
     if (OpenFB.isLoggedIn()) {
       if (state.name === 'app.login') {
-        $state.go('app.profile');
+        if ($window.localStorage.match !== undefined) {
+          match.id = $window.localStorage.match;
+          $state.go('app.chats');
+        } else {
+          $state.go('app.profile');
+        }
         e.preventDefault();
       }
+
     } else {
       if (state.name !== 'app.login') {
         $state.go('app.login');
@@ -53,11 +59,4 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   $rootScope.$on('OAuthException', function() {
     $state.go('app.login');
   });
-
-  $rootScope.$on('pushNotificationStart', function(e, userData) {
-      $state.go('app.match');
-      // at this point also send the message to a matched user factory
-      // so that the match view has a means ot obtain the data required
-  });
-
 });

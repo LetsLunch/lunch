@@ -12,6 +12,7 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
       }
   });
 })
+
 .controller('MatchedCtrl', function($rootScope, $scope, $state, $window, requests, match){
     var initialize = function() {
       requests.getDetails(match.id).then(function(res) {
