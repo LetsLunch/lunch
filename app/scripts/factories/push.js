@@ -74,8 +74,14 @@ function onNotificationGCM(e) {
         push.register(e.regid);
       }
   } else if (e.event === 'message') {
-    var chat = injector.get('storedChat'); // Assumes ng-app is a dependent
-    chat.postChat(e.payload);
-    // TODO: Differentiate FG/BG notifications
+    if (e.payload.match) {
+      var $provide = injector.get('$provide');
+      var $state = injector.get('$state');
+      $provide.value('match', '' + e.payload.match);
+      $state.go('app.matched');
+    } else {
+      var chat = injector.get('storedChat'); // Assumes ng-app is a dependent
+      chat.postChat(e.payload);
+    }
   }
 }

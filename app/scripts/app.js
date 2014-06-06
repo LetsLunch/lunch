@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.browse', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.chats', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.service.matchData', 'Lunch.service.storedChat'])
+angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.browse', 'Lunch.matched', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.chats', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.service.matchData', 'Lunch.service.storedChat'])
 
 .config(function($provide, $stateProvider, $urlRouterProvider) {
   // Set application server
@@ -8,6 +8,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   $provide.constant('fbAPI', '765912086774968');
   $provide.constant('gcmAPI', '142933827745');
   $provide.constant('AppServer', 'http://127.0.0.1:8008');
+  $provide.value('match', null);
 
   // Set initial paths
   $stateProvider
