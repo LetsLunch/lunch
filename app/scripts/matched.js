@@ -31,5 +31,6 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
     };
 
     $window.localStorage.match = match.id;
+    $window.localStorage.matchDate = new Date().toDateString();
     initialize();
 });
