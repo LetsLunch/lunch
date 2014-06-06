@@ -25,7 +25,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
         var idTrack = {};
         angular.forEach(fbLikeObj.data, function(value){
           //if a new like / id 
-         if(!$scope.userData.likes[value.id] && value.name){
+         // if(!$scope.userData.likes[value.id] && value.name){
+          if(value.name){
             //inform the database if a new id
             //add the new id and like data locally
             $scope.userData.likes[value.id] = value.name;
@@ -57,15 +58,11 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
     });
   };
 
-  var postTags = function() {
-    angular.forEach($scope.userData.tags, function(value, key){
-      if(value){ // only posts if tag is selected
-        requests.postTag({
-          'userId' : $scope.userData.id,
-          'id': key,
-          'name': key
-        });
-      }
+  var postTag = function(tagName) {
+    requests.postTag({
+      'userId' : $scope.userData.id,
+      'id': tagName,
+      'name': tagName
     });
   };
 
@@ -109,9 +106,11 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
     var clickedText = e.toElement.innerText;
     var pressed = $scope.userData.tags[clickedText];
     if(pressed){
-      //toggle
+      // toggle
+      // TODO - delete Tag when unpressed
       $scope.userData.tags[clickedText] = false;
     } else {
+      postTag(clickedText);
       $scope.userData.tags[clickedText] = true;
     }
     $rootScope.$emit('userDataChanged', $scope.userData);
@@ -147,6 +146,13 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
     postUser().then(function() {
       getPicture();
       $scope.getLikes();
+      //post tags on initialisation
+      angular.forEach(storedUserData.tags, function(value, key){
+        //only post tags that are pressed currently
+        if(value){
+          postTag(key);
+        }
+      });
 
       Geo.getCurrentPosition()
         .then(function(pos) { postLocation(pos); })
