@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.storedUserData', 'Lunch.factory.requests', 'Lunch.service.matchData'])
+angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.requests', 'Lunch.service.matchData'])
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -14,7 +14,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
   });
 })
 
-.controller('ProfileCtrl', function($rootScope, $scope, $ionicSlideBoxDelegate, storedUserData, OpenFB, Geo, localStore, requests, matchData) {
+.controller('ProfileCtrl', function($q, $rootScope, $scope, $ionicSlideBoxDelegate, $window, storedUserData, OpenFB, Geo, localStore, requests, matchData) {
   // Store data in scope
   $scope.userData = storedUserData;
 
@@ -46,7 +46,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
           }
         }
       $rootScope.$emit('userDataChanged', $scope.userData);
-    });
+      });
   };
 
   var postLikes = function(like) {
@@ -84,25 +84,25 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
   };
 
   var getDetails = function() {
-    OpenFB.get('/me')
-    .success(function(data){
-      $scope.userData.first_name = data.first_name;
-      $scope.userData.last_name = data.last_name;
-      $scope.userData.id = data.id;
-      $scope.userData.updated_time = data.updated_time;
-      //update the database with user information from fb
-      postUser();
-      //store updates to data locally
-      $rootScope.$emit('userDataChanged', $scope.userData);
-    })
-    .error(function(data){
-      //if we have data for the user, and fb api is not available
-      // still post user data and tags
-      if($scope.userData.id){
-        postUser();
-        postTags();
-      }
-    });
+    var deferredPost = $q.defer();
+
+    if ($scope.userData.id) {
+      deferredPost.resolve();
+    } else {
+      OpenFB.get('/me')
+      .success(function(data){
+        angular.extend($scope.userData, data);
+        //store updates to data locally
+        $rootScope.$emit('userDataChanged', $scope.userData);
+        deferredPost.resolve();
+      })
+      .error(function(err){
+        $window.alert('Unable to reach Facebook');
+        deferredPost.reject();
+      });
+    }
+
+    return deferredPost.promise;
   };
 
   $scope.tagClick = function(e){
@@ -118,13 +118,14 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
   };
 
   var postUser = function(){
-    requests.postBasicDetails({
-      'id' : $scope.userData.id,
-      'firstname': $scope.userData.first_name,
-      'lastname': $scope.userData.last_name,
-      'profileImage': $scope.userData.photo_url
+    return getDetails().then(function() {
+      return requests.postBasicDetails({
+        'id' : $scope.userData.id,
+        'firstname': $scope.userData.first_name,
+        'lastname': $scope.userData.last_name,
+        'profileImage': $scope.userData.photo_url
+      });
     });
-    postTags();
   };
 
   var postLocation = function(pos) {
@@ -143,13 +144,15 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
   };
 
   $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
-    getDetails();
-    getPicture();
-    $scope.getLikes();
+    postUser().then(function() {
+      getDetails();
+      getPicture();
+      $scope.getLikes();
 
-    Geo.getCurrentPosition()
-      .then(function(pos) { postLocation(pos); })
-      .catch(function(err) { console.error(err); });
+      Geo.getCurrentPosition()
+        .then(function(pos) { postLocation(pos); })
+        .catch(function(err) { console.error(err); });
+    });
 
   });
 });
