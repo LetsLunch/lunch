@@ -7,65 +7,69 @@
   height: 96px;
 }
 
-.col {
-  background-color: #F0F8FF;
-  border-color: #ddd;
-  /*#FAEBD7;*/
-  margin: 10px;
-  text-align: center;
-  color: #4a87ee;
-  border-radius: 10px;
-  border-width: 1px;
-  border-style: solid;
-  font-size: 14px;
-  /*#995533;*/
+.userimage {
+  padding: 0 0 0;
+  box-shadow: 0 0 0;
+}
+.sliderbox{
+  height:70%;
 }
 
 .tags  {
-  margin-left: 15px;
+  margin: 5px;
 } 
 
 .likes {
   margin-left: 5px;
   margin-top: 5px;
-}
 
-#blurb,
-#facebook,
-#username,
-#location,  
-.search,
-.userimage {
+}
+.blurb{
+  height : 470px;
+}
+.blurb,
+.facebook,
+.username, 
+.search{
   text-align: center;
 }
 
-#username {
+.username {
   margin-bottom: 3px;
 }
 
-#location {
+.location {
   margin-top: 0px;
   padding-top: 0px;
 }
-
-.tag,
+.like{
+  color: white;
+  background-color: #4a87ee;
+  border-color: #145fd7;
+}
+.tag{
+  background-color: #D1D1D1;
+  border-color: #D1D1D1;
+}
 .like,
-.lunchbuddy {
-  border-bottom: solid grey;
+.lunchbuddy,
+.tag{
+  border: 1px solid;
+  border-radius: 5px;
+  
 }
 
 .lunchbuddy {
-  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.userimage {
-  margin-top: 15px;
-}
 
-#fbbutton {
+.fbbutton {
   border-radius: 10px;
   background-color: #3b5998;
   color: white;
+  margin: 10px;
 }
 
 #lunchtitle {
@@ -87,6 +91,8 @@
 .like {
   font-size: 12px;
   padding: 5px;
+  margin: 2px;
+
 }
 
 .facebook {
@@ -106,13 +112,11 @@
 }
 
 .pressed {
-  background-color:grey;
+  background-color:#145fd7;
+  border-color: #145fd7;
   color:white;
   border-bottom:white;
-  -moz-box-shadow:    inset 0 0 10px #000000;
-  -webkit-box-shadow: inset 0 0 10px #000000;
-  box-shadow:         inset 0 0 10px #000000;
-}
+ }`
 
 .chatname {
   background-color: white;  

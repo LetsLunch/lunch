@@ -3,24 +3,28 @@
         <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
     <ion-content class="has-header">
-        <div id="userimage"></div>
-        <div >
-            <h4 id="username">{{userData.first_name}} {{userData.last_name}}</h4>
+      <div class = "list card row ">
+        <div class="userimage card col-30">
+          <img ng-src="{{userData.photo_url}}">
         </div>
-        <div >
-            <h4 id="location" ng-show="userData.location">{{userData.location}}</h4>
+        <div class='name card col-50'>
+          <h2 class="username ">{{userData.first_name}} {{userData.last_name}}</h4>
+          <h4 class="location" ng-show="userData.location">{{userData.location}}</h4>
         </div>
-        <div class="search"><a ng-click="takeAction()" class="lunchbuddy button button-light">{{action}}</a></div>
+      </div> 
+        <div class="search">
+          <a ng-click="takeAction()" class="lunchbuddy button button-block button-positive">{{action}}</a>
+        </div>
         <div class="item item-divider">
-             Lunch topics
+             Talk About
         </div>
         <div class="tags">
-            <span class="item tag col-33" ng-repeat="(tag, pressed) in userData.tags" ng-click="tagClick($event)" ng-class="{pressed:pressed}" >
+            <span class="card tag" ng-repeat="(tag, pressed) in userData.tags" ng-click="tagClick($event)" ng-class="{pressed:pressed}" >
                 {{tag}}
             </span>
         </div>
         <div class="item item-divider fbdivider">
-            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">Your Facebook Likes</a></div>
+            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext"></a></div>
         </div>
         <div class="likes">
             <span class="item like col-33" ng-repeat="like in userData.likes">
