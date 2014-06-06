@@ -7,7 +7,7 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   // TODO: Change this to your production server
   $provide.constant('fbAPI', '765912086774968');
   $provide.constant('gcmAPI', '142933827745');
-  $provide.constant('AppServer', 'http://127.0.0.1:8008');
+  $provide.constant('AppServer', 'http://10.8.28.232:8008');
   $provide.value('match', null);
 
   // Set initial paths

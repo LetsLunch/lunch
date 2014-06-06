@@ -25,10 +25,11 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
         var idTrack = {};
         angular.forEach(fbLikeObj.data, function(value){
           //if a new like / id 
-          if(!$scope.userData.likes[value.id] && value.name){
+         if(!$scope.userData.likes[value.id] && value.name){
             //inform the database if a new id
             //add the new id and like data locally
             $scope.userData.likes[value.id] = value.name;
+    
             postLikes(value);
           }
           //track id
@@ -48,14 +49,12 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
     });
   };
 
-  var postLikes = function(likes) {
-     angular.forEach(likes, function(like, key){
+  var postLikes = function(like) {
        requests.postLike({
          'userId' : $scope.userData.id,
          'id': like.id,
          'name': like.name
        });
-     });
    };
 
   var postTags = function() {
@@ -157,7 +156,7 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.s
      getDetails();
      getPicture();
      $scope.getLikes();
-
+     // this could be moved to within a seperate function, and only called if we have a user id
      Geo.getCurrentPosition()
        .then(function(pos) { postLocation(pos); })
        .catch(function(err) { console.error(err); });
