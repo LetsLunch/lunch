@@ -145,7 +145,6 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
 
   $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
     postUser().then(function() {
-      getDetails();
       getPicture();
       $scope.getLikes();
 
