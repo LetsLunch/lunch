@@ -21,7 +21,6 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
           tags: res.data.tags.map(function(tag) { return tag.name; }),
           likes: res.data.likes.map(function(like) { return like.name; })
         };
-
         angular.extend(res.data.user, user);
         angular.extend($scope, res.data.user);
       }).catch(function(err) {
@@ -32,5 +31,6 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
 
     $window.localStorage.match = match.id;
     $window.localStorage.matchDate = new Date().toDateString();
+
     initialize();
 });
