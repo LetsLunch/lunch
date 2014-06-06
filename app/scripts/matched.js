@@ -15,13 +15,13 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
 .controller('MatchedCtrl', function($rootScope, $scope, $state, requests, match){
     var initialize = function() {
       requests.getDetails(match.id).then(function(res) {
-        res.data.photo_url = res.data.profileImage;
-        angular.extend($scope,res.data);
+        var parsedRes = angular.fromJson(res);
+        parsedRes.data.photo_url = parsedRes.data.profileImage;
+        angular.extend($scope, parsedRes.data );
       }).catch(function(err) {
         console.error(err);
         $state.go('app.browse');
       });
     };
-
     initialize();
 });
