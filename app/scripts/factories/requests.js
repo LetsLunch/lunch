@@ -53,11 +53,11 @@ angular.module('Lunch.factory.requests', [])
         data: payload
       });
     },
-    'deleteTag': function(tagId, userId){
+    'deleteTag': function(payload){
       return $http({
         method: 'DELETE',
-        url: baseUrl + urls.tag + '/' + tagId + api_key,
-        data: userId
+        url: baseUrl + urls.tag + '/' + payload.id + api_key,
+        data: payload
       });
     },
     'postLocation': function(payload){

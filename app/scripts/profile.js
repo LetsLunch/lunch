@@ -25,7 +25,6 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
         var idTrack = {};
         angular.forEach(fbLikeObj.data, function(value){
           //if a new like / id 
-         // if(!$scope.userData.likes[value.id] && value.name){
           if(value.name){
             //inform the database if a new id
             //add the new id and like data locally
@@ -61,8 +60,23 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
   var postTag = function(tagName) {
     requests.postTag({
       'userId' : $scope.userData.id,
-      'id': tagName,
-      'name': tagName
+      'id': tagName
+    });
+  };
+
+  var postTags = function() {
+    angular.forEach(storedUserData.tags, function(value, key){
+        // only post tags that are pressed currently
+        if(value){
+          postTag(key);
+        }
+    });
+  };
+
+  var deleteTag = function(tagName) {
+    requests.deleteTag({
+      'userId' : $scope.userData.id,
+      'id': tagName
     });
   };
 
@@ -105,9 +119,10 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
   $scope.tagClick = function(e){
     var clickedText = e.toElement.innerText;
     var pressed = $scope.userData.tags[clickedText];
+    // toggle pressed state
     if(pressed){
-      // toggle
       // TODO - delete Tag when unpressed
+      deleteTag(clickedText);
       $scope.userData.tags[clickedText] = false;
     } else {
       postTag(clickedText);
@@ -146,18 +161,13 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
     postUser().then(function() {
       getPicture();
       $scope.getLikes();
+
       //post tags on initialisation
-      angular.forEach(storedUserData.tags, function(value, key){
-        //only post tags that are pressed currently
-        if(value){
-          postTag(key);
-        }
-      });
+      postTags();
 
       Geo.getCurrentPosition()
         .then(function(pos) { postLocation(pos); })
         .catch(function(err) { console.error(err); });
-    });
-
+      });
   });
 });
