@@ -28,7 +28,7 @@ var _singleUserProfile = function (results, callback) {
   if (results.length) {
     callback(null, new UserProfile(results[0]));
   } else {
-    callback(null, null);
+    callback(null, new UserProfile(results));
   }
 };
 
@@ -53,11 +53,13 @@ var _matchBy = function (keys, params, callback) {
     'MATCH (user:User)',
     Cypher.where('user', keys),
     'WITH user',
-    'MATCH (user)-[:LIKES]->(like:Like)',
+    'OPTIONAL MATCH (user)-[:LIKES]->(like:Like)',
     'WITH user,like',
-    'MATCH (user)-[:HAS_TAG]->(tag:Tag)',
+    'OPTIONAL MATCH (user)-[:HAS_TAG]->(tag:Tag)',
     'WITH user,like,tag',
-    'RETURN user,COLLECT( DISTINCT like) as likes,COLLECT( DISTINCT tag) as tags'
+    'OPTIONAL MATCH (user)-[:IS_AT]->(location:Location)',
+    'WITH user,like,tag,location',
+    'RETURN user,COLLECT( DISTINCT like) as likes,COLLECT( DISTINCT tag) as tags, location'
   ].join('\n');
 
   colog.info(query);
