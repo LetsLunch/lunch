@@ -1,0 +1,31 @@
+    <ion-view> <!-- title="Profile"> -->
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content class="has-header">
+        <div id="userimage"></div>
+        <div >
+            <h4 id="username">{{userData.first_name}} {{userData.last_name}}</h4>
+        </div>
+        <div >
+            <h4 id="location" ng-show="userData.location">{{userData.location}}</h4>
+        </div>
+        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light">Find a Lunch Buddy</a></div>
+        <div class="item item-divider">
+             Lunch topics
+        </div>
+        <div class="tags">
+            <span class="item tag col-33" ng-repeat="(tag, pressed) in userData.tags" ng-click="tagClick($event)" ng-class="{pressed:pressed}" >
+                {{tag}}
+            </span>
+        </div>
+        <div class="item item-divider fbdivider">
+            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">Your Facebook Likes</a></div>
+        </div>
+        <div class="likes">
+            <span class="item like col-33" ng-repeat="like in userData.likes">
+                {{like}}
+            </span>
+        </div>
+    </ion-content>
+</ion-view>
