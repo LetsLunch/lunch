@@ -60,7 +60,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
   var postTag = function(tagName) {
     requests.postTag({
       'userId' : $scope.userData.id,
-      'id': tagName
+      'id': tagName,
+      'name': tagName
     });
   };
 
