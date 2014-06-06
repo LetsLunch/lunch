@@ -59,7 +59,7 @@ var _findAllMatches = function (params, callback) {
     'RETURN user, collect(DISTINCT like) as likes, collect(DISTINCT tag) as tags, location'
   ].join('\n');
 
-  colog.log('create query', query);
+  colog.log(query);
 
   callback(null, query, cypherParams);
 };
@@ -94,7 +94,7 @@ var _selected = function (params, callback) {
     ].join('\n');
   }
 
-  colog.info('create query', query);
+  colog.info(query);
 
   callback(null, query, cypherParams);
 };
