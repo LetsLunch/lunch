@@ -4,36 +4,17 @@ angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.fact
 .service('matchData', function(requests, OpenFB, $q){
 
   var processMatchData = function(matches){
-    var matchData = [];
+    return matches.map(function(match) {
+      var user = {
+        location: match.location.id,
+        tags: match.tags.map(function(tag) { return tag.name; }),
+        likes: match.likes.map(function(like) { return like.name; })
+      };
 
-    angular.forEach(matches, function(user){
-      // Every user is returned in a promise
-      var userPromise = $q.defer();
-      matchData.unshift(userPromise);
-      requests.getDetails(user.id).then(function(details){
-        var user = {},
-            likes = [],
-            tags = {};
+      angular.extend(user, match.user);
 
-        angular.forEach(details.data.likes, function(value){
-          likes.push(value.name);
-        });
-
-         angular.forEach(details.data.tags, function(value){
-          tags[value.name] = true;
-        });
-
-        details.user.likes = likes;
-        details.user.tags = tags;
-        details.user.city = details.data.user.location || undefined;
-        angular.extend(user, details.user);
-
-        userPromise.resolve(user);
-        });
+      return user;
     });
-
-    // Only resolve when all user promises resolve
-    return $q.all(matchData);
   };
 
   this.getMatches = function() {
@@ -42,9 +23,8 @@ angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.fact
     OpenFB.checkLogin().then(function(id) {
       return requests.getMatches({ 'userId': id })
     }).then(function(matchData){
-      return processMatchData(matchData.data)
-    }).then(function(processedData){
-      deferredMatchData.resolve(processedData);
+      deferredMatchData.resolve(
+        processMatchData(matchData.data));
     });
 
     return deferredMatchData.promise;
