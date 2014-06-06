@@ -12,7 +12,11 @@ angular.module('Lunch.chats', ['Lunch.factory.storedUserData'])
     }
   });
 })
-.controller('ChatsCtrl', function($scope, storedUserData, storedChat) {
+.controller('ChatsCtrl', function($scope, $state, storedUserData, storedChat) {
+  $scope.seeProfile = function() {
+    $state.go('app.matched');
+  };
+
   $scope.inputtext = '';
 
   // Get past messages
