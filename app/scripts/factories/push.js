@@ -69,15 +69,17 @@ function onNotificationGCM(e) {
   var injector = elem.injector();
   if (e.event === 'registered') {
       if ( e.regid.length > 0 ) {
-        console.log('REGISTERED with GCM Server -> REGID: ' + e.regid);
         var push = injector.get('push'); // Assumes ng-app is a dependent
         push.register(e.regid);
       }
   } else if (e.event === 'message') {
+    if (e.foreground) {
+      // TODO: Play a sound on foreground reception
+    }
     if (e.payload.match) {
-      var $provide = injector.get('$provide');
+      var match = injector.get('match');
       var $state = injector.get('$state');
-      $provide.value('match', '' + e.payload.match);
+      match.id = e.payload.match;
       $state.go('app.matched');
     } else {
       var chat = injector.get('storedChat'); // Assumes ng-app is a dependent

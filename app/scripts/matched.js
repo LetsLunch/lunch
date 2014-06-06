@@ -14,7 +14,7 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
 })
 .controller('MatchedCtrl', function($rootScope, $scope, $state, requests, match){
     var initialize = function() {
-      requests.getDetails(match).then(function(res) {
+      requests.getDetails(match.id).then(function(res) {
         res.data.photo_url = res.data.profileImage;
         angular.extend($scope,res.data);
       }).catch(function(err) {
