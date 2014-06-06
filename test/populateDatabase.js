@@ -37,23 +37,24 @@ var Like = function (id) {
 };
 var Tag = function (id) {
   var tags = [
-    'Stilson',
-    'Mozzarella',
-    'Gruyere',
-    'Camembert',
-    'Parmesan',
-    'Ricotta',
-    'Pecorino'
+    'Cake',
+    'Cars',
+    'Cats',
+    'Finance',
+    'Javascript',
+    'Robots',
+    'Startups',
+    'Yoga'
   ];
 
   if (id >= tags.length) { throw 'Unexpected id in Tag: ' + id; }
 
-  this.id = '' + id;
+  this.id = tags[id];
   this.name = tags[id];
 };
 var Location = function (id) {
   var locations = [
-    94102,
+    94108,
     49093
   ];
 
@@ -90,12 +91,13 @@ for (iUser = 0; iUser < 10; iUser++) {
   relate.push('MERGE (u'+iUser+':User {id:\''+iUser+'\'})');
 }
 for (iTag = 0; iTag < 7; iTag++) {
-  relate.push('MERGE (t'+iTag+':Tag {id:\''+iTag+'\'})');
+
+  relate.push('MERGE (t'+iTag+':Tag {id:\''+tags[iTag].id+'\'})');
 }
 for (iLike = 0; iLike < 7; iLike++) {
   relate.push('MERGE (l'+iLike+':Like {id:\''+iLike+'\'})');
 }
-relate.push('MERGE (z'+94102+':Location {id:\''+94102+'\'})');
+relate.push('MERGE (z'+94108+':Location {id:\''+94108+'\'})');
 relate.push('MERGE (z'+49093+':Location {id:\''+49093+'\'})');
 
 for (iUser = 0; iUser < 10; iUser++) {
@@ -107,7 +109,7 @@ for (iUser = 0; iUser < 10; iUser++) {
     // relate.push('MERGE (u:User {id:\''+iUser+'\'}) WITH u MERGE (l:Like {id:\''+Math.floor(Math.random()*7)+'\'}) WITH u,l CREATE UNIQUE (u)-[:LIKES]->(l)');
   }
   if (iUser < 7) {
-    relate.push('CREATE UNIQUE (u'+iUser+')-[:IS_AT]->(z94102)');
+    relate.push('CREATE UNIQUE (u'+iUser+')-[:IS_AT]->(z94108)');
   } else {
     relate.push('CREATE UNIQUE (u'+iUser+')-[:IS_AT]->(z49093)');
   }
