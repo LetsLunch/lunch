@@ -123,9 +123,9 @@ exports.userSelected = {
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
     // Check for params 
-    Match.userSelected(params, options,function(err, results, queries){
+    Match.userSelected(params, options,function(err, results, queries) {
       if(results.id){
-        colog.info(params.id +" - "+params.selectedUserId);
+        colog.info(params.id + ' matched with ' +params.selectedUserId);
         Chat.match(params.id,params.selectedUserId);
       }
       callback(err,results,queries);
