@@ -10,7 +10,7 @@
         <div >
             <h4 id="location" ng-show="userData.location">{{userData.location}}</h4>
         </div>
-        <div class="search"><a href="#/app/browse" class="lunchbuddy button button-light">Find a Lunch Buddy</a></div>
+        <div class="search"><a ng-click="takeAction()" class="lunchbuddy button button-light">{{action}}</a></div>
         <div class="item item-divider">
              Lunch topics
         </div>
