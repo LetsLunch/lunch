@@ -118,12 +118,14 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
 
   $scope.tagClick = function(e){
     var clickedText = e.toElement.innerText;
-    var pressed = $scope.userData.tags[clickedText];
-    // toggle pressed state
-    if(pressed){
-      // TODO - delete Tag when unpressed
+    var wasPressed = $scope.userData.tags[clickedText];
+
+    // toggle the state of the tag
+    //if it was pressed, and is now not pressed, delete the tag
+    if(wasPressed){
       deleteTag(clickedText);
       $scope.userData.tags[clickedText] = false;
+    //if it was not pressed, and is now pressed, create the tag
     } else {
       postTag(clickedText);
       $scope.userData.tags[clickedText] = true;
