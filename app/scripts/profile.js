@@ -14,7 +14,15 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
   });
 })
 
-.controller('ProfileCtrl', function($q, $rootScope, $scope, $ionicSlideBoxDelegate, $window, storedUserData, OpenFB, Geo, localStore, requests, matchData) {
+.controller('ProfileCtrl', function($q, $rootScope, $state, $scope, $ionicSlideBoxDelegate, $window, storedUserData, OpenFB, Geo, localStore, requests, matchData, match) {
+  if (match.id === undefined) {
+    $scope.action = 'Find a Lunch Buddy';
+    $scope.takeAction = function() { $state.go('app.browse'); };
+  } else {
+    $scope.action = 'Plan your Lunch';
+    $scope.takeAction = function() { $state.go('app.chats'); };
+  }
+
   // Store data in scope
   $scope.userData = storedUserData;
 
