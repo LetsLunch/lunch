@@ -16,24 +16,23 @@ angular.module('Lunch.browse', ['openfb', 'Lunch.service.matchData', 'Lunch.fact
 
 .controller('BrowseCtrl', function($rootScope, $state, $scope, matchData, $location, requests, OpenFB, match){
     var matchId;
-    var matchedData = matchData.getMatches();
+    var matchedData = [];
 
     var renderMatch = function(match){
-        match.photo_url = match.profileImage;
-        matchId = match.id;
-        angular.extend($scope, match);
+      matchId = match.id;
+      angular.extend($scope, match);
     };
 
     var next = function(){
       if(matchedData.length){
-        renderMatch(matchedData.unshift());
+        renderMatch(matchedData.shift());
       } else {
         matchData.getMatches().then(function(data){
           if (data.length) {
             matchedData = data;
             next();
           } else {
-            $state.go('app.nomatches')
+            $state.go('app.nomatches');
           }
         });
       }
