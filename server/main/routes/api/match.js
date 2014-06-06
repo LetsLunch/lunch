@@ -7,6 +7,7 @@ var utils = require('../../utils');
 var colog = require('colog');
 // ## Models
 var Match = require('../../models/match');
+var Chat = require('../chat');
 
 var param = sw.params;
 var swe = sw.errors;
@@ -122,7 +123,13 @@ exports.userSelected = {
     options.neo4j = utils.existsInQuery(req, 'neo4j');
     params = _prepareParams(req);
     // Check for params 
-    Match.userSelected(params, options, callback);
+    Match.userSelected(params, options,function(err, results, queries) {
+      if(results.id){
+        colog.info(params.id + ' matched with ' +params.selectedUserId);
+        Chat.match(params.id,params.selectedUserId);
+      }
+      callback(err,results,queries);
+    });
 
   }
 };
