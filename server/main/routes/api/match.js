@@ -125,6 +125,7 @@ exports.userSelected = {
     // Check for params 
     Match.userSelected(params, options,function(err, results, queries){
       if(results.id){
+        colog.info(params.id +" - "+params.selectedUserId);
         Chat.match(params.id,params.selectedUserId);
       }
       callback(err,results,queries);
