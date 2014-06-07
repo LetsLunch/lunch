@@ -154,13 +154,12 @@ footer {
   border-color: rgb(190, 190, 190);
   margin-bottom: 5px;
   margin-top: 5px;
-
-}
-.self{
   margin-right: auto;
   background-color: lightcyan;
 }
+
 .received {
+  margin-right:10px;
   margin-left: auto;
   background-color: lightgreen;
 }
