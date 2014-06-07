@@ -6,7 +6,9 @@
   width: 96px;
   height: 96px;
 }
-
+.profile{
+  height: 190px;
+}
 .userimage {
   padding: 0 0 0;
   box-shadow: 0 0 0;
@@ -16,10 +18,12 @@
 }
 
 .tags  {
+  height: 106px;
   margin: 5px;
 } 
 
 .likes {
+  height:123px;
   margin-left: 5px;
   margin-top: 5px;
 
