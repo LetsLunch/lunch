@@ -52,8 +52,8 @@ angular.module('Lunch.browse', ['openfb', 'Lunch.service.matchData', 'Lunch.fact
         })
         .then(function(returnedData){
           var parsedData = angular.fromJson(returnedData);
-          if(parsedData.config){
-            match.id = parsedData.config.data.selectedUserId;
+          if(parsedData.data.id && decision ==='true'){
+            match.id = parsedData.data.selectedUserId;
             $state.go('app.matched');
           } else {
             next();
