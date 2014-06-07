@@ -167,9 +167,9 @@ angular.module('Lunch.profile', [
 
   var postLocation = function(pos) {
     $scope.userData.geolocation = pos.coords;
-      OpenFB.checkLogin().then(function(id) {
+      OpenFB.checkLogin().then(function(userId) {
         requests.postLocation({
-          'userId': id,
+          'userId': userId,
           'lat': pos.coords.latitude,
           'lng': pos.coords.longitude
         }).then(function(res) {

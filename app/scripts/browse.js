@@ -48,10 +48,10 @@ angular.module('Lunch.browse', [
     // records an approval for the currently displayed profile
     $scope.postDecision = function(decision){
       // call service to send approval to db
-      OpenFB.checkLogin().then(function(id){
-        console.log(id);
+      OpenFB.checkLogin().then(function(userId){
+        console.log(userId);
         requests.postDecision({
-            id: id,
+            id: userId,
             selectedUserId : matchId,
             accepted: decision
         })
