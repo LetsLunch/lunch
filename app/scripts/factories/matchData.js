@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('Lunch.service.matchData', ['Lunch.factory.requests', 'Lunch.factory.storedUserData'])
+angular.module('Lunch.service.matchData', [
+  'Lunch.factory.requests',
+  'Lunch.factory.storedUserData'
+])
 .service('matchData', function(requests, OpenFB, $q){
 
   var processMatchData = function(matches){

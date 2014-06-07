@@ -2,7 +2,11 @@
 
 //factory for processing push notifications, based on:
 //   intown.biz/2014/04/11/android-notifications/
-angular.module('push', ['openfb', 'Lunch.factory.storedUserData', 'Lunch.factory.requests'])
+angular.module('push', [
+  'openfb',
+  'Lunch.factory.storedUserData',
+  'Lunch.factory.requests'
+])
   .service('push', function($window, OpenFB, storedUserData, requests, gcmAPI) {
     var pushNotification;
     var isMobile;
