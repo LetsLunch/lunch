@@ -6,8 +6,8 @@ angular.module('Lunch.factory.requests', [])
          
 })
 
-.factory('requests', function($rootScope, $http, $q, AppServer){
-  var baseUrl = AppServer + '/api/v0/';
+.factory('requests', function($rootScope, $http, $q, APIHost){
+  var baseUrl = APIHost + '/api/v0/';
   var api_key = '?api_key=special-key&neo4j=true';
   var urls = {
     'basicDetails' : 'users',
