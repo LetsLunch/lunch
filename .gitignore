@@ -1,0 +1,12 @@
+node_modules
+www
+.tmp
+.sass-cache
+.DS_Store
+._.DS_Store
+app/bower_components
+coverage
+platforms/*
+!platforms/.gitkeep
+plugins
+app/fonts

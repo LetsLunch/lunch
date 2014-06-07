@@ -1,0 +1,34 @@
+<ion-view> <!-- title="Matched"> -->
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left"class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+      <h1>Meet up for lunch!</h1>
+      <div class="userimage"><img ng-src="{{profileImage}}"></div>
+
+    	<h2 id="username">{{firstname}} {{lastname}}</h2>
+
+
+			<h4 id="location">{{location}}</h4>
+	
+			<div class="item item-divider">
+   			 {{firstname}} wants to talk about
+  		</div>
+  		<div class="tags">
+            <span class="item tag col-33 pressed" ng-repeat="tag in tags">
+                {{tag}}   
+            </span>
+      </div>
+			 <div class="item item-divider fbdivider"> 
+            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">{{firstname}}'s Facebook Likes</a></div>
+      </div>
+  		<div class="likes">
+            <span class="item like col-33" ng-repeat="like in likes">
+                {{like}}
+            </span>
+      </div>
+ 		<div class="button-bar">
+		  <a class="button icon ion-chatboxes" href="#/app/chats"></a>
+		</div>
+  </ion-content>
+</ion-view>
