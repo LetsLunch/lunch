@@ -4,31 +4,35 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
       <h1>Meet up for lunch!</h1>
-      <div class="userimage"><img ng-src="{{profileImage}}"></div>
-
-    	<h2 id="username">{{firstname}} {{lastname}}</h2>
-
-
-			<h4 id="location">{{location}}</h4>
-	
-			<div class="item item-divider">
-   			 {{firstname}} wants to talk about
-  		</div>
-  		<div class="tags">
+       <div class = "profile card row ">
+        <div class="userimage card col-30">
+          <img ng-src="{{profileImage}}">
+        </div>
+        <div class='name card col-50'>
+          <h2 class="username ">{{firstname}} {{lastname}}</h4>
+          <h4 class="location" ng-show="userData.location">{{location}}</h4>
+        </div>
+      </div> 
+      <div class="item item-divider">
+         {{firstname}} wants to talk about
+      </div>
+      <div class="tags">
             <span class="item tag col-33 pressed" ng-repeat="tag in tags">
-                {{tag}}   
+                {{tag}}
             </span>
       </div>
-			 <div class="item item-divider fbdivider"> 
+       <div class="item item-divider fbdivider">
             <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">{{firstname}}'s Facebook Likes</a></div>
       </div>
-  		<div class="likes">
+      <div class="likes">
             <span class="item like col-33" ng-repeat="like in likes">
                 {{like}}
             </span>
       </div>
+  </ion-content>
+  <div class="bar bar-footer">
  		<div class="button-bar">
 		  <a class="button icon ion-chatboxes" href="#/app/chats"></a>
 		</div>
-  </ion-content>
+  </div>
 </ion-view>

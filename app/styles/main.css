@@ -76,7 +76,7 @@
   margin: 10px;
 }
 
-#lunchtitle {
+.lunchtitle {
   font-size: 80px;
 }
 
@@ -148,9 +148,22 @@ footer {
 }
 
 .chatMessage {
-  margin-right: 0 !important;
-}
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: rgb(190, 190, 190);
+  margin-bottom: 5px;
+  margin-top: 5px;
 
+}
+.self{
+  margin-right: auto;
+  background-color: lightcyan;
+}
+.received {
+  margin-left: auto;
+  background-color: lightgreen;
+}
 .userchat {
   color: blue;
 }

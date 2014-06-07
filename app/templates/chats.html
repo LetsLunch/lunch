@@ -8,53 +8,24 @@
   <ion-content class="has-header">
       <div class="chatContainer">
         <div ng-repeat="chatMessage in chatMessages" class="row chatMsgRow right">
-          <div class="card chatMessage">
-              <div class="item item-text-wrap">
+          <div class="card chatMessage self">
                 <div class="chattext" ng-class="{userchat:chatMessage.self}"> 
                  {{chatMessage.message}}
                 </div>
                 <div class="time">{{chatMessage.timestamp | date : 'shortTime'}}   {{chatMessage.timestamp | date : 'shortDate'}}</div>
-              </div>
           </div>
         </div>
+        <!-- TO TEST FORMAT MESSAGES THAT ARE RECEVIED -->
+         <div class="row chatMsgRow right">
+           <div class="card chatMessage received">
+                  <div class="chattext" ng-class="{userchat:chatMessage.self}"> 
+                   HI , how are you doing ?
+                  </div>
+                  <div class="time">{{chatMessage.timestamp | date : 'shortTime'}}   {{chatMessage.timestamp | date : 'shortDate'}}</div>
+            </div>
+        </div>  
+        <!--  -->
 
-        <!-- <div class="row">
-          <div class="card col-50">
-            <div class="item item-text-wrap">
-             This is a basic Card which contains an item that has wrapping text.
-            </div>
-          </div>
-          <div class="card col-50">
-            <div class="item item-text-wrap">
-             This is a basic Card which contains an item that has wrapping text.
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="card col-50">
-            <div class="item item-text-wrap">
-             This is a basic Card which contains an item that has wrapping text.
-            </div>
-          </div>
-          <div class="card col-50">
-            <div class="item item-text-wrap">
-             This is a basic Card which contains an item that has wrapping text.
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="card col-50">
-            <div class="item item-text-wrap">
-             This is a basic Card which contains an item that has wrapping text.
-            </div>
-          </div>
-          <div class="card col-50">
-            <div class="item item-text-wrap">
-             This is a basic Card which contains an item that has wrapping text.
-            </div>
-          </div>
-        </div> -->
     
       </div>
   </ion-content>
