@@ -1,6 +1,11 @@
 'use strict';
 
-angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.requests', 'Lunch.service.matchData'])
+angular.module('Lunch.profile', [
+  'openfb',
+  'Lunch.factory.Geo',
+  'Lunch.factory.requests',
+  'Lunch.service.matchData'
+])
 .config(function($stateProvider) {
   $stateProvider
   .state('app.profile', {
@@ -14,7 +19,10 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
   });
 })
 
-.controller('ProfileCtrl', function($q, $rootScope, $state, $scope, $ionicSlideBoxDelegate, $window, storedUserData, OpenFB, Geo, localStore, requests, matchData, match) {
+.controller('ProfileCtrl', function($q, $rootScope, $state, $scope,
+                                    $ionicSlideBoxDelegate, $window,
+                                    storedUserData, OpenFB, Geo, localStore,
+                                    requests, matchData, match) {
   if (match.id === undefined) {
     $scope.action = 'Find a Lunch Buddy';
     $scope.takeAction = function() { $state.go('app.browse'); };
@@ -43,14 +51,17 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
           //track id
           idTrack[value.id] = true;
         });
-        //check ids fetched from fb to local ids.  if like stored locally no longer
-        //avaiable from fb, inform the db and (then) delete locally
+        // check ids fetched from fb to local ids.
+        // if like stored locally no longer
+        // avaiable from fb, inform the db and (then) delete locally
         for(var like in $scope.userData.likes) {
           if(!idTrack[like]){
-            console.info('Deleteing like: ' + like + '; no longer in facebook');
+            console.info('Deleting like: ' + like + '; no longer in facebook');
             requests.deleteLike(like.id, {'userId': $scope.userData.id});
-            delete $scope.userData.likes[like]; // since the like no longer exists
-            //inform database using like.id and user.id and like.name ($scope.userData.likes[likeId])
+            delete $scope.userData.likes[like];
+            // since the like no longer exists
+            // inform database using like.id and user.id and like.name
+            // ($scope.userData.likes[likeId])
           }
         }
       $rootScope.$emit('userDataChanged', $scope.userData);
@@ -90,10 +101,11 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
   };
 
   var getPicture = function() {
-    OpenFB.get('/me/picture?redirect=0&height=133&type=normal&width=100')//'/me/picture')
+    OpenFB.get('/me/picture?redirect=0&height=133&type=normal&width=100')
     .success(function(data){
       if(data !== $scope.userData.photo_url){
-        var image = "<div class='userimage'><img src='" + data.data.url + "'/></div>";
+        var image =
+          "<div class='userimage'><img src='" + data.data.url + "'/></div>";
         angular.element(document.querySelector('#userimage')).html(image);
         $scope.userData.photo_url = data.data.url;
         //tell the database the image associated with the user has changed
@@ -168,7 +180,8 @@ angular.module('Lunch.profile', ['openfb', 'Lunch.factory.Geo', 'Lunch.factory.r
     });
   };
 
-  $scope.$on('$stateChangeSuccess', function(e, state) { // this triggers every time we go to the profile page, may need something else
+  // this triggers every time we go to the profile page
+  $scope.$on('$stateChangeSuccess', function(e, state) {
     postUser().then(function() {
       getPicture();
       $scope.getLikes();

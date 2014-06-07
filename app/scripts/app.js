@@ -1,6 +1,22 @@
 'use strict';
 
-angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.browse', 'Lunch.matched', 'Lunch.nomatches', 'Lunch.noshow', 'Lunch.chats', 'Lunch.login','Lunch.factory.Geo', 'Lunch.factory.localStore','Lunch.factory.storedUserData', 'Lunch.service.matchData', 'Lunch.service.storedChat'])
+angular.module('Lunch', [
+  'ionic',
+  'openfb',
+  'push',
+  'Lunch.profile',
+  'Lunch.browse',
+  'Lunch.matched',
+  'Lunch.nomatches',
+  'Lunch.noshow',
+  'Lunch.chats',
+  'Lunch.login',
+  'Lunch.factory.Geo',
+  'Lunch.factory.localStore',
+  'Lunch.factory.storedUserData',
+  'Lunch.service.matchData',
+  'Lunch.service.storedChat'
+])
 
 .config(function($provide, $stateProvider, $urlRouterProvider) {
   // Set application server
@@ -22,7 +38,8 @@ angular.module('Lunch', ['ionic',  'openfb', 'push', 'Lunch.profile', 'Lunch.bro
   $urlRouterProvider.otherwise('/app/login');
 })
 
-.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI, match, storedChat) {
+.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI,
+              gcmAPI, match, storedChat) {
   $ionicPlatform.ready(function() {
     if($window.StatusBar) {
       $window.StatusBar.styleDefault();

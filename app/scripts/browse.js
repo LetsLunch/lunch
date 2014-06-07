@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('Lunch.browse', ['openfb', 'Lunch.service.matchData', 'Lunch.factory.storedUserData'])
+angular.module('Lunch.browse', [
+  'openfb',
+  'Lunch.service.matchData',
+  'Lunch.factory.storedUserData'
+])
 .config(function($stateProvider){
   $stateProvider
   .state('app.browse', {
@@ -14,7 +18,8 @@ angular.module('Lunch.browse', ['openfb', 'Lunch.service.matchData', 'Lunch.fact
   });
 })
 
-.controller('BrowseCtrl', function($rootScope, $state, $scope, matchData, $location, requests, OpenFB, match){
+.controller('BrowseCtrl', function($rootScope, $state, $scope, matchData,
+                                   $location, requests, OpenFB, match){
     var matchId;
     var matchedData = [];
 
