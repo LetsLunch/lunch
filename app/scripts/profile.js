@@ -19,7 +19,10 @@ angular.module('Lunch.profile', [
   });
 })
 
-.controller('ProfileCtrl', function($q, $rootScope, $state, $scope, $ionicSlideBoxDelegate, $window, storedUserData, OpenFB, Geo, localStore, requests, matchData, match) {
+.controller('ProfileCtrl', function($q, $rootScope, $state, $scope,
+                                    $ionicSlideBoxDelegate, $window,
+                                    storedUserData, OpenFB, Geo, localStore,
+                                    requests, matchData, match) {
   if (match.id === undefined) {
     $scope.action = 'Find a Lunch Buddy';
     $scope.takeAction = function() { $state.go('app.browse'); };

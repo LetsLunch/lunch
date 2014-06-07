@@ -38,7 +38,8 @@ angular.module('Lunch', [
   $urlRouterProvider.otherwise('/app/login');
 })
 
-.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI, gcmAPI, match, storedChat) {
+.run(function($ionicPlatform, $rootScope, $state, $window, OpenFB, push, fbAPI,
+              gcmAPI, match, storedChat) {
   $ionicPlatform.ready(function() {
     if($window.StatusBar) {
       $window.StatusBar.styleDefault();

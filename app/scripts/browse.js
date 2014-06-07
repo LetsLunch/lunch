@@ -18,7 +18,8 @@ angular.module('Lunch.browse', [
   });
 })
 
-.controller('BrowseCtrl', function($rootScope, $state, $scope, matchData, $location, requests, OpenFB, match){
+.controller('BrowseCtrl', function($rootScope, $state, $scope, matchData,
+                                   $location, requests, OpenFB, match){
     var matchId;
     var matchedData = [];
 
