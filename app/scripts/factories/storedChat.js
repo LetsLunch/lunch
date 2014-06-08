@@ -20,7 +20,7 @@ angular.module('Lunch.service.storedChat', ['Lunch.factory.requests'])
     this.postChat = function(payload) {
       var text = payload.message;
       var time = payload.timestamp;
-      var self = !!payload.user;
+      var self = !!payload.self;
       
       deferredChat.notify(payload);
       
