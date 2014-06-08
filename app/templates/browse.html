@@ -19,7 +19,7 @@
             </span>
       </div>
 			 <div class="item item-divider fbdivider">
-            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">{{firstname}}'s Facebook Likes</a></div>
+            <div><img class="likeimg" src="images/facebook/FB-LikeButton-online-58.png"> <a class="liketext">{{firstname}}'s Facebook Likes</a></div> 
       </div
   		<div class="likes">
             <span class="item like col-33" ng-repeat="like in likes">
@@ -27,6 +27,7 @@
             </span>
       </div>
  		<div class="button-bar">
+     <!--  postDecision has a boolean string as its argument, since the server endpoint api expects this -->
 		  <a class="button assertive icon ion-close-round" ng-click="postDecision('false')"></a>
 		  <a class="button balanced icon ion-checkmark-round" ng-click="postDecision('true')"></a>
 		</div>

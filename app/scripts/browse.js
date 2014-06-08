@@ -49,15 +49,13 @@ angular.module('Lunch.browse', [
     $scope.postDecision = function(decision){
       // call service to send approval to db
       OpenFB.checkLogin().then(function(userId){
-        console.log(userId);
         requests.postDecision({
             id: userId,
             selectedUserId : matchId,
             accepted: decision
         })
         .then(function(returnedData){
-          var parsedData = angular.fromJson(returnedData);
-          if(parsedData.data.id && decision ==='true'){
+          if(returnedData.data.id && decision ==='true'){
             match.id = parsedData.data.selectedUserId;
             $state.go('app.matched');
           } else {
