@@ -1,10 +1,11 @@
 <ion-view>
 <ion-content class="has-header">
+			<div class="sliderbox">
     		<ion-slide-box delegate-handle="loginSlider" show-pager="true" pager-click="updateSlide(index)">
 				  <ion-slide>
-				    <div id="blurb">
+				    <div class="blurb">
 				    	<h2>Meet someone over</h2>
-				    	<h1 id="lunchtitle">Lunch</h1>
+				    	<h1 class="lunchtitle">Lunch</h1>
 				    </div>
 				  </ion-slide>
 				  <ion-slide>
@@ -17,6 +18,7 @@
 				    <div><h1>Even more blurb</h1></div>
 				  </ion-slide>
 				</ion-slide-box>
-				<div id="facebook"><a ng-click="login()" id="fbbutton" class="button"><img class="facebook" src="images/facebook/FB-f-Logo__white_29.png"> Login with Facebook</a></div>
+				</div>
+				<div class="facebook"><a ng-click="login()" class="fbbutton button button-block button-positive"><img class="facebook" src="images/facebook/FB-f-Logo__white_29.png"> Login with Facebook</a></div>
   </ion-content>
 </ion-view>
