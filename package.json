@@ -13,10 +13,10 @@
     "morgan": "^1.1.1",
     "neo4j": "^1.1.0",
     "neo4j-architect": "^0.1.1",
-    "neo4j-swagger-ui": "0.0.14",
+    "neo4j-swagger-ui": "^0.0.14",
     "node-gcm": "^0.9.11",
     "request": "^2.36.0",
-    "sillyname": "0.0.3",
+    "sillyname": "^0.0.3",
     "swagger-node-express": "^2.0.3"
   },
   "devDependencies": {
