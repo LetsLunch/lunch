@@ -5,7 +5,7 @@ angular.module('Lunch.service.storedChat', ['Lunch.factory.requests'])
     // Make new chats available through promises and stash them locally
     var deferredChat = $q.defer();
 
-    this.getChatPromise = function() {
+    this.getChat = function() {
       return deferredChat.promise;
     };
 

@@ -1,6 +1,8 @@
 'use strict';
 
-var subpath        = require('express')(),
+var path           = require('path'),
+    express        = require('express'),
+    subpath        = express(),
     bodyParser     = require('body-parser'),
     methodOverride = require('method-override'),
     logger         = require('morgan'),
@@ -42,9 +44,10 @@ module.exports = function(app) {
   routes.swaggerui(app);
   // Chat enpoint routes
   routes.chat(app);
-  // Use documentation as landing page
-  app.get('/', function(req, res) {
+  // Documentation
+  app.get('/docs', function(req, res) {
     res.redirect('./docs');
   });
-  // TODO: make landing page
+  // Landing page (and default paths)
+  app.use(express.static(path.join(__dirname + '../../../landing')));
 };

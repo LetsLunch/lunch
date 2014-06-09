@@ -17,6 +17,12 @@
   height:70%;
 }
 
+.demoimg{
+  max-height:100px;
+  width: auto;
+  text-align: center;
+}
+
 .tags  {
   height: 106px;
   margin: 5px;
@@ -32,6 +38,7 @@
   height : 470px;
 }
 .blurb,
+.demoblurb,
 .facebook,
 .username, 
 .search,
