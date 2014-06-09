@@ -15,11 +15,13 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
 
 .controller('MatchedCtrl', function($rootScope, $scope, $state, $window,
                                     requests, match){
+    // Ensure the match is valid
     if (!match.id) {
       $state.go('app.browse');
-    }
+    } else {
+      $window.localStorage.match = match.id;
+      $window.localStorage.matchDate = new Date().toDateString();
 
-    var initialize = function() {
       requests.getDetails(match.id).then(function(res) {
         var user = {
           location: res.data.location.city,
@@ -32,10 +34,7 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
         console.error(err);
         $state.go('app.browse');
       });
-    };
+    }
 
-    $window.localStorage.match = match.id;
-    $window.localStorage.matchDate = new Date().toDateString();
 
-    initialize();
 });
