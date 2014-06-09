@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <!-- jQuery (required for Bootstrap.js) -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- Bootstrap.js (for carousel) -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <style>
+    .carousel-control.left, .carousel-control.right{ 
+      background: none !important; 
+      filter: progid:none !important; 
+    }
+  </style>
+</head>
+<body style="background-color: #CF9999;">
+  <div class="jumbotron text-center">
+    <h1>Meet people over <strong>Lunch</strong></h1>
+  </div>
+  <div class="container">
+    <div class="row">
+      Do you eat at a different time than your friends and officemates? Have you ever been stuck going to lunch alone? Lunch aims to fix that, and let you meet new people at the same time. All you need to do is tell Lunch what you’d like to talk about while you eat, and you will be given matches around you with similar interests. Pick one, start a conversation, and meet over lunch!
+    </div>
+    <div class="row">
+      <h2 class="text-center">How it works</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div id="carousel-screencast" class="carousel slide" data-ride="carousel">
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner">
+            <div class="item active">
+              <img src="images/profile_framed.png" alt="Profile Screen"
+              style="margin-left:auto; margin-right:auto; width: 250px; height: auto">
+              <div class="text-center">
+                <h3 class="screencast-text">Tell us what you'd like to talk about today</h3>
+                <p class="screencast-text">The topics you select will be used to match you with a friend for lunch.</p>
+              </div>
+            </div>
+            <div class="item">
+              <img src="images/browse_framed.png" alt="Browsing Screen"
+              style="margin-left:auto; margin-right:auto; width: 250px; height: auto">
+              <div class="text-center">
+                <h3 class="screencast-text">Pick an interesting lunch buddy</h3>
+                <p class="screencast-text">Browse through matches in your area with similar interests</p>
+              </div>
+            </div>
+            <div class="item">
+              <img src="images/match_framed.png" alt="Matching Screen"
+              style="margin-left:auto; margin-right:auto; width: 250px; height: auto">
+              <div class="text-center">
+                <h3 class="screencast-text">See your match</h3>
+                <p class="screencast-text">You can always review your match to see what you both like</p>
+              </div>
+            </div>
+            <div class="item">
+              <img src="images/chat_framed.png" alt="Chat Screen"
+              style="margin-left:auto; margin-right:auto; width: 250px; height: auto">
+              <div class="text-center">
+                <h3 class="screencast-text">Start a conversation and organize lunch!</h3>
+                <p class="screencast-text">You have the rest of the day to talk to your match, and make plans for lunch!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-screencast" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left screencast-glyph"></span>
+          </a>
+          <a class="right carousel-control" href="#carousel-screencast" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right screencast-glyph"></span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <p>
+        <iframe src="http://ghbtns.com/github-btn.html?user=letslunch&amp;repo=lunch&amp;type=watch&amp;count=true&amp;size=large"
+        allowtransparency="true" frameborder="0" scrolling="0" width="120" height="30"></iframe>
+        <iframe src="http://ghbtns.com/github-btn.html?user=letslunch&amp;repo=lunch&amp;type=fork&amp;count=true&amp;size=large"
+        allowtransparency="true" frameborder="0" scrolling="0" width="120" height="30"></iframe>
+      </p>
+    </div>
+    <div class="row text-center">
+      <p>
+        Created by <a href="https://github.com/zzmp">@zzmp</a>, <a href="https://github.com/omkarv">@omkarv</a>, and <a href="https://github.com/rajatkhanna82">@rajatkhanna82</a> for <a href="http://hackreactor.com/">Hack Reactor</a>.
+      </p>
+    </div>
+    <div class="row text-center">
+    Available soon on Google Play.
+      <!-- <a href="https://play.google.com/store/apps/details?id=com.getlunch">
+        <img alt="Get it on Google Play"
+          src="/images/brand/en_generic_rgb_wo_60.png" />
+      </a> -->
+    </div>
+  </div>
+
+  <!-- Built at Hack Reactor -->
+  <a href="http://hackreactor.com"><img style="position: fixed; top: 0; right: 0; border: 0;" src="http://i.imgur.com/x86kKmF.png" alt="Built at Hack Reactor"></a>
+
+  <script>
+    // Stop autoplay of carousel
+    $.fn.carousel.defaults = {
+      interval: false
+      , pause: 'hover'
+    }
+  </script>
+
+</body>
+</html>
