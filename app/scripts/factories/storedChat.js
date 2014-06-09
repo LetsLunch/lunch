@@ -29,7 +29,7 @@ angular.module('Lunch.service.storedChat', ['Lunch.factory.requests'])
       chat.push({
         message: text,
         timestamp: time,
-        self: self
+        self: !!self
       });
       $window.localStorage.chat = angular.toJson(chat);
 
