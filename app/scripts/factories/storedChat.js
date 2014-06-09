@@ -34,7 +34,9 @@ angular.module('Lunch.service.storedChat', ['Lunch.factory.requests'])
       $window.localStorage.chat = angular.toJson(chat);
 
       // Send to match
-      requests.postChat(match.id, payload);
+      if (self) {
+        requests.postChat(match.id, payload);
+      }
     };
   });
 
