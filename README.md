@@ -97,7 +97,7 @@ You can boot up a client through a browser, emulator, or mobile device. Push not
 
 Logging is available through [**morgan**](https://www.npmjs.org/package/morgan) and [**colog**](https://www.npmjs.org/package/colog). To enable logging, set your shell's DEVELOPMENT variable to enable logging. Using **bash** and **zsh**, `export DEVELOPMENT=true`.
 
-* `nodemon server/server.js`
+* `npm start`
 
 ## Testing
 

@@ -55,6 +55,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "./node_modules/.bin/bower install",
+    "start": "node server/server.js"
   }
 }
