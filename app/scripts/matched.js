@@ -15,6 +15,10 @@ angular.module('Lunch.matched', ['Lunch.factory.requests'])
 
 .controller('MatchedCtrl', function($rootScope, $scope, $state, $window,
                                     requests, match){
+    if (!match.id) {
+      $state.go('app.browse');
+    }
+
     var initialize = function() {
       requests.getDetails(match.id).then(function(res) {
         var user = {
