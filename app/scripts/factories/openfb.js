@@ -13,6 +13,8 @@ angular.module('openfb', [])
 
     .factory('OpenFB', function ($rootScope, $q, $window, $http) {
 
+        // So long as we serve all content through https,
+        // we should not run afoul of mixed content policies
         var FB_LOGIN_URL = 'https://www.facebook.com/dialog/oauth',
 
         // By default we store fbtoken in sessionStorage. This can be overriden in init()

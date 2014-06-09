@@ -23,7 +23,7 @@ angular.module('Lunch', [
   // TODO: Change this to your production server
   $provide.constant('fbAPI', '765912086774968');
   $provide.constant('gcmAPI', '142933827745');
-  $provide.constant('APIHost', 'http://127.0.0.1:8008');
+  $provide.constant('APIHost', '//127.0.0.1:8008');
   $provide.value('match', {});
 
   // Set initial paths
@@ -46,7 +46,8 @@ angular.module('Lunch', [
     }
   });
 
-  // Initialize with localhost to support development
+  // Initialize with http://localhost to support development
+  // (https is not set up to work locally)
   // (cordova will default to https://www.facebook.com/)
   OpenFB.init(fbAPI, 'http://localhost:9000/oauth.html', $window.localStorage);
   push.init();
