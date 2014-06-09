@@ -17,7 +17,7 @@ var User = function (id) {
   this.id = '' + id;
   this.firstname = name[0];
   this.lastname = name[1];
-  this.profileImage = 'http://www.example.com/' + id;
+  this.profileImage = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBhIPEBMSEBQQEBUWFRAWGRcVFhYXGRoaHxUVGxciGB4jGyYqGBklJRIUIy8jJScpLiwuFyQxN0AqNSYuLTABCQoKBQUFDQUFDSkYEhgpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKf/AABEIAGoAUAMBIgACEQEDEQH/xAAbAAEAAwADAQAAAAAAAAAAAAAAAwUGAQIEB//EAC8QAAIBAgMFBQkBAAAAAAAAAAABAgMRBAUxEiFBUWEikaGxwTIzcXKBstHw8SP/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A+uAAAAdK1eMFeTSX7pzA7gqK2fq/Yjdc27eB2o5+n7cWuq3/AL4gWoIqGLhUXZafTj3EoAAAAABxOaSbeiTfcZfF4l1JuTd9bfDgaXFe7n8s/tZkwAAAkw9dwkpLg/6ajD1lOKkuK/qMmX+QzvTa5Sfkn6gWIAAAACPFe7n8s/tZkzW143hJLVxkvBmTsBwAABf5Cv8AN9ZPyRQF/kULUm+cn6L0AsQAAAAAz2cYXYndaSu/rx8/E0JV5847Ku+0nuXTjfuAowABJRp7Uox0u0jU0KCpxUY6Iz+UQi6q2urXV8DRgAAAOJSS3tpfEpcXnje6mtlc3r9ORW1aspu8m5PrvAva+d04+zeb36bl4lJiK7qScpasiAAAAc3LjCZ4rJVE+W0vXqUwA1lHExmrxafAkMge3D5vUhq9tcn+QPCAAAAAAAAAAAAAAAAAAAAAAAAAAP/Z';
 };
 var Like = function (id) {
   var likes = [
@@ -53,14 +53,26 @@ var Tag = function (id) {
   this.name = tags[id];
 };
 var Location = function (id) {
-  var locations = [
-    94108,
-    49093
-  ];
+  var locations = [{
+    id: '94108',
+    zipcode: '94108',
+    city: 'San Francisco',
+    state: 'CA'
+  },
+  {
+    id: '94043',
+    zipcode: '94043',
+    city: 'Mountain View',
+    state: 'CA'
+  }];
+    
 
   if (id >= locations.length) { throw 'Unexpected id in Location: ' + id; }
 
-  this.id = '' + locations[id];
+  this.id = locations[id].id;
+  this.zipcode = locations[id].zipcode;
+  this.city = locations[id].city;
+  this.state = locations[id].state;
 };
 
 // Populate test arrays
