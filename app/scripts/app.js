@@ -23,7 +23,7 @@ angular.module('Lunch', [
   // TODO: Change this to your production server
   $provide.constant('fbAPI', '765912086774968');
   $provide.constant('gcmAPI', '142933827745');
-  $provide.constant('APIHost', '//getlunch.azurewebsites.net');
+  $provide.constant('APIHost', 'http://getlunch.azurewebsites.net');
   $provide.value('match', {});
 
   // Set initial paths
