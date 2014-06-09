@@ -1,0 +1,193 @@
+/* Your app's CSS, go crazy, make it your own */
+
+.ionic-logo {
+  display: block;
+  margin: 15px auto;
+  width: 96px;
+  height: 96px;
+}
+.profile{
+  height: 190px;
+}
+.userimage {
+  padding: 0 0 0;
+  box-shadow: 0 0 0;
+}
+.sliderbox{
+  height:70%;
+}
+
+.tags  {
+  height: 106px;
+  margin: 5px;
+} 
+
+.likes {
+  height:123px;
+  margin-left: 5px;
+  margin-top: 5px;
+
+}
+.blurb{
+  height : 470px;
+}
+.blurb,
+.facebook,
+.username, 
+.search{
+  text-align: center;
+}
+
+.username {
+  margin-bottom: 3px;
+}
+
+.location {
+  margin-top: 0px;
+  padding-top: 0px;
+}
+.like{
+  color: white;
+  background-color: #4a87ee;
+  border-color: #145fd7;
+}
+.tag{
+  background-color: #D1D1D1;
+  border-color: #D1D1D1;
+}
+.like,
+.lunchbuddy,
+.tag{
+  border: 1px solid;
+  border-radius: 5px;
+  
+}
+
+.lunchbuddy {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+
+.fbbutton {
+  border-radius: 10px;
+  background-color: #3b5998;
+  color: white;
+  margin: 10px;
+}
+
+.lunchtitle {
+  font-size: 80px;
+}
+
+.tag,
+.like {
+  display: inline-block;
+  font-size: 15px;
+  padding: 8px;
+}
+
+.tag {
+  margin: 5px;
+
+}
+
+.like {
+  font-size: 12px;
+  padding: 5px;
+  margin: 2px;
+
+}
+
+.facebook {
+  position: relative;
+  margin-right: 3px;
+  top: 7px;
+}
+
+.liketext {
+  position: relative;
+  bottom: 7px;
+  margin-left: 12px;
+}
+
+.fbdivider {
+  padding: 5px;
+}
+
+.pressed {
+  background-color:#145fd7;
+  border-color: #145fd7;
+  color:white;
+  border-bottom:white;
+ }`
+
+.chatname {
+  background-color: white;  
+  font-size: 13px;
+  font-weight : bold;
+}
+
+.chattext{
+  font-size: 11px;
+}
+
+.time {
+  font-style: italic;
+  font-size: 10px;
+}
+
+.chatMsgRow {
+  padding: 1px;
+}
+
+footer {
+    display: block;
+    position: absolute;
+    bottom: 10px;
+}
+
+.chatMessage {
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: rgb(190, 190, 190);
+  margin-bottom: 5px;
+  margin-top: 5px;
+  margin-right: auto;
+  background-color: lightcyan;
+}
+
+.received {
+  margin-right:10px;
+  margin-left: auto;
+  background-color: lightgreen;
+}
+.userchat {
+  color: blue;
+}
+
+/*
+.toggle(
+  -webkit-transition: -webkit-transition: linear 2s;
+  -moz-transition: linear 2s;
+  -ms-transition: linear 2s;
+  -o-transition: linear 2s;
+  transition: linear 2s;
+}
+ 
+.toggle.ng-enter{
+  opacity: 0;
+}
+ 
+.toggle.ng-enter-active{
+  opacity: 1;
+}
+ 
+.toggle.ng-leave{
+  opacity: 1;
+}
+ 
+.toggle.ng-leave-active{
+  opacity: 0;
+} */
