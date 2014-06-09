@@ -1,6 +1,7 @@
 'use strict';
 
-var gcm     = require('./chat/gcm'),
+var path    = require('path'),
+    gcm     = require('./chat/gcm'),
     request = require('request'),
     colog   = require('colog');
 
@@ -12,7 +13,7 @@ var pushMessage = function(id, payload) {
   
   // Query neo4j instance
   request.post({
-    uri: (process.env['NEO4J_URL'] || 'http://localhost:7474/') + 'db/data/cypher',
+    uri: path.join(process.env['NEO4J_URL'] || 'http://localhost:7474/', 'db/data/cypher'),
     json: { query: query, params: params }
   }, function(err, r, body) {
     //Collect tokens
