@@ -56,7 +56,7 @@ angular.module('Lunch.browse', [
         })
         .then(function(returnedData){
           if(returnedData.data.id && decision === 'true'){
-            match.id = returnedData.data.selectedUserId;
+            match.id = returnedData.data.id;
             $state.go('app.matched');
           } else {
             next();
