@@ -187,7 +187,7 @@ angular.module('openfb', [])
         function revokePermissions() {
             return api({method: 'DELETE', path: '/me/permissions'})
                 .success(function () {
-                    console.log('Permissions revoked');
+                    //colog.info('Permissions revoked');
                 });
         }
 
