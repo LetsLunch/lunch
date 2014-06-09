@@ -9,7 +9,7 @@ angular.module('Lunch.service.matchData', [
   var processMatchData = function(matches){
     return matches.map(function(match) {
       var user = {
-        location: match.location.id,
+        location: match.location.city,
         tags: match.tags.map(function(tag) { return tag.name; }),
         likes: match.likes.map(function(like) { return like.name; })
       };
