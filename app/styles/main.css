@@ -34,7 +34,8 @@
 .blurb,
 .facebook,
 .username, 
-.search{
+.search,
+.location {
   text-align: center;
 }
 
